@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Matrix Result</title>
+    <link rel="stylesheet" href="/css/stylesSideBar.css">
+    <link rel="stylesheet" href="/css/stylesMatrixResult.css">
+</head>
+<body>
+    <div class="app-layout">
+        <div th:replace="~{sidebar :: sidebar}"></div>
+
+        <main class="matrix-page">
+            <div class="matrix-container">
+                <!-- YOUR MATRIX -->
+                <section class="hero-card">
+                    <h2>Your Matrix</h2>
+                    <table class="matrix-table">
+                        <tr th:each="row : ${matrix}">
+                            <td th:each="value : ${row}" th:text="${value}"></td>
+                        </tr>
+                    </table>
+                </section>
+                <!-- DETERMINANT -->
+                <section class="status-card">
+                    <h2>Matrix Determinant</h2>
+
+                    <details class="math-details">
+                        <summary>What does the determinant mean?</summary>
+                        <p class="math-description">
+                            The determinant helps determine whether a matrix can be inverted.<br>
+                            For a 2 × 2 matrix, the determinant is calculated using <strong>ad − bc</strong>.<br>
+                            For larger matrices, the determinant can be calculated using cofactor expansion,<br>
+                            where the matrix is broken into smaller matrices called minors.<br>
+                            If the determinant equals <strong>0</strong>, the matrix has no inverse.
+                        </p>
+                    </details>
+
+                    <!-- Calculate Determinant -->
+                    <form th:action="@{/matrices/calculate-determinant}" method="post">
+                        <input type="hidden" name="size" th:value="${size}">
+                        <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
+                        <input type="hidden" name="showTranspose" th:value="${transpose != null}">
+                        <input type="hidden" name="showInverse" th:value="${inverse != null}">
+                        <div th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+                            <input th:each="colIndex : ${#numbers.sequence(0, size - 1)}"
+                                   type="hidden"
+                                   th:name="'cell_' + ${rowIndex} + '_' + ${colIndex}"
+                                   th:value="${matrix[rowIndex][colIndex]}">
+                        </div>
+                        <div class="button-group">
+                            <button th:if="${determinant == null}" type="submit" class="btn-primary">
+                                Calculate Determinant
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Close Determinant -->
+                    <form th:if="${determinant != null}" th:action="@{/matrices/close-determinant}" method="post">
+                        <input type="hidden" name="size" th:value="${size}">
+                        <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
+                        <input type="hidden" name="showTranspose" th:value="${transpose != null}">
+                        <input type="hidden" name="showInverse" th:value="${inverse != null}">
+                        <div th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+                            <input th:each="colIndex : ${#numbers.sequence(0, size - 1)}"
+                                   type="hidden"
+                                   th:name="'cell_' + ${rowIndex} + '_' + ${colIndex}"
+                                   th:value="${matrix[rowIndex][colIndex]}">
+                        </div>
+                        <div th:if="${determinant != null}">
+                            <h3>Determinant: <span th:text="${determinant}"></span></h3>
+                        </div>
+                        <div class="button-group">
+                            <button type="submit" class="btn-danger">
+                                Close Determinant
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- TRANSPOSE -->
+                <section class="hero-card">
+                    <h2>Transposed Matrix</h2>
+                     <details class="math-details">
+                        <summary>What does the transpose mean?</summary>
+                        <p class="math-description">
+                            A transpose matrix is created by swapping rows and columns. 
+                            The first row becomes the first column, the second row becomes the second column, and so on. 
+                            This process is the same for 2×2, 3×3, and larger matrices. It is often written as Aᵀ.
+                        </p>
+                    </details>
+                    <!-- Calculate -->
+                    <form th:action="@{/matrices/transpose}" method="post">
+                        <input type="hidden" name="size" th:value="${size}">
+                        <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
+                        <input type="hidden" name="showTranspose" th:value="${transpose != null}">
+                        <input type="hidden" name="showInverse" th:value="${inverse != null}">
+                        <div th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+                            <input th:each="colIndex : ${#numbers.sequence(0, size - 1)}"
+                                   type="hidden"
+                                   th:name="'cell_' + ${rowIndex} + '_' + ${colIndex}"
+                                   th:value="${matrix[rowIndex][colIndex]}">
+                        </div>
+                        <div class="button-group">
+                            <button th:if="${transpose == null}" type="submit" class="btn-primary">
+                                Calculate Transpose
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Close -->
+                    <form th:if="${transpose != null}" th:action="@{/matrices/close-transpose}" method="post">
+                        <input type="hidden" name="size" th:value="${size}">
+                        <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
+                        <input type="hidden" name="showTranspose" th:value="${transpose != null}">
+                        <input type="hidden" name="showInverse" th:value="${inverse != null}">
+                        <div th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+                            <input th:each="colIndex : ${#numbers.sequence(0, size - 1)}"
+                                   type="hidden"
+                                   th:name="'cell_' + ${rowIndex} + '_' + ${colIndex}"
+                                   th:value="${matrix[rowIndex][colIndex]}">
+                        </div>
+                         <div th:if="${transpose != null}">
+                        <table class="matrix-table">
+                            <tr th:each="row : ${transpose}">
+                                <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                            </tr>
+                        </table>                          
+                    </div>
+                        <div class="button-group">
+                            <button type="submit" class="btn-danger">
+                                Close Transpose
+                            </button>
+                        </div>
+                    </form>                  
+                </section>
+
+                <!-- INVERSE -->
+                <section class="preview-card">
+                    <h2>Inverse Matrix</h2>
+                     <details class="math-details">
+                        <summary>What does the inverse mean?</summary>
+                        <p class="math-description">
+                            The inverse of a matrix A is another matrix A⁻¹ such that when you multiply them together, you get the identity matrix.<br>
+                            Not all matrices have an inverse; only square matrices with a non-zero determinant have inverses.<br>
+                            For a 2 × 2 matrix, the inverse is calculated using the formula <strong>(1/det(A)) × adj(A)</strong>.<br>
+                            For larger matrices, the inverse can be calculated using cofactor expansion and the adjugate matrix.<br>
+                            If the determinant equals <strong>0</strong>, the matrix has no inverse.
+                        </p>
+                    </details>
+                    <!-- Calculate -->
+                    <form th:action="@{/matrices/inverse}" method="post">
+                        <input type="hidden" name="size" th:value="${size}">
+                        <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
+                        <input type="hidden" name="showTranspose" th:value="${transpose != null}">
+                        <input type="hidden" name="showInverse" th:value="${inverse != null}">
+                        <div th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+                            <input th:each="colIndex : ${#numbers.sequence(0, size - 1)}"
+                                   type="hidden"
+                                   th:name="'cell_' + ${rowIndex} + '_' + ${colIndex}"
+                                   th:value="${matrix[rowIndex][colIndex]}">
+                        </div>
+                        <div class="button-group">
+                            <button th:if="${inverse == null}" type="submit" class="btn-primary">
+                                Calculate Inverse
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Close -->
+                    <form th:if="${inverse != null}" th:action="@{/matrices/close-inverse}" method="post">
+                        <input type="hidden" name="size" th:value="${size}">
+                        <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
+                        <input type="hidden" name="showTranspose" th:value="${transpose != null}">
+                        <input type="hidden" name="showInverse" th:value="${inverse != null}">
+                        <div th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+                            <input th:each="colIndex : ${#numbers.sequence(0, size - 1)}"
+                                   type="hidden"
+                                   th:name="'cell_' + ${rowIndex} + '_' + ${colIndex}"
+                                   th:value="${matrix[rowIndex][colIndex]}">
+                        </div>                       
+                        <div th:if="${inverse != null}">
+                      <h3>Exact Fraction Form</h3>
+
+<table class="matrix-table">
+    <tr th:each="row : ${inverse}">
+        <td th:each="value : ${row}"
+            th:text="${matrixService.formatInverseFraction(value, inverseDeterminant)}">
+        </td>
+    </tr>
+</table>
+            <table class="matrix-table">
+    <tr th:each="row : ${inverse}">
+        <td th:each="value : ${row}"
+            th:text="${matrixService.formatNumber(value)}">
+        </td>
+    </tr>
+</table>
+                    </div>
+                    <div th:if="${inverseError != null}">
+                        <p th:text="${inverseError}"></p>
+                    </div>
+                        <div class="button-group">
+                            <button type="submit" class="btn-danger">
+                                Close Inverse
+                            </button>
+                        </div>
+                    </form>                    
+                </section>
+                <!-- IDENTITY -->
+                <section class="preview-card">
+                    <h2>Identity Matrix</h2>
+                     <details class="math-details">
+                        <summary>What does the identity matrix mean?</summary>
+                        <p class="math-description">
+                           The identity matrix is a special square matrix that acts as the multiplicative identity in matrix multiplication. It is denoted as I and has 1s on the diagonal and 0s elsewhere. For example, the 3 × 3 identity matrix looks like this:<br>
+                            <strong>
+                            [1 0 0]<br>
+                            [0 1 0]<br>
+                            [0 0 1]
+                            </strong><br>
+                            When you multiply any matrix A by the identity matrix I (of compatible size), you get A back: A × I = A and I × A = A.<br>
+                            The identity matrix plays a crucial role in linear algebra, especially when working with inverses, as it serves as the "do nothing" element for matrix multiplication.
+                        </p>
+                    </details>
+                    <!-- Calculate -->
+                    <form th:action="@{/matrices/identity}" method="post">
+                        <input type="hidden" name="size" th:value="${size}">
+                        <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
+                        <input type="hidden" name="showTranspose" th:value="${transpose != null}">
+                        <input type="hidden" name="showInverse" th:value="${inverse != null}">
+                        <input type="hidden" name="showIdentity" th:value="${identity != null}">
+                        <div th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+                            <input th:each="colIndex : ${#numbers.sequence(0, size - 1)}"
+                                   type="hidden"
+                                   th:name="'cell_' + ${rowIndex} + '_' + ${colIndex}"
+                                   th:value="${matrix[rowIndex][colIndex]}">
+                        </div>
+                        <div class="button-group">
+                            <button th:if="${identity == null}" type="submit" class="btn-primary">
+                                Calculate Identity
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Close -->
+                    <form th:if="${identity != null}" th:action="@{/matrices/close-identity}" method="post">
+                        <input type="hidden" name="size" th:value="${size}">
+                        <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
+                        <input type="hidden" name="showTranspose" th:value="${transpose != null}">
+                        <input type="hidden" name="showInverse" th:value="${inverse != null}">
+                        <input type="hidden" name="showIdentity" th:value="${identity != null}">
+                        <div th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+                            <input th:each="colIndex : ${#numbers.sequence(0, size - 1)}"
+                                   type="hidden"
+                                   th:name="'cell_' + ${rowIndex} + '_' + ${colIndex}"
+                                   th:value="${matrix[rowIndex][colIndex]}">
+                        </div>                       
+                        <div th:if="${identity != null}">
+                        <table class="matrix-table">
+                            <tr th:each="row : ${identity}">
+                                <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div th:if="${identityError != null}">
+                        <p th:text="${identityError}"></p>
+                    </div>
+                        <div class="button-group">
+                            <button type="submit" class="btn-danger">
+                                Close Identity
+                            </button>
+                        </div>
+                    </form>                    
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

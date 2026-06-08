@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Enter Matrix</title>
+        <link rel="stylesheet" href="/css/stylesSideBar.css">
+        <link rel="stylesheet" href="/css/stylesMatrixInput.css">
+    </head>
+<body>
+    <div class="app-layout">
+        <div th:replace="~{sidebar :: sidebar}"></div>
+        <main class="matrix-page">
+        <div class="matrix-card">
+            <h1>Enter Matrix Values</h1>
+                <form th:action="@{/matrices/determinant}" method="post">
+                    <input type="hidden" name="size" th:value="${size}">   
+                        <table>
+                            <tr th:each="row : ${#numbers.sequence(0, size - 1)}">
+                                <td th:each="col : ${#numbers.sequence(0, size - 1)}">
+                                    <input
+                                        type="number"
+                                        step="any"
+                                        th:id="'cell_' + ${row} + '_' + ${col}"
+                                        th:name="'cell_' + ${row} + '_' + ${col}"
+                                        th:placeholder="'Value ' + ${row} + ',' + ${col}"
+                                        th:title="'Matrix cell (' + ${row} + ',' + ${col} + ')'"
+                                        aria-label="[[${'Matrix cell (' + row + ',' + col + ')'}]]"
+                                        required
+                                    >
+                                </td>
+                            </tr>
+                        </table>
+                <div class="button-group">
+                <button type="submit" class="btn-primary">Create Matrix</button>                
+                <div class="button-group">
+                <a href th:href="@{/matrices}" class="btn-secondary link-button">Back</a>
+            </div>
+                
+        </form>
+    </body>
+</html>

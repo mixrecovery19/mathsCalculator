@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.matrix-page {
+    margin-left: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;    
+    padding-top: 2rem;
+    min-height: auto;
+}
+.matrix-card {
+    width: 420px;
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.matrix-card h1 {
+    margin-bottom: 2rem;
+}
+.matrix-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.matrix-card select {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.button-group button,
+.button-group a {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+/* 🔹 Primary button (Articles) */
+.btn-primary {
+    background-color: rgb(70, 236, 70);
+    color: black;
+}
+.btn-primary:hover {
+    background-color: #05e16c;
+}
+/* 🔹 Secondary button (Login) */
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+/* 🔹 Danger button (Logout) */
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #c0392b;
+}
