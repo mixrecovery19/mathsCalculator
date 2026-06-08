@@ -19,13 +19,7 @@ public class MatrixService {
     if (size == 2) {
 
         return
-                matrix[0][0]
-                * matrix[1][1]
-
-                -
-
-                matrix[0][1]
-                * matrix[1][0];
+                matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     }
 
     double determinant = 0;
@@ -172,13 +166,26 @@ public class MatrixService {
                 formatNumber(denominator);
     }
     
-    public String formatInverseFraction(double value, double determinant)
-    {
-        double numerator =
-                Math.round(value * determinant);
+    public String formatInverseNumerator(
+        double value,
+        double determinant
+) {
 
-        return formatNumber(numerator)
-                + "/"
-                + formatNumber(determinant);
+    double numerator =
+            Math.round(value * determinant);
+
+    return formatNumber(numerator);
+}
+    public String formatDeterminant(Double value) {
+
+        if (value == null) {
+            return "";
+        }
+
+        if (value == Math.floor(value)) {
+            return String.format("%,.0f", value);
+        }
+
+        return String.format("%,.4f", value);
     }
 }

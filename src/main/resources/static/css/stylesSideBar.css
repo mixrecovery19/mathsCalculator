@@ -35,19 +35,19 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    border-radius: 30px;
 }
 
 .sidebar-nav a {
     color: white;
     text-decoration: none;
     padding: 0.9rem 1rem;
-    border-radius: 12px;
+    border-radius: 30px;
 }
-
 .sidebar-nav a:hover {
     background: rgba(255, 255, 255, 0.12);
+    border-radius: 30px;
 }
-
 .sidebar-nav hr {
     margin: 1rem 0;
     border: none;
@@ -58,7 +58,6 @@ body {
     margin-bottom: 0.5rem;
     color: #cbd5e1;
 }
-
 .main-content {
     flex: 1;
 

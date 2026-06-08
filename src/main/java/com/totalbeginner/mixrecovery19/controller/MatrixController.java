@@ -1,15 +1,13 @@
 package com.totalbeginner.mixrecovery19.controller;
 
-import java.util.Map;
-
+import com.totalbeginner.mixrecovery19.service.MatrixService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.totalbeginner.mixrecovery19.service.MatrixService;
+import java.util.Map;
 
 @Controller
 public class MatrixController {
@@ -20,318 +18,214 @@ public class MatrixController {
         this.matrixService = matrixService;
     }
 
-    @GetMapping("/matrices")
+    @GetMapping("/matrixResult")
     public String matricesPage(Model model) {
+        int defaultSize = 2;
 
-        return "matrices";
+        model.addAttribute("size", defaultSize);
+        model.addAttribute("matrixA", new double[defaultSize][defaultSize]);
+        model.addAttribute("matrixB", new double[defaultSize][defaultSize]);
+        return "matrixResult";
     }
 
-    @PostMapping("/matrices/create")
+    /*@PostMapping("/matrices/create")
     public String createMatrix(@RequestParam("size") int size, Model model) {
-
         model.addAttribute("size", size);
-        // Logic for creating matrix
         return "matrixInput";
-    }
+    }*/
 
-    @PostMapping("/matrices/determinant")
-    public String determinant(@RequestParam int size, @RequestParam Map<String, String> params, Model model)
-    {
-        double[][] matrix = new double[size][size];
-
-        for (int row = 0;
-            row < size; row++) {
-
-            for (int col = 0; col < size; col++) {
-
-                String key = "cell_" + row + "_" + col;
-
-                matrix[row][col] = Double.parseDouble(params.get(key));
-                
-            }
-        }
-
-        model.addAttribute("matrix", matrix);
-        model.addAttribute("size",size);
-                
-
-        return "matrixResult";
-    }
-    @PostMapping("/matrices/calculate-determinant")
-    public String calculateDeterminant(@RequestParam int size, @RequestParam Map<String, String> params, Model model)
-    {
-    double[][] matrix = new double[size][size];
-
-    for (int row = 0; row < size; row++) {
-        for (int col = 0; col < size; col++) {
-
-            String key = "cell_" + row + "_" + col;
-
-            matrix[row][col] = Double.parseDouble(params.get(key));               
-        }
-    }
-
-    double determinant = matrixService.determinant(matrix);
-        model.addAttribute("matrix", matrix);   
-        model.addAttribute("size", size);
-        model.addAttribute("determinant", determinant);    
-
-    return "matrixResult";
-    }
-
-    @PostMapping("/matrices/close-determinant")
-    public String closeDeterminant(@RequestParam int size, @RequestParam Map<String, String> params, Model model)
-    {
-        double[][] matrix = buildMatrix(size, params);                
-
-        model.addAttribute("matrix", matrix);        
-        model.addAttribute("size", size);
-        
-        return "matrixResult";
-    }
-
-   @PostMapping("/matrices/transpose")
-        public String transposeMatrix(
+    /**
+     * SINGLE endpoint for ALL result-page actions (calculate / close any section).
+     * The form sends:
+     *   - size + cell_* parameters
+     *   - current show* flags (hidden inputs)
+     *   - action parameter from the submitted button
+     */
+        @PostMapping("/matrices/result")
+        public String handleMatrixAction(
                 @RequestParam int size,
                 @RequestParam Map<String, String> params,
-                @RequestParam(defaultValue = "false")
-                boolean showDeterminant,
-                @RequestParam(defaultValue = "false")
-                boolean showInverse,
-                Model model
-        )
-        {
-            double[][] matrix = buildMatrix(size, params);
+                @RequestParam(defaultValue = "false") boolean showDeterminant,
+                @RequestParam(defaultValue = "false") boolean showTranspose,
+                @RequestParam(defaultValue = "false") boolean showInverse,
+                @RequestParam(defaultValue = "false") boolean showIdentity,
+                @RequestParam(defaultValue = "false") boolean showDeterminantB,
+                @RequestParam(defaultValue = "false") boolean showTransposeB,
+                @RequestParam(defaultValue = "false") boolean showInverseB,
+                @RequestParam(defaultValue = "false") boolean showIdentityB,
 
-            double[][] transpose = matrixService.transpose(matrix);
+                @RequestParam(required = false) String action,
 
-            model.addAttribute("matrix", matrix);           
-            model.addAttribute("transpose", transpose);         
-            model.addAttribute("size", size); 
-            model.addAttribute("matrixService", matrixService);           
+                Model model) {
 
-            // reopen determinant if it was already open
-            if (showDeterminant) {
-                model.addAttribute("determinant", matrixService.determinant(matrix));
-                
-            }
-            // reopen inverse if it was already open
-            if (showInverse) {
-                double[][] inverse = matrixService.inverse(matrix);
-                model.addAttribute("inverse", inverse);
-                
-                if (inverse == null) {
+        if ("change-size".equals(action)) {
+                // Fresh empty matrix for the new size
+                model.addAttribute("matrixA", new double[size][size]);
+                model.addAttribute("matrixB", new double[size][size]);
 
-                    model.addAttribute(
-                            "inverseError",
-                            "This matrix has no inverse because its determinant is 0."
-                    );
-                }
-            }
+                model.addAttribute("size", size);
+                // Force all sections closed on size change
+                model.addAttribute("determinant", null);
+                model.addAttribute("transpose", null);
+                model.addAttribute("inverse", null);
+                model.addAttribute("identity", null);
 
-            return "matrixResult";
+                return "matrixResult";
         }
 
-    @PostMapping("/matrices/close-transpose")
-    public String closeTranspose(@RequestParam int size, @RequestParam Map<String, String> params, Model model)
-    {
-        double[][] matrix = buildMatrix(size, params);
-        model.addAttribute("matrix", matrix);
-        model.addAttribute("size", size);
+    // Normal actions (update-matrix, calculate-*, close-*, etc.)
+    double[][] matrixA = buildMatrixA(size, params);
+    double[][] matrixB = buildMatrixB(size, params);
 
-        return "matrixResult";
+        boolean newShowDet  = false;
+        boolean newShowTrans = false;
+        boolean newShowInv   = false;
+        boolean newShowId    = false;
+        boolean newShowDetB = false;
+        boolean newShowTransB = false;
+        boolean newShowInvB = false;
+        boolean newShowIdB = false;
+
+    if (action != null && !action.isEmpty()) {
+        if ("update-matrix".equals(action)) {
+            // Keep whatever sections were already open
+            newShowDet  = showDeterminant;
+            newShowTrans = showTranspose;
+            newShowInv   = showInverse;
+            newShowId    = showIdentity;
+            newShowDetB = showDeterminantB;
+            newShowTransB = showTransposeB;
+            newShowInvB = showInverseB;
+            newShowIdB = showIdentityB;
+
+        } else {
+            // Toggle logic for calculate/close buttons
+                newShowDet  = switchAction(action, "determinant", showDeterminant);
+                newShowTrans = switchAction(action, "transpose", showTranspose);
+                newShowInv   = switchAction(action, "inverse", showInverse);
+                newShowId    = switchAction(action, "identity", showIdentity);
+                newShowDetB  = switchAction(action, "determinant-b", showDeterminantB);
+                newShowTransB = switchAction(action, "transpose-b", showTransposeB);
+                newShowInvB   = switchAction(action, "inverse-b", showInverseB);
+                newShowIdB    = switchAction(action, "identity-b", showIdentityB);
+        }
     }
 
-    private double[][] buildMatrix(int size, Map<String, String> params)
-    {
+        model.addAttribute("matrixA", matrixA);
+        model.addAttribute("matrixB", matrixB);
+        model.addAttribute("size", size);
+
+    restoreOpenSections(model, matrixA, newShowDet, newShowTrans, newShowInv, newShowId);
+    restoreOpenSectionsB(model, matrixB, newShowDetB, newShowTransB, newShowInvB, newShowIdB);
+
+    return "matrixResult";
+}
+
+    private boolean switchAction(String action, String section, boolean currentValue) {
+        String calculate = "calculate-" + section;
+        String close = "close-" + section;
+
+        if (calculate.equals(action)) return true;
+        if (close.equals(action)) return false;
+        return currentValue; // no change for this section
+    }
+    // =================================================================
+    // Helper methods (unchanged except minor cleanup)
+    // =================================================================
+
+    private double[][] buildMatrixA(int size, Map<String, String> params) {
         double[][] matrix = new double[size][size];
-
         for (int row = 0; row < size; row++) {
-
             for (int col = 0; col < size; col++) {
-
                 String key = "cell_" + row + "_" + col;
-
-                matrix[row][col] = Double.parseDouble(params.get(key));
+                String value = params.get(key);
+                matrix[row][col] = (value == null || value.isBlank()) ? 0 : Double.parseDouble(value);                
             }
         }
         return matrix;
     }
-    @PostMapping("/matrices/inverse")
-        public String inverseMatrix(
-                @RequestParam int size,
-                @RequestParam Map<String, String> params,
-                @RequestParam(defaultValue = "false")
-                boolean showDeterminant,
-                @RequestParam(defaultValue = "false")
-                boolean showTranspose,
-                Model model
-        )
-        {
-            double[][] matrix =
-                    buildMatrix(size, params);
 
-            double[][] inverse =
-                    matrixService.inverse(matrix);
-            double inverseDeterminant = matrixService.determinant(matrix);
+    private double[][] buildMatrixB(int size, Map<String, String> params) {
+        double[][] matrix = new double[size][size];
 
-            model.addAttribute(
-                    "inverseDeterminant",
-                    inverseDeterminant
-            );
-            model.addAttribute(
-                    "matrix",
-                    matrix
-            );
-            model.addAttribute("matrixService", matrixService);
-
-            model.addAttribute(
-                    "size",
-                    size
-            );
-
-            model.addAttribute(
-                    "inverse",
-                    inverse
-            );
-
-            // restore determinant if open
-            if (showDeterminant) {
-
-                model.addAttribute(
-                        "determinant",
-                        matrixService.determinant(matrix)
-                );
-            }
-
-            // restore transpose if open
-            if (showTranspose) {
-
-                model.addAttribute(
-                        "transpose",
-                        matrixService.transpose(matrix)
-                );
-            }
-
-            // inverse error handling
-            if (inverse == null) {
-
-                model.addAttribute(
-                        "inverseError",
-                        "This matrix has no inverse because its determinant is 0."
-                );
-            }
-
-            return "matrixResult";
+                for (int row = 0; row < size; row++) {
+                        for (int col = 0; col < size; col++) {
+                        String key = "cellB_" + row + "_" + col;
+                        String value = params.get(key);
+                        matrix[row][col] = (value == null || value.isBlank()) ? 0 : Double.parseDouble(value);
+                        }
+                }
+                return matrix;
         }
 
-    @PostMapping("/matrices/close-inverse")
-    public String closeInverse(@RequestParam int size, @RequestParam Map<String, String> params, Model model)
-    {
-        double[][] matrix = buildMatrix(size, params);
-        model.addAttribute("matrix", matrix);
-        model.addAttribute("size", size);
-
-        return "matrixResult";
-    }
-
-    @PostMapping("/matrices/identity")
-    public String identityMatrix(
-            @RequestParam int size,
-            @RequestParam Map<String, String> params,
-            @RequestParam(defaultValue = "false")
+    private void restoreOpenSections(
+            Model model,
+            double[][] matrixA,
             boolean showDeterminant,
-            @RequestParam(defaultValue = "false")
             boolean showTranspose,
-            @RequestParam(defaultValue = "false")
             boolean showInverse,
-            Model model
-    )
-    {
-        double[][] matrix =
-                buildMatrix(size, params);
+            boolean showIdentity) {
 
-        double[][] identity =
-                matrixService.identity(matrix);
+        model.addAttribute("matrixService", matrixService); // kept only because original template used it
 
-        model.addAttribute(
-                "matrix",
-                matrix
-        );
-
-        model.addAttribute(
-                "size",
-                size
-        );
-
-        model.addAttribute(
-                "identity",
-                identity
-        );
-
-        model.addAttribute(
-                "matrixService",
-                matrixService
-        );
-
-        // restore determinant
         if (showDeterminant) {
-
-            model.addAttribute(
-                    "determinant",
-                    matrixService.determinant(matrix)
-            );
+            double determinant = matrixService.determinant(matrixA);
+            model.addAttribute("determinant", determinant);
+            model.addAttribute("formattedDeterminant", matrixService.formatDeterminant(determinant));
         }
 
-        // restore transpose
         if (showTranspose) {
-
-            model.addAttribute(
-                    "transpose",
-                    matrixService.transpose(matrix)
-            );
+            model.addAttribute("transpose", matrixService.transpose(matrixA));
         }
 
-        // restore inverse
         if (showInverse) {
+            double[][] inverse = matrixService.inverse(matrixA);
+            model.addAttribute("inverse", inverse);
+            model.addAttribute("inverseDeterminant", matrixService.determinant(matrixA));
 
-            model.addAttribute(
-                    "inverse",
-                    matrixService.inverse(matrix)
-            );
+            if (inverse == null) {
+                model.addAttribute("inverseError", "This matrix has no inverse because its determinant is 0.");
+            }
         }
 
-        if (identity == null) {
+        if (showIdentity) {
+            model.addAttribute("identity", matrixService.identity(matrixA));
+        }
+    }
 
-            model.addAttribute(
-                    "inverseError",
-                    "This matrix has no inverse because its determinant is 0."
-            );
+    private void restoreOpenSectionsB(
+            Model model,
+            double[][] matrixB,
+            boolean showDeterminantB,
+            boolean showTransposeB,
+            boolean showInverseB,
+            boolean showIdentityB) {
+
+        model.addAttribute("matrixService", matrixService);
+
+        if (showDeterminantB) {
+            double determinant = matrixService.determinant(matrixB);
+            model.addAttribute("determinantB", determinant);
+            model.addAttribute("formattedDeterminantB", matrixService.formatDeterminant(determinant));
         }
 
-        return "matrixResult";
+        if (showTransposeB) {
+            model.addAttribute("transposeB", matrixService.transpose(matrixB));
+        }
+
+        if (showInverseB) {
+            double[][] inverse = matrixService.inverse(matrixB);
+            model.addAttribute("inverseB", inverse);
+            model.addAttribute("inverseDeterminantB", matrixService.determinant(matrixB));
+
+            if (inverse == null) {
+                model.addAttribute("inverseErrorB", "This matrix has no inverse because its determinant is 0.");
+            }
+        }
+
+        if (showIdentityB) {
+            model.addAttribute("identityB", matrixService.identity(matrixB));
+        }
     }
 
-    @PostMapping("/matrices/close-identity")
-    public String closeIdentity(
-            @RequestParam int size,
-            @RequestParam Map<String, String> params,
-            Model model
-    )
-    {
-        double[][] matrix =
-                buildMatrix(size, params);
-
-        model.addAttribute(
-                "matrix",
-                matrix
-        );
-
-        model.addAttribute(
-                "size",
-                size
-        );
-
-        return "matrixResult";
-    }
 }

@@ -106,19 +106,41 @@ body {
     border-spacing: 10px;
 }
 
-.matrix-table td {
-    width: 70px;
-    height: 70px;
-
-    background: #f8f9fa;
-
-    border: 2px solid #dcdcdc;
-    border-radius: 12px;
-
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: 500;
+.matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
 }
+
+.matrix-table td {
+    min-width: 65px;
+    padding: 10px 12px;
+    text-align: center;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    font-size: clamp(
+        0.75rem,
+        1vw,
+        1rem
+    );
+
+    transition: all 0.2s ease;
+}
+
+.matrix-table input {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+}
+
 .math-details {
     margin: 1rem 0;
     background: #f5f8fc;
@@ -164,11 +186,21 @@ body {
     overflow-wrap: break-word;
     word-wrap: break-word;
 }
-.matrix-container {
-    width: min(450px, 100%);
+.matrix-container.three-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
 
+.matrix-column {
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
+}
 
-    gap: 2rem;
+.column-title {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: #333;
 }

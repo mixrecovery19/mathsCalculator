@@ -17,7 +17,6 @@ import java.util.List;
 
 import com.totalbeginner.mixrecovery19.model.*;
 import com.totalbeginner.mixrecovery19.service.*;
-import com.totalbeginner.mixrecovery19.service.*;
 
 @Controller
 public class LoginController {
