@@ -1,7 +1,22 @@
-body {
+* {
     margin: 0;
     padding: 0;
-    background: #f4f6f9;
+    box-sizing: border-box;
+}
+
+/* 🔹 Page background */
+body {
+    font-family: -apple-system,
+                 BlinkMacSystemFont,
+                 "Segoe UI",
+                 Roboto,
+                 Arial,
+                 sans-serif;
+                  background: 
+        linear-gradient(rgba(244, 248, 251, 0.85), rgba(244, 248, 251, 0.85)),
+        url("/images/mathsimage2.png");
+    color: #2c3e50;
+    min-height: 100vh;
 }
 .matrix-page {
     margin-left: 260px;
@@ -299,4 +314,34 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
+}
+body {
+    opacity: 1;
+    transition:
+        opacity 0.22s ease,
+        transform 0.18s ease;
+}
+
+body.loading {
+    opacity: 0.75;
+    transform: translateY(4px);
+    pointer-events: none;
+}
+/* 🔹 Logged OUT background */
+.logged-out-bg {
+    background: 
+        linear-gradient(rgba(244, 248, 251, 0.9), rgba(244, 248, 251, 0.9)),
+        url("/images/mathsimage2.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+/* 🔹 Logged IN background */
+.logged-in-bg {
+    background: 
+        linear-gradient(rgba(244, 248, 251, 0.85), rgba(244, 248, 251, 0.85)),
+        url("/images/mathsimage2.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }

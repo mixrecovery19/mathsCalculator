@@ -2,6 +2,24 @@ body {
     margin: 0;
     padding: 0;
 }
+/* 🔹 Logged OUT background */
+.logged-out-bg {
+    background: 
+        linear-gradient(rgba(244, 248, 251, 0.9), rgba(244, 248, 251, 0.9)),
+        url("/images/mathsimage1.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+/* 🔹 Logged IN background */
+.logged-in-bg {
+    background: 
+        linear-gradient(rgba(244, 248, 251, 0.85), rgba(244, 248, 251, 0.85)),
+        url("/images/mathsimage1.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 .matrix-page {
     margin-left: 260px;
     display: flex;

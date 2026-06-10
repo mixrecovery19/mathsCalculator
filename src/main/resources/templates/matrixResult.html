@@ -6,6 +6,7 @@
     <title>Matrix Calculator</title>
     <link rel="stylesheet" href="/css/stylesSideBar.css">
     <link rel="stylesheet" href="/css/stylesMatrixResult.css">
+    <script src="/js/overlayhelper.js"></script>
 </head>
 <body>
     <div class="app-layout">
@@ -29,13 +30,13 @@
                 <input type="hidden" name="showAddition" th:value="${showAddition}">
                 <input type="hidden" name="showSubtraction" th:value="${showSubtraction}">
                 <input type="hidden" name="showMultiplication" th:value="${showMultiplication}">
+                <input type="hidden" name="showSquareA" th:value="${squareA != null}">
+                <input type="hidden" name="showSquareB" th:value="${squareB != null}">
 
                 <div class="matrix-container three-columns">
                     <!-- ==================== COLUMN 1: MATRIX A ==================== -->
                     <div class="matrix-column">
-                        <h2 class="column-title">Matrix A</h2>
-
-                        <!-- Live display of Matrix A -->
+                        <h2 class="column-title">Matrix A</h2>                        
                         <section class="hero-card">
                             <h3>Your Matrix A</h3>
                             <table class="matrix-table">
@@ -93,7 +94,6 @@
                                     This process is the same for 2×2, 3×3, and larger matrices. It is often written as Aᵀ.
                                 </p>
                             </details>
-
                             <div class="button-group">
                                 <button th:if="${transpose == null}" 
                                         type="submit" 
@@ -103,7 +103,6 @@
                                     Calculate Transpose
                                 </button>
                             </div>
-
                             <div th:if="${transpose != null}">
                                 <table class="matrix-table">
                                     <tr th:each="row : ${transpose}">
@@ -425,13 +424,69 @@
                         </section>                    
                     </div>
 
-                                        <!-- ==================== COLUMN 3: MATRIX CALCULATIONS ==================== -->
+                    <!-- ==================== COLUMN 3: MATRIX CALCULATIONS ==================== -->
                     <div class="matrix-column">
                         <h2 class="column-title">Matrix Calculations</h2>
+                         <section class="hero-card">
+                        <h2>Matrix Squaring</h2>
+                        <details class="math-details">
+                            <summary>What is matrix squaring?</summary>
+                            <p class="math-description">
+                                Matrix squaring works by multiplying a matrix by itself.<br><br>
+                                <strong>A² = A × A</strong><br><br>
+                                <strong>B² = B × B</strong><br><br>
+                                The matrix must be square: same number of rows and columns.
+                            </p>
+                        </details>
+                        <div class="button-group">
+                            <button th:if="${squareA == null}" type="submit" name="action" value="calculate-square-a" class="btn-primary">
+                                Calculate A²
+                            </button>
+                            <button th:if="${squareB == null}" type="submit" name="action" value="calculate-square-b" class="btn-primary">
+                                Calculate B²
+                            </button>
+                        </div>
+                        <div th:if="${squareA != null}">
+                            <h3>Matrix A²</h3>
+                            <table class="matrix-table">
+                                <tr th:each="row : ${squareA}">
+                                    <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                                </tr>
+                            </table>
 
+                            <div class="button-group">
+                                <button type="submit" name="action" value="close-square-a" class="btn-danger">
+                                    Close A²
+                                </button>
+                            </div>
+                        </div>
+                        <div th:if="${squareB != null}">
+                            <h3>Matrix B²</h3>
+                            <table class="matrix-table">
+                                <tr th:each="row : ${squareB}">
+                                    <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                                </tr>
+                            </table>
+
+                            <div class="button-group">
+                                <button type="submit" name="action" value="close-square-b" class="btn-danger">
+                                    Close B²
+                                </button>
+                            </div>
+                        </div>
+                    </section>
                         <!-- ADDITION -->
                         <section class="hero-card">
                             <h2>Matrix Addition</h2>
+                             <details class="math-details">
+                                <summary>What is matrix addition?</summary>
+                                <p class="math-description">
+                                    Matrix addition works by adding matching positions together.<br><br>
+                                    Row 1 Column 1 in Matrix B is added to Row 1 Column 1 in Matrix A.<br><br>
+                                    This repeats for every cell.<br><br>
+                                    Both matrices must be the same size.
+                                </p>
+                            </details>
                             <div class="button-group">
                                 <button th:if="${additionResult == null}" type="submit" name="action" value="calculate-addition" class="btn-primary">
                                     Calculate Addition
@@ -451,8 +506,7 @@
                                 </div>
                             </div>
                         </section>
-
-                        <!-- SUBTRACTION -->
+                       
                         <section class="hero-card">
                             <h2>Matrix Subtraction</h2>
                             <details class="math-details">
@@ -496,6 +550,8 @@
                                     For example:<br><br>
                                     Row 1 of Matrix A × Column 1 of Matrix B becomes the top-left result.<br><br>
                                     This repeats for every row and every column.
+                                    The rule for matrix multiplication is that the number of columns in the first matrix (Matrix A) 
+                                    must equal the number of rows in the second matrix (Matrix B).<br><br>
                                 </p>
                             </details>
                             <div class="button-group">
@@ -517,6 +573,116 @@
                                 </div>
                             </div>
                         </section>
+                          <section class="hero-card">
+
+    <h2>Matrix Scalar</h2>
+
+    <details class="math-details">
+        <summary>
+            What is matrix scalar multiplication?
+        </summary>
+
+        <p class="math-description">
+            Matrix scalar multiplication involves multiplying every
+            element of a matrix by a scalar (a single number).<br><br>
+
+            <strong>k × A</strong><br><br>
+
+            where k is the scalar and A is the matrix.<br><br>
+
+            This operation scales the matrix by the factor of k.<br><br>
+
+            For example, if k = 2 and A is a 2 × 2 matrix,
+            then each element of A is multiplied by 2 to produce
+            the resulting matrix.<br><br>
+
+            The matrix can be any size, and the scalar can be
+            any real number.
+        </p>
+    </details>
+
+    <h3>Matrix Scalar Calculator</h3>
+
+    <input type="number"
+           step="any"
+           name="scalarValue"
+           th:value="${scalarValue}"
+           placeholder="Enter scalar value"
+           class="scalar-input">
+
+    <div class="button-group">
+
+        <button th:if="${scalarA == null}"
+                type="submit"
+                name="action"
+                value="calculate-scalar-a"
+                class="btn-primary">
+
+            Scalar Matrix A
+        </button>
+
+        <button th:if="${scalarB == null}"
+                type="submit"
+                name="action"
+                value="calculate-scalar-b"
+                class="btn-primary">
+
+            Scalar Matrix B
+        </button>
+
+    </div>
+
+    <!-- MATRIX A RESULT -->
+    <div th:if="${scalarA != null}">
+
+        <h3>Matrix A Scalar Result</h3>
+
+        <table class="matrix-table">
+            <tr th:each="row : ${scalarA}">
+                <td th:each="value : ${row}"
+                    th:text="${matrixService.formatNumber(value)}">
+                </td>
+            </tr>
+        </table>
+
+        <div class="button-group">
+            <button type="submit"
+                    name="action"
+                    value="close-scalar-a"
+                    class="btn-danger">
+
+                Close A Scalar
+            </button>
+        </div>
+
+    </div>
+
+    <!-- MATRIX B RESULT -->
+    <div th:if="${scalarB != null}">
+
+        <h3>Matrix B Scalar Result</h3>
+
+        <table class="matrix-table">
+            <tr th:each="row : ${scalarB}">
+                <td th:each="value : ${row}"
+                    th:text="${matrixService.formatNumber(value)}">
+                </td>
+            </tr>
+        </table>
+
+        <div class="button-group">
+            <button type="submit"
+                    name="action"
+                    value="close-scalar-b"
+                    class="btn-danger">
+
+                Close B Scalar
+            </button>
+        </div>
+
+    </div>
+
+</section>
                     </div>
             </form>
         </main>

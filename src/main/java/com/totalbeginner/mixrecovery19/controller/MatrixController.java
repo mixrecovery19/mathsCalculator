@@ -33,80 +33,56 @@ public String handleMatrixAction(
 
         @RequestParam int size,
         @RequestParam Map<String, String> params,
-
         @RequestParam(defaultValue = "false")
         boolean showDeterminant,
-
         @RequestParam(defaultValue = "false")
         boolean showTranspose,
-
         @RequestParam(defaultValue = "false")
         boolean showInverse,
-
         @RequestParam(defaultValue = "false")
         boolean showIdentity,
-
         @RequestParam(defaultValue = "false")
         boolean showDeterminantB,
-
         @RequestParam(defaultValue = "false")
         boolean showTransposeB,
-
         @RequestParam(defaultValue = "false")
         boolean showInverseB,
-
         @RequestParam(defaultValue = "false")
         boolean showIdentityB,
-
         @RequestParam(defaultValue = "false")
         boolean showAddition,
-
         @RequestParam(defaultValue = "false")
         boolean showSubtraction,
-
         @RequestParam(defaultValue = "false")
         boolean showMultiplication,
+        @RequestParam(defaultValue = "false")
+        boolean showSquareA,
+        @RequestParam(defaultValue = "false")
+        boolean showSquareB,
+        @RequestParam(defaultValue = "false")
+        boolean showScalarA,
+        @RequestParam(defaultValue = "false")
+        boolean showScalarB,
+        @RequestParam(defaultValue = "1") double scalarValue,
 
-        @RequestParam(required = false)
-        String action,
-
-        Model model
-    ) {
+        @RequestParam(required = false) String action, Model model) {    
 
     if ("change-size".equals(action)) {
 
-    model.addAttribute(
-            "matrixA",
-            new double[size][size]
-    );
-
-    model.addAttribute(
-            "matrixB",
-            new double[size][size]
-    );
-
+    model.addAttribute("matrixA", new double[size][size]);   
+    model.addAttribute("matrixB", new double[size][size]);   
     model.addAttribute("size", size);
-
     model.addAttribute("showAddition", false);
     model.addAttribute("showSubtraction", false);
     model.addAttribute("showMultiplication", false);
+    model.addAttribute("scalarValue", 1);    
 
     return "matrixResult";
-}
+}   
 
-    // ==========================================
-    // BUILD MATRICES
-    // ==========================================
+    double[][] matrixA = buildMatrixA(size, params);
 
-    double[][] matrixA =
-            buildMatrixA(size, params);
-
-    double[][] matrixB =
-            buildMatrixB(size, params);
-
-    // ==========================================
-    // UI STATE FLAGS
-    // ==========================================
+    double[][] matrixB = buildMatrixB(size, params);    
 
     boolean newShowDet = false;
     boolean newShowTrans = false;
@@ -121,10 +97,10 @@ public String handleMatrixAction(
     boolean newShowAddition = false;
     boolean newShowSubtraction = false;
     boolean newShowMultiplication = false;
-
-    // ==========================================
-    // ACTION HANDLING
-    // ==========================================
+    boolean newShowSquareA = false;
+    boolean newShowSquareB = false;
+    boolean newShowScalarA = false;
+    boolean newShowScalarB = false;   
 
     if (action != null && !action.isEmpty()) {
 
@@ -137,7 +113,6 @@ public String handleMatrixAction(
             newShowTrans = showTranspose;
             newShowInv = showInverse;
             newShowId = showIdentity;
-
             // Preserve Matrix B sections
             newShowDetB = showDeterminantB;
             newShowTransB = showTransposeB;
@@ -148,16 +123,16 @@ public String handleMatrixAction(
             newShowAddition = showAddition;
             newShowSubtraction = showSubtraction;
             newShowMultiplication = showMultiplication;
+            newShowSquareA = showSquareA;
+            newShowSquareB = showSquareB;
+            newShowScalarA = showScalarA;
+            newShowScalarB = showScalarB;
 
         } else {
 
             // Matrix A
             newShowDet =
-                    switchAction(
-                            action,
-                            "determinant",
-                            showDeterminant
-                    );
+                    switchAction(action, "determinant", showDeterminant);                    
 
             newShowTrans =
                     switchAction(
@@ -209,164 +184,197 @@ public String handleMatrixAction(
                             showIdentityB
                     );
 
-            // Result operations
-            newShowAddition =
-                    switchAction(
-                            action,
-                            "addition",
-                            showAddition
-                    );
+                // Result operations
+                newShowAddition =
+                        switchAction(
+                                action,
+                                "addition",
+                                showAddition
+                        );
 
-            newShowSubtraction =
-                    switchAction(
-                            action,
-                            "subtraction",
-                            showSubtraction
-                    );
+                newShowSubtraction =
+                        switchAction(
+                                action,
+                                "subtraction",
+                                showSubtraction
+                        );
 
-            newShowMultiplication =
+                newShowMultiplication =
+                        switchAction(
+                                action,
+                                "multiplication",
+                                showMultiplication
+                        );
+
+                newShowSquareA =
+                        switchAction(
+                                action,
+                                "square-a",
+                                showSquareA
+                        );
+
+                newShowSquareB =
+                        switchAction(
+                                action,
+                                "square-b",
+                                showSquareB
+                        );
+
+                newShowScalarA =
                     switchAction(
                             action,
-                            "multiplication",
-                            showMultiplication
+                            "scalar-a",
+                            showScalarA
+                    );
+                newShowScalarB =
+                    switchAction(
+                            action,
+                            "scalar-b",
+                            showScalarB
                     );
         }
     }
 
-    // ==========================================
-    // SEND MATRICES TO VIEW
-    // ==========================================
+        model.addAttribute("matrixA", matrixA);
+        model.addAttribute("matrixB", matrixB);
+        model.addAttribute("size", size);
 
-    model.addAttribute("matrixA", matrixA);
-    model.addAttribute("matrixB", matrixB);
-    model.addAttribute("size", size);
-
-    // Persist operation state
-    model.addAttribute(
-            "showAddition",
-            newShowAddition
-    );
-
-    model.addAttribute(
-            "showSubtraction",
-            newShowSubtraction
-    );
-
-    model.addAttribute(
-            "showMultiplication",
-            newShowMultiplication
-    );
-
-    // ==========================================
-    // MATRIX A SECTIONS
-    // ==========================================
-
-    restoreOpenSections(
-            model,
-            matrixA,
-            newShowDet,
-            newShowTrans,
-            newShowInv,
-            newShowId
-    );
-
-    // ==========================================
-    // MATRIX B SECTIONS
-    // ==========================================
-
-    restoreOpenSectionsB(
-            model,
-            matrixB,
-            newShowDetB,
-            newShowTransB,
-            newShowInvB,
-            newShowIdB
-    );
-
-    // ==========================================
-    // MATRIX OPERATIONS
-    // ==========================================
-
-    if (newShowAddition) {
+        // Persist operation state
+        model.addAttribute(
+                "showAddition",
+                newShowAddition
+        );
 
         model.addAttribute(
-                "additionResult",
-                matrixService.addMatrices(
-                        matrixA,
-                        matrixB
-                )
+                "showSubtraction",
+                newShowSubtraction
         );
-    }
-
-    if (newShowSubtraction) {
 
         model.addAttribute(
-                "subtractionResult",
-                matrixService.subtractMatrices(
-                        matrixA,
-                        matrixB
-                )
+                "showMultiplication",
+                newShowMultiplication
         );
-    }
-
-    if (newShowMultiplication) {
 
         model.addAttribute(
-                "multiplicationResult",
-                matrixService.multiplyMatrices(
-                        matrixA,
-                        matrixB
-                )
+                "showSquareA",
+                newShowSquareA
         );
-    }
+        model.addAttribute(
+                "showSquareB",
+                newShowSquareB
+        );    
+        model.addAttribute(
+                "showScalarA",
+                newShowScalarA
+        );
+        model.addAttribute(
+                "showScalarB",
+                newShowScalarB
+        );
 
-    return "matrixResult";
-}
+        restoreOpenSections(
+                model,
+                matrixA,
+                newShowDet,
+                newShowTrans,
+                newShowInv,
+                newShowId,
+                newShowScalarA,
+                newShowSquareA,
+                scalarValue
 
-    private boolean switchAction(String action, String section, boolean currentValue) {
-        String calculate = "calculate-" + section;
-        String close = "close-" + section;
+        );
+  
+        restoreOpenSectionsB(
+                model,
+                matrixB,
+                newShowDetB,
+                newShowTransB,
+                newShowInvB,
+                newShowIdB,
+                newShowScalarB,
+                newShowSquareB,
+                scalarValue
+        );
+                        
+                if (newShowAddition) {
+                        model.addAttribute(
+                                "additionResult",
+                                matrixService.addMatrices(
+                                        matrixA,
+                                        matrixB
+                                )
+                        );
+                }
 
-        if (calculate.equals(action)) return true;
-        if (close.equals(action)) return false;
-        return currentValue; // no change for this section
-    }
-    // =================================================================
-    // Helper methods (unchanged except minor cleanup)
-    // =================================================================
+                if (newShowSubtraction) {
+                        model.addAttribute(
+                                "subtractionResult",
+                                matrixService.subtractMatrices(
+                                        matrixA,
+                                        matrixB
+                                )
+                        );
+                }
 
-    private double[][] buildMatrixA(int size, Map<String, String> params) {
-        double[][] matrix = new double[size][size];
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
-                String key = "cell_" + row + "_" + col;
-                String value = params.get(key);
-                matrix[row][col] = (value == null || value.isBlank()) ? 0 : Double.parseDouble(value);                
-            }
+                if (newShowMultiplication) {
+                        model.addAttribute(
+                                "multiplicationResult",
+                                matrixService.multiplyMatrices(
+                                        matrixA,
+                                        matrixB
+                                )
+                        );
+        }       
+
+        return "matrixResult";
         }
-        return matrix;
-    }
 
-    private double[][] buildMatrixB(int size, Map<String, String> params) {
-        double[][] matrix = new double[size][size];
+        private boolean switchAction(String action, String section, boolean currentValue) {
+                String calculate = "calculate-" + section;
+                String close = "close-" + section;
 
+                if (calculate.equals(action)) return true;
+                if (close.equals(action)) return false;
+                return currentValue; // no change for this section
+        }   
+
+        private double[][] buildMatrixA(int size, Map<String, String> params) {
+                double[][] matrix = new double[size][size];
                 for (int row = 0; row < size; row++) {
-                        for (int col = 0; col < size; col++) {
-                        String key = "cellB_" + row + "_" + col;
+                for (int col = 0; col < size; col++) {
+                        String key = "cell_" + row + "_" + col;
                         String value = params.get(key);
-                        matrix[row][col] = (value == null || value.isBlank()) ? 0 : Double.parseDouble(value);
-                        }
+                        matrix[row][col] = (value == null || value.isBlank()) ? 0 : Double.parseDouble(value);                
+                }
                 }
                 return matrix;
         }
 
+        private double[][] buildMatrixB(int size, Map<String, String> params) {
+                double[][] matrix = new double[size][size];
+
+                        for (int row = 0; row < size; row++) {
+                                for (int col = 0; col < size; col++) {
+                                String key = "cellB_" + row + "_" + col;
+                                String value = params.get(key);
+                                matrix[row][col] = (value == null || value.isBlank()) ? 0 : Double.parseDouble(value);
+                                }
+                        }
+                        return matrix;
+                }
+
     private void restoreOpenSections(
-            Model model,
-            double[][] matrixA,
-            boolean showDeterminant,
-            boolean showTranspose,
-            boolean showInverse,
-            boolean showIdentity) {
+                Model model,
+                double[][] matrixA,
+                boolean showDeterminant,
+                boolean showTranspose,
+                boolean showInverse,
+                boolean showIdentity,
+                boolean showScalarA,
+                boolean showSquareA,
+                double scalarValue
+            ) {
 
         model.addAttribute("matrixService", matrixService); // kept only because original template used it
 
@@ -393,6 +401,13 @@ public String handleMatrixAction(
         if (showIdentity) {
             model.addAttribute("identity", matrixService.identity(matrixA));
         }
+        if (showSquareA) {
+            model.addAttribute("squareA", matrixService.squareMatrix(matrixA));
+        }
+        if (showScalarA) {
+                        model.addAttribute("scalarA", matrixService.scalarMultiply(matrixA, scalarValue));
+        }
+        
     }
 
     private void restoreOpenSectionsB(
@@ -401,7 +416,11 @@ public String handleMatrixAction(
             boolean showDeterminantB,
             boolean showTransposeB,
             boolean showInverseB,
-            boolean showIdentityB) {
+            boolean showIdentityB,
+            boolean showScalarB,
+            boolean showSquareB,
+            double scalarValue
+            ) {
 
         model.addAttribute("matrixService", matrixService);
 
@@ -428,6 +447,13 @@ public String handleMatrixAction(
         if (showIdentityB) {
             model.addAttribute("identityB", matrixService.identity(matrixB));
         }
+        if (showSquareB) {
+            model.addAttribute("squareB", matrixService.squareMatrix(matrixB));
+        }
+        if (showScalarB) {
+                        model.addAttribute("scalarB", matrixService.scalarMultiply(matrixB, scalarValue));
+        }
+        
     }
 
 }

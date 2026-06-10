@@ -171,10 +171,10 @@ public class MatrixService {
 
         return String.format("%,.4f", value);
     }
-        public double[][] addMatrices(double[][] matrixA, double[][] matrixB) {
+    public double[][] addMatrices(double[][] matrixA, double[][] matrixB) {
 
-            int size = matrixA.length;
-            double[][] result = new double[size][size];
+        int size = matrixA.length;
+        double[][] result = new double[size][size];
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -214,6 +214,33 @@ public class MatrixService {
             }
         }
 
+        return result;
+    }
+
+    public double[][] squareMatrix(double[][] matrix) {
+        int size = matrix.length;
+        double[][] result = new double[size][size];
+
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                for (int k = 0; k < size; k++) {
+                    result[row][col] += matrix[row][k] * matrix[k][col];
+                }
+            }
+        }
+        return result;
+    }
+
+    public double[][] scalarMultiply(double[][] matrix, double scalar) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        double[][] result = new double[rows][cols];
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                result[row][col] = matrix[row][col] * scalar;
+            }
+        }
         return result;
     }
 }

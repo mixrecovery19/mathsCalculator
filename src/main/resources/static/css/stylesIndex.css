@@ -15,7 +15,7 @@ body {
                  sans-serif;
                   background: 
         linear-gradient(rgba(244, 248, 251, 0.85), rgba(244, 248, 251, 0.85)),
-        url("/images/averybrokensystem2.png");
+        url("/images/mathsimage1.png");
     color: #2c3e50;
     min-height: 100vh;
 }
@@ -23,7 +23,7 @@ body {
 .logged-out-bg {
     background: 
         linear-gradient(rgba(244, 248, 251, 0.9), rgba(244, 248, 251, 0.9)),
-        url("/images/cartoon-me-banging-head.png");
+        url("/images/mathsimage1.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -32,7 +32,7 @@ body {
 .logged-in-bg {
     background: 
         linear-gradient(rgba(244, 248, 251, 0.85), rgba(244, 248, 251, 0.85)),
-        url("/images/awesome-corruption-cartoon.png");
+        url("/images/mathsimage1.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
