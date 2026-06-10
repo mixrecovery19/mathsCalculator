@@ -11,27 +11,19 @@ public class MatrixService {
 
     // Base case (1×1)
     if (size == 1) {
-
         return matrix[0][0];
     }
-
     // Base case (2×2)
     if (size == 2) {
 
-        return
-                matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     }
 
     double determinant = 0;
 
     for (int col = 0; col < size; col++) {
 
-        double[][] minor =
-                getMinor(
-                        matrix,
-                        0,
-                        col
-                );
+        double[][] minor = getMinor(matrix, 0, col);                
 
         determinant +=
                 Math.pow(-1, col)
@@ -41,11 +33,11 @@ public class MatrixService {
                 determinant(minor);
     }
 
-    return determinant;
-}
+        return determinant;
+    }
 
-    private double[][] getMinor(double[][] matrix, int excludedRow, int excludedCol)
-    {
+    private double[][] getMinor(double[][] matrix, int excludedRow, int excludedCol) {
+    
         int size = matrix.length;
         double[][] minor = new double[size - 1] [size - 1];
         int minorRow = 0;
@@ -71,8 +63,8 @@ public class MatrixService {
 
         return minor;
     }
-    public double[][] transpose(double[][] matrix)
-    {
+    public double[][] transpose(double[][] matrix) {
+    
         int rows = matrix.length;
         int cols = matrix[0].length;
         double[][] transpose = new double[cols][rows];
@@ -109,14 +101,12 @@ public class MatrixService {
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-
                 inverse[row][col] = adjugate[row][col] / determinant;
             }
         }
         return inverse;
     }
-    public String formatNumber(double value)
-    {
+    public String formatNumber(double value) {    
         // whole number
         if (value == Math.floor(value)) {
             return String.valueOf((int) value);
@@ -128,9 +118,10 @@ public class MatrixService {
                 .replaceAll("\\.$", "");
     }
 
-    public double[][] identity(double[][] matrix)
-    {
+    public double[][] identity(double[][] matrix) {    
+
         double[][] inverse = inverse(matrix);
+
         if (inverse == null) {
             return null;
         }
@@ -141,21 +132,17 @@ public class MatrixService {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 for (int k = 0; k < size; k++) {
-
                     result[row][col] += matrix[row][k] * inverse[k][col];
                 }
             }
         }
         return result;
     }
-    public String formatFraction(double numerator, double denominator)
-    {
+
+    public String formatFraction(double numerator, double denominator) {    
         // whole number case
         if (numerator % denominator == 0) {
-
-            return String.valueOf(
-                    (int) (numerator / denominator)
-            );
+            return String.valueOf((int) (numerator / denominator));
         }
 
         return
@@ -166,16 +153,12 @@ public class MatrixService {
                 formatNumber(denominator);
     }
     
-    public String formatInverseNumerator(
-        double value,
-        double determinant
-) {
+    public String formatInverseNumerator(double value, double determinant) {
 
-    double numerator =
-            Math.round(value * determinant);
+    double numerator = Math.round(value * determinant);
 
-    return formatNumber(numerator);
-}
+        return formatNumber(numerator);
+    }
     public String formatDeterminant(Double value) {
 
         if (value == null) {
@@ -187,5 +170,50 @@ public class MatrixService {
         }
 
         return String.format("%,.4f", value);
+    }
+        public double[][] addMatrices(double[][] matrixA, double[][] matrixB) {
+
+            int size = matrixA.length;
+            double[][] result = new double[size][size];
+
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+
+                result[row][col] = matrixA[row][col] + matrixB[row][col];
+            }
+        }
+
+        return result;
+    }
+
+    public double[][] subtractMatrices(double[][] matrixA, double[][] matrixB) {
+
+        int size = matrixA.length;
+        double[][] result = new double[size][size];
+
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+
+                result[row][col] = matrixA[row][col] - matrixB[row][col];
+            }
+        }
+
+        return result;
+    }
+
+    public double[][] multiplyMatrices(double[][] matrixA, double[][] matrixB) {
+
+        int size = matrixA.length;
+        double[][] result = new double[size][size];
+
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                for (int k = 0; k < size; k++) {
+                    result[row][col] += matrixA[row][k] * matrixB[k][col];
+                }
+            }
+        }
+
+        return result;
     }
 }

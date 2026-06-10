@@ -28,95 +28,297 @@ public class MatrixController {
         return "matrixResult";
     }
 
-    /*@PostMapping("/matrices/create")
-    public String createMatrix(@RequestParam("size") int size, Model model) {
-        model.addAttribute("size", size);
-        return "matrixInput";
-    }*/
+   @PostMapping("/matrices/result")
+public String handleMatrixAction(
 
-    /**
-     * SINGLE endpoint for ALL result-page actions (calculate / close any section).
-     * The form sends:
-     *   - size + cell_* parameters
-     *   - current show* flags (hidden inputs)
-     *   - action parameter from the submitted button
-     */
-        @PostMapping("/matrices/result")
-        public String handleMatrixAction(
-                @RequestParam int size,
-                @RequestParam Map<String, String> params,
-                @RequestParam(defaultValue = "false") boolean showDeterminant,
-                @RequestParam(defaultValue = "false") boolean showTranspose,
-                @RequestParam(defaultValue = "false") boolean showInverse,
-                @RequestParam(defaultValue = "false") boolean showIdentity,
-                @RequestParam(defaultValue = "false") boolean showDeterminantB,
-                @RequestParam(defaultValue = "false") boolean showTransposeB,
-                @RequestParam(defaultValue = "false") boolean showInverseB,
-                @RequestParam(defaultValue = "false") boolean showIdentityB,
+        @RequestParam int size,
+        @RequestParam Map<String, String> params,
 
-                @RequestParam(required = false) String action,
+        @RequestParam(defaultValue = "false")
+        boolean showDeterminant,
 
-                Model model) {
+        @RequestParam(defaultValue = "false")
+        boolean showTranspose,
 
-        if ("change-size".equals(action)) {
-                // Fresh empty matrix for the new size
-                model.addAttribute("matrixA", new double[size][size]);
-                model.addAttribute("matrixB", new double[size][size]);
+        @RequestParam(defaultValue = "false")
+        boolean showInverse,
 
-                model.addAttribute("size", size);
-                // Force all sections closed on size change
-                model.addAttribute("determinant", null);
-                model.addAttribute("transpose", null);
-                model.addAttribute("inverse", null);
-                model.addAttribute("identity", null);
+        @RequestParam(defaultValue = "false")
+        boolean showIdentity,
 
-                return "matrixResult";
-        }
+        @RequestParam(defaultValue = "false")
+        boolean showDeterminantB,
 
-    // Normal actions (update-matrix, calculate-*, close-*, etc.)
-    double[][] matrixA = buildMatrixA(size, params);
-    double[][] matrixB = buildMatrixB(size, params);
+        @RequestParam(defaultValue = "false")
+        boolean showTransposeB,
 
-        boolean newShowDet  = false;
-        boolean newShowTrans = false;
-        boolean newShowInv   = false;
-        boolean newShowId    = false;
-        boolean newShowDetB = false;
-        boolean newShowTransB = false;
-        boolean newShowInvB = false;
-        boolean newShowIdB = false;
+        @RequestParam(defaultValue = "false")
+        boolean showInverseB,
+
+        @RequestParam(defaultValue = "false")
+        boolean showIdentityB,
+
+        @RequestParam(defaultValue = "false")
+        boolean showAddition,
+
+        @RequestParam(defaultValue = "false")
+        boolean showSubtraction,
+
+        @RequestParam(defaultValue = "false")
+        boolean showMultiplication,
+
+        @RequestParam(required = false)
+        String action,
+
+        Model model
+    ) {
+
+    if ("change-size".equals(action)) {
+
+    model.addAttribute(
+            "matrixA",
+            new double[size][size]
+    );
+
+    model.addAttribute(
+            "matrixB",
+            new double[size][size]
+    );
+
+    model.addAttribute("size", size);
+
+    model.addAttribute("showAddition", false);
+    model.addAttribute("showSubtraction", false);
+    model.addAttribute("showMultiplication", false);
+
+    return "matrixResult";
+}
+
+    // ==========================================
+    // BUILD MATRICES
+    // ==========================================
+
+    double[][] matrixA =
+            buildMatrixA(size, params);
+
+    double[][] matrixB =
+            buildMatrixB(size, params);
+
+    // ==========================================
+    // UI STATE FLAGS
+    // ==========================================
+
+    boolean newShowDet = false;
+    boolean newShowTrans = false;
+    boolean newShowInv = false;
+    boolean newShowId = false;
+
+    boolean newShowDetB = false;
+    boolean newShowTransB = false;
+    boolean newShowInvB = false;
+    boolean newShowIdB = false;
+
+    boolean newShowAddition = false;
+    boolean newShowSubtraction = false;
+    boolean newShowMultiplication = false;
+
+    // ==========================================
+    // ACTION HANDLING
+    // ==========================================
 
     if (action != null && !action.isEmpty()) {
-        if ("update-matrix".equals(action)) {
-            // Keep whatever sections were already open
-            newShowDet  = showDeterminant;
+
+        // Matrix update buttons
+        if ("update-matrix-a".equals(action)
+                || "update-matrix-b".equals(action)) {
+
+            // Preserve Matrix A sections
+            newShowDet = showDeterminant;
             newShowTrans = showTranspose;
-            newShowInv   = showInverse;
-            newShowId    = showIdentity;
+            newShowInv = showInverse;
+            newShowId = showIdentity;
+
+            // Preserve Matrix B sections
             newShowDetB = showDeterminantB;
             newShowTransB = showTransposeB;
             newShowInvB = showInverseB;
             newShowIdB = showIdentityB;
 
+            // Preserve result operations
+            newShowAddition = showAddition;
+            newShowSubtraction = showSubtraction;
+            newShowMultiplication = showMultiplication;
+
         } else {
-            // Toggle logic for calculate/close buttons
-                newShowDet  = switchAction(action, "determinant", showDeterminant);
-                newShowTrans = switchAction(action, "transpose", showTranspose);
-                newShowInv   = switchAction(action, "inverse", showInverse);
-                newShowId    = switchAction(action, "identity", showIdentity);
-                newShowDetB  = switchAction(action, "determinant-b", showDeterminantB);
-                newShowTransB = switchAction(action, "transpose-b", showTransposeB);
-                newShowInvB   = switchAction(action, "inverse-b", showInverseB);
-                newShowIdB    = switchAction(action, "identity-b", showIdentityB);
+
+            // Matrix A
+            newShowDet =
+                    switchAction(
+                            action,
+                            "determinant",
+                            showDeterminant
+                    );
+
+            newShowTrans =
+                    switchAction(
+                            action,
+                            "transpose",
+                            showTranspose
+                    );
+
+            newShowInv =
+                    switchAction(
+                            action,
+                            "inverse",
+                            showInverse
+                    );
+
+            newShowId =
+                    switchAction(
+                            action,
+                            "identity",
+                            showIdentity
+                    );
+
+            // Matrix B
+            newShowDetB =
+                    switchAction(
+                            action,
+                            "determinant-b",
+                            showDeterminantB
+                    );
+
+            newShowTransB =
+                    switchAction(
+                            action,
+                            "transpose-b",
+                            showTransposeB
+                    );
+
+            newShowInvB =
+                    switchAction(
+                            action,
+                            "inverse-b",
+                            showInverseB
+                    );
+
+            newShowIdB =
+                    switchAction(
+                            action,
+                            "identity-b",
+                            showIdentityB
+                    );
+
+            // Result operations
+            newShowAddition =
+                    switchAction(
+                            action,
+                            "addition",
+                            showAddition
+                    );
+
+            newShowSubtraction =
+                    switchAction(
+                            action,
+                            "subtraction",
+                            showSubtraction
+                    );
+
+            newShowMultiplication =
+                    switchAction(
+                            action,
+                            "multiplication",
+                            showMultiplication
+                    );
         }
     }
 
-        model.addAttribute("matrixA", matrixA);
-        model.addAttribute("matrixB", matrixB);
-        model.addAttribute("size", size);
+    // ==========================================
+    // SEND MATRICES TO VIEW
+    // ==========================================
 
-    restoreOpenSections(model, matrixA, newShowDet, newShowTrans, newShowInv, newShowId);
-    restoreOpenSectionsB(model, matrixB, newShowDetB, newShowTransB, newShowInvB, newShowIdB);
+    model.addAttribute("matrixA", matrixA);
+    model.addAttribute("matrixB", matrixB);
+    model.addAttribute("size", size);
+
+    // Persist operation state
+    model.addAttribute(
+            "showAddition",
+            newShowAddition
+    );
+
+    model.addAttribute(
+            "showSubtraction",
+            newShowSubtraction
+    );
+
+    model.addAttribute(
+            "showMultiplication",
+            newShowMultiplication
+    );
+
+    // ==========================================
+    // MATRIX A SECTIONS
+    // ==========================================
+
+    restoreOpenSections(
+            model,
+            matrixA,
+            newShowDet,
+            newShowTrans,
+            newShowInv,
+            newShowId
+    );
+
+    // ==========================================
+    // MATRIX B SECTIONS
+    // ==========================================
+
+    restoreOpenSectionsB(
+            model,
+            matrixB,
+            newShowDetB,
+            newShowTransB,
+            newShowInvB,
+            newShowIdB
+    );
+
+    // ==========================================
+    // MATRIX OPERATIONS
+    // ==========================================
+
+    if (newShowAddition) {
+
+        model.addAttribute(
+                "additionResult",
+                matrixService.addMatrices(
+                        matrixA,
+                        matrixB
+                )
+        );
+    }
+
+    if (newShowSubtraction) {
+
+        model.addAttribute(
+                "subtractionResult",
+                matrixService.subtractMatrices(
+                        matrixA,
+                        matrixB
+                )
+        );
+    }
+
+    if (newShowMultiplication) {
+
+        model.addAttribute(
+                "multiplicationResult",
+                matrixService.multiplyMatrices(
+                        matrixA,
+                        matrixB
+                )
+        );
+    }
 
     return "matrixResult";
 }

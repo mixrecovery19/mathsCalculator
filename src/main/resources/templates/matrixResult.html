@@ -26,9 +26,11 @@
                 <input type="hidden" name="showTransposeB" th:value="${transposeB != null}">
                 <input type="hidden" name="showInverseB" th:value="${inverseB != null}">
                 <input type="hidden" name="showIdentityB" th:value="${identityB != null}">
+                <input type="hidden" name="showAddition" th:value="${showAddition}">
+                <input type="hidden" name="showSubtraction" th:value="${showSubtraction}">
+                <input type="hidden" name="showMultiplication" th:value="${showMultiplication}">
 
                 <div class="matrix-container three-columns">
-
                     <!-- ==================== COLUMN 1: MATRIX A ==================== -->
                     <div class="matrix-column">
                         <h2 class="column-title">Matrix A</h2>
@@ -423,24 +425,99 @@
                         </section>                    
                     </div>
 
-                    <!-- ==================== COLUMN 3: RESULT (placeholder) ==================== -->
+                                        <!-- ==================== COLUMN 3: MATRIX CALCULATIONS ==================== -->
                     <div class="matrix-column">
-                        <h2 class="column-title">Result</h2>
+                        <h2 class="column-title">Matrix Calculations</h2>
+
+                        <!-- ADDITION -->
                         <section class="hero-card">
-                            <h3>A + B / A × B / etc.</h3>
-                            <p style="text-align:center; padding:2rem; color:#888;">
-                                The result of your chosen operation<br>
-                                between Matrix A and Matrix B will appear here.
-                            </p>
-                            <table class="matrix-table" style="opacity:0.4;">
-                                <tr th:each="row : ${#numbers.sequence(0, size - 1)}">
-                                    <td th:each="col : ${#numbers.sequence(0, size - 1)}" th:text="0"></td>
-                                </tr>
-                            </table>
+                            <h2>Matrix Addition</h2>
+                            <div class="button-group">
+                                <button th:if="${additionResult == null}" type="submit" name="action" value="calculate-addition" class="btn-primary">
+                                    Calculate Addition
+                                </button>
+                            </div>
+                            <div th:if="${additionResult != null}">
+                                <h3>Matrix A + Matrix B</h3>
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${additionResult}">
+                                        <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                                    </tr>
+                                </table>
+                                <div class="button-group">
+                                    <button type="submit" name="action" value="close-addition" class="btn-danger">
+                                        Close Addition
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- SUBTRACTION -->
+                        <section class="hero-card">
+                            <h2>Matrix Subtraction</h2>
+                            <details class="math-details">
+                                <summary>What is matrix subtraction?</summary>
+                                <p class="math-description">
+                                    Matrix subtraction works by subtracting matching positions together.<br><br>
+                                    Row 1 Column 1 in Matrix B is subtracted from Row 1 Column 1 in Matrix A.<br><br>
+                                    This repeats for every cell.<br><br>
+                                    Both matrices must be the same size.
+                                </p>
+                            </details>
+                            <div class="button-group">
+                                <button th:if="${subtractionResult == null}" type="submit" name="action" value="calculate-subtraction" class="btn-primary">
+                                    Calculate Subtraction
+                                </button>
+                            </div>
+                            <div th:if="${subtractionResult != null}">
+                                <h3>Matrix A − Matrix B</h3>
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${subtractionResult}">
+                                        <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                                    </tr>
+                                </table>
+                                <div class="button-group">
+                                    <button type="submit" name="action" value="close-subtraction" class="btn-danger">
+                                        Close Subtraction
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- MULTIPLICATION -->
+                        <section class="hero-card">
+                            <h2>Matrix Multiplication</h2>
+                            <details class="math-details">
+                                <summary>What is matrix multiplication?</summary>
+                                <p class="math-description">
+                                    Matrix multiplication works differently from addition and subtraction.<br><br>
+                                    Each row in Matrix A is multiplied against each column in Matrix B.<br>
+                                    The products are then added together to produce each value in the resulting matrix.<br><br>
+                                    For example:<br><br>
+                                    Row 1 of Matrix A × Column 1 of Matrix B becomes the top-left result.<br><br>
+                                    This repeats for every row and every column.
+                                </p>
+                            </details>
+                            <div class="button-group">
+                                <button th:if="${multiplicationResult == null}" type="submit" name="action" value="calculate-multiplication" class="btn-primary">
+                                    Calculate Multiplication
+                                </button>
+                            </div>
+                            <div th:if="${multiplicationResult != null}">
+                                <h3>Matrix A × Matrix B</h3>
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${multiplicationResult}">
+                                        <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                                    </tr>
+                                </table>
+                                <div class="button-group">
+                                    <button type="submit" name="action" value="close-multiplication" class="btn-danger">
+                                        Close Multiplication
+                                    </button>
+                                </div>
+                            </div>
                         </section>
                     </div>
-
-                </div>
             </form>
         </main>
     </div>

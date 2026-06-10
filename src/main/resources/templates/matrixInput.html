@@ -1,34 +1,27 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Matrix Calculator</title>
-    <link rel="stylesheet" href="/css/stylesSideBar.css">
-    <link rel="stylesheet" href="/css/stylesMatrixResult.css">
-</head>
-<body>
-    <div class="app-layout">
-        <div th:replace="~{sidebar :: sidebar}"></div>
+<main class="matrix-page">
+    <!-- SINGLE FORM – powers the entire dashboard -->
+    <form th:action="@{/matrices/result}" method="post">
 
-        <main class="matrix-page">
-            <form th:action="@{/matrices/result}" method="post">
+        <!-- ==================== DASHBOARD HEADER (controls + editable matrix) ==================== -->
+        <div th:replace="~{fragments/matrixHeaderA :: matrixHeaderA}"></div>
+        <div th:replace="~{fragments/matrixHeaderB :: matrixHeaderB}"></div>
 
-                <!-- Dashboard header with controls + editable matrix -->
-                <div th:replace="~{fragments/matrixHeader :: matrixHeader}"></div>
+        <!-- Hidden state needed by the controller for toggles -->
+        <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
+        <input type="hidden" name="showTranspose" th:value="${transpose != null}">
+        <input type="hidden" name="showInverse" th:value="${inverse != null}">
+        <input type="hidden" name="showIdentity" th:value="${identity != null}">
+        <input type="hidden" name="showDeterminantB" th:value="${determinantB != null}">
+        <input type="hidden" name="showTransposeB" th:value="${transposeB != null}">
+        <input type="hidden" name="showInverseB" th:value="${inverseB != null}">
+        <input type="hidden" name="showIdentityB" th:value="${identityB != null}">
 
-                <!-- Hidden state for operations -->
-                <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
-                <input type="hidden" name="showTranspose" th:value="${transpose != null}">
-                <input type="hidden" name="showInverse" th:value="${inverse != null}">
-                <input type="hidden" name="showIdentity" th:value="${identity != null}">
-
-                <div class="matrix-container three-columns">
-
+        <div class="matrix-container three-columns">
                     <!-- ==================== COLUMN 1: MATRIX A ==================== -->
                     <div class="matrix-column">
                         <h2 class="column-title">Matrix A</h2>
 
+                        <!-- Live display of Matrix A -->
                         <section class="hero-card">
                             <h3>Your Matrix A</h3>
                             <table class="matrix-table">
@@ -38,7 +31,6 @@
                             </table>
                         </section>
 
-                        <!-- All your operations (determinant, transpose, inverse, identity) -->
                         <!-- DETERMINANT -->
                         <section class="status-card">
                             <h2>Matrix Determinant</h2>
@@ -52,59 +44,382 @@
                                     If the determinant equals <strong>0</strong>, the matrix has no inverse.
                                 </p>
                             </details>
+
                             <div class="button-group">
-                                <button th:if="${determinant == null}" type="submit" name="action" value="calculate-determinant" class="btn-primary">Calculate Determinant</button>
+                                <button th:if="${determinant == null}" 
+                                        type="submit" 
+                                        name="action" 
+                                        value="calculate-determinant"
+                                        class="btn-primary">
+                                    Calculate Determinant
+                                </button>
                             </div>
+
                             <div th:if="${determinant != null}">
                                 <h3>Determinant: <span th:text="${formattedDeterminant}"></span></h3>
                                 <div class="button-group">
-                                    <button type="submit" name="action" value="close-determinant" class="btn-danger">Close Determinant</button>
+                                    <button type="submit" 
+                                            name="action" 
+                                            value="close-determinant"
+                                            class="btn-danger">
+                                        Close Determinant
+                                    </button>
                                 </div>
                             </div>
                         </section>
 
-                        <!-- TRANSPOSE, INVERSE, IDENTITY – exactly as you had them (I kept them identical) -->
-                        <!-- (Copy the three sections from your previous file here – they are unchanged) -->
                         <!-- TRANSPOSE -->
                         <section class="hero-card">
                             <h2>Transposed Matrix</h2>
-                            <details class="math-details">... (your original text) ...</details>
+                            <details class="math-details">
+                                <summary>What does the transpose mean?</summary>
+                                <p class="math-description">
+                                    A transpose matrix is created by swapping rows and columns. 
+                                    The first row becomes the first column, the second row becomes the second column, and so on. 
+                                    This process is the same for 2×2, 3×3, and larger matrices. It is often written as Aᵀ.
+                                </p>
+                            </details>
+
                             <div class="button-group">
-                                <button th:if="${transpose == null}" type="submit" name="action" value="calculate-transpose" class="btn-primary">Calculate Transpose</button>
+                                <button th:if="${transpose == null}" 
+                                        type="submit" 
+                                        name="action" 
+                                        value="calculate-transpose"
+                                        class="btn-primary">
+                                    Calculate Transpose
+                                </button>
                             </div>
+
                             <div th:if="${transpose != null}">
                                 <table class="matrix-table">
-                                    <tr th:each="row : ${transpose}"><td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td></tr>
+                                    <tr th:each="row : ${transpose}">
+                                        <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                                    </tr>
                                 </table>
                                 <div class="button-group">
-                                    <button type="submit" name="action" value="close-transpose" class="btn-danger">Close Transpose</button>
+                                    <button type="submit" 
+                                            name="action" 
+                                            value="close-transpose"
+                                            class="btn-danger">
+                                        Close Transpose
+                                    </button>
                                 </div>
                             </div>
                         </section>
 
-                        <!-- INVERSE and IDENTITY sections go here exactly as in your last version -->
+                        <!-- INVERSE -->
+                        <section class="preview-card">
+                            <h2>Inverse Matrix</h2>
+                            <details class="math-details">
+                                <summary>What does the inverse mean?</summary>
+                                <p class="math-description">
+                                    The inverse of a matrix A is another matrix A⁻¹ such that when you multiply them together, you get the identity matrix.<br>
+                                    Not all matrices have an inverse; only square matrices with a non-zero determinant have inverses.<br>
+                                    For a 2 × 2 matrix, the inverse is calculated using the formula <strong>(1/det(A)) × adj(A)</strong>.<br>
+                                    For larger matrices, the inverse can be calculated using cofactor expansion and the adjugate matrix.<br>
+                                    If the determinant equals <strong>0</strong>, the matrix has no inverse.
+                                </p>
+                            </details>
+
+                            <div class="button-group">
+                                <button th:if="${inverse == null}" 
+                                        type="submit" 
+                                        name="action" 
+                                        value="calculate-inverse"
+                                        class="btn-primary">
+                                    Calculate Inverse
+                                </button>
+                            </div>
+
+                            <div th:if="${inverse != null}">
+                                <h3>Inverse Matrix Fraction Form</h3>
+                                <h5>(1/det(A))</h5>
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${inverse}">
+                                        <td th:each="value : ${row}"
+                                            th:text="${matrixService.formatInverseNumerator(value, inverseDeterminant)}">
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <h3>Inverse Matrix Decimal Form</h3>
+                                <h5>(1/det(A) Calculated)</h5>
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${inverse}">
+                                        <td th:each="value : ${row}"
+                                            th:text="${matrixService.formatNumber(value)}">
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div th:if="${inverseError != null}">
+                                    <p th:text="${inverseError}"></p>
+                                </div>
+
+                                <div class="button-group">
+                                    <button type="submit" 
+                                            name="action" 
+                                            value="close-inverse"
+                                            class="btn-danger">
+                                        Close Inverse
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- IDENTITY -->
+                        <section class="preview-card">
+                            <h2>Identity Matrix</h2>
+                            <details class="math-details">
+                                <summary>What does the identity matrix mean?</summary>
+                                <p class="math-description">
+                                   The identity matrix is a special square matrix that acts as the multiplicative identity in matrix multiplication. It is denoted as I and has 1s on the diagonal and 0s elsewhere. For example, the 3 × 3 identity matrix looks like this:<br>
+                                    <strong>
+                                    [1 0 0]<br>
+                                    [0 1 0]<br>
+                                    [0 0 1]
+                                    </strong><br>
+                                    When you multiply any matrix A by the identity matrix I (of compatible size), you get A back: A × I = A and I × A = A.<br>
+                                    The identity matrix plays a crucial role in linear algebra, especially when working with inverses, as it serves as the "do nothing" element for matrix multiplication.
+                                </p>
+                            </details>
+
+                            <div class="button-group">
+                                <button th:if="${identity == null}" 
+                                        type="submit" 
+                                        name="action" 
+                                        value="calculate-identity"
+                                        class="btn-primary">
+                                    Calculate Identity
+                                </button>
+                            </div>
+
+                            <div th:if="${identity != null}">
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${identity}">
+                                        <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                                    </tr>
+                                </table>
+                                <div th:if="${identityError != null}">
+                                    <p th:text="${identityError}"></p>
+                                </div>
+                                <div class="button-group">
+                                    <button type="submit" 
+                                            name="action" 
+                                            value="close-identity"
+                                            class="btn-danger">
+                                        Close Identity
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
                     </div>
 
                     <!-- ==================== COLUMN 2: MATRIX B (placeholder) ==================== -->
                     <div class="matrix-column">
                         <h2 class="column-title">Matrix B</h2>
                         <section class="hero-card">
-                            <h3>Matrix B (coming soon)</h3>
-                            <p style="text-align:center; padding:2rem; color:#888;">Second matrix will go here</p>
-                            <table class="matrix-table" style="opacity:0.4;">
-                                <tr th:each="row : ${#numbers.sequence(0, size - 1)}">
-                                    <td th:each="col : ${#numbers.sequence(0, size - 1)}" th:text="0"></td>
+                            <h3>Your Matrix B</h3>
+                            <table class="matrix-table">
+                                <tr th:each="row : ${matrixB}">
+                                    <td th:each="value : ${row}" th:text="${value}"></td>
                                 </tr>
                             </table>
                         </section>
+
+                        <!-- DETERMINANT -->
+                        <section class="status-card">
+                            <h2>Matrix B Determinant</h2>
+                            <details class="math-details">
+                                <summary>What does the determinant mean?</summary>
+                                <p class="math-description">
+                                    The determinant helps determine whether a matrix can be inverted.<br>
+                                    For a 2 × 2 matrix, the determinant is calculated using <strong>ad − bc</strong>.<br>
+                                    For larger matrices, the determinant can be calculated using cofactor expansion,<br>
+                                    where the matrix is broken into smaller matrices called minors.<br>
+                                    If the determinant equals <strong>0</strong>, the matrix has no inverse.
+                                </p>
+                            </details>
+
+                            <div class="button-group">
+                                <button th:if="${determinantB == null}" 
+                                        type="submit" 
+                                        name="action" 
+                                        value="calculate-determinant-b"
+                                        class="btn-primary">
+                                    Calculate B Determinant
+                                </button>
+                            </div>
+
+                            <div th:if="${determinantB != null}">
+                                <h3>Determinant: <span th:text="${formattedDeterminantB}"></span></h3>
+                                <div class="button-group">
+                                    <button type="submit" 
+                                            name="action" 
+                                            value="close-determinant-b"
+                                            class="btn-danger">
+                                        Close Determinant
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TRANSPOSE -->
+                        <section class="hero-card">
+                            <h2>Transposed Matrix B</h2>
+                            <details class="math-details">
+                                <summary>What does the transpose mean?</summary>
+                                <p class="math-description">
+                                    A transpose matrix is created by swapping rows and columns. 
+                                    The first row becomes the first column, the second row becomes the second column, and so on. 
+                                    This process is the same for 2×2, 3×3, and larger matrices. It is often written as Bᵀ.
+                                </p>
+                            </details>
+
+                            <div class="button-group">
+                                <button th:if="${transposeB == null}" 
+                                        type="submit" 
+                                        name="action" 
+                                        value="calculate-transpose-b"
+                                        class="btn-primary">
+                                    Calculate B Transpose
+                                </button>
+                            </div>
+
+                            <div th:if="${transposeB != null}">
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${transposeB}">
+                                        <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                                    </tr>
+                                </table>
+                                <div class="button-group">
+                                    <button type="submit" 
+                                            name="action" 
+                                            value="close-transpose-b"
+                                            class="btn-danger">
+                                        Close Transpose
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- INVERSE -->
+                        <section class="preview-card">
+                            <h2>Inverse Matrix B</h2>
+                            <details class="math-details">
+                                <summary>What does the inverse mean?</summary>
+                                <p class="math-description">
+                                    The inverse of a matrix B is another matrix B⁻¹ such that when you multiply them together, you get the identity matrix.<br>
+                                    Not all matrices have an inverse; only square matrices with a non-zero determinant have inverses.<br>
+                                    For a 2 × 2 matrix, the inverse is calculated using the formula <strong>(1/det(B)) × adj(B)</strong>.<br>
+                                    For larger matrices, the inverse can be calculated using cofactor expansion and the adjugate matrix.<br>
+                                    If the determinant equals <strong>0</strong>, the matrix has no inverse.
+                                </p>
+                            </details>
+
+                            <div class="button-group">
+                                <button th:if="${inverseB == null}" 
+                                        type="submit" 
+                                        name="action" 
+                                        value="calculate-inverse-b"
+                                        class="btn-primary">
+                                    Calculate Inverse
+                                </button>
+                            </div>
+
+                            <div th:if="${inverseB != null}">
+                                <h3>Inverse Matrix Fraction Form</h3>
+                                <h5>(1/det(B))</h5>
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${inverseB}">
+                                        <td th:each="value : ${row}"
+                                            th:text="${matrixService.formatInverseNumerator(value, inverseDeterminantB)}">
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <h3>Inverse Matrix Decimal Form</h3>
+                                <h5>(1/det(B) Calculated)</h5>
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${inverseB}">
+                                        <td th:each="value : ${row}"
+                                            th:text="${matrixService.formatNumber(value)}">
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div th:if="${inverseErrorB != null}">
+                                    <p th:text="${inverseErrorB}"></p>
+                                </div>
+
+                                <div class="button-group">
+                                    <button type="submit" 
+                                            name="action" 
+                                            value="close-inverse-b"
+                                            class="btn-danger">
+                                        Close Inverse
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- IDENTITY -->
+                        <section class="preview-card">
+                            <h2>Identity Matrix B</h2>
+                            <details class="math-details">
+                                <summary>What does the identity matrix mean?</summary>
+                                <p class="math-description">
+                                   The identity matrix is a special square matrix that acts as the multiplicative identity in matrix multiplication. It is denoted as I and has 1s on the diagonal and 0s elsewhere. For example, the 3 × 3 identity matrix looks like this:<br>
+                                    <strong>
+                                    [1 0 0]<br>
+                                    [0 1 0]<br>
+                                    [0 0 1]
+                                    </strong><br>
+                                    When you multiply any matrix A by the identity matrix I (of compatible size), you get A back: A × I = A and I × A = A.<br>
+                                    The identity matrix plays a crucial role in linear algebra, especially when working with inverses, as it serves as the "do nothing" element for matrix multiplication.
+                                </p>
+                            </details>
+
+                            <div class="button-group">
+                                <button th:if="${identityB == null}" 
+                                        type="submit" 
+                                        name="action" 
+                                        value="calculate-identity-b"
+                                        class="btn-primary">
+                                    Calculate B Identity
+                                </button>
+                            </div>
+
+                            <div th:if="${identityB != null}">
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${identityB}">
+                                        <td th:each="value : ${row}" th:text="${matrixService.formatNumber(value)}"></td>
+                                    </tr>
+                                </table>
+                                <div th:if="${identityErrorB != null}">
+                                    <p th:text="${identityErrorB}"></p>
+                                </div>
+                                <div class="button-group">
+                                    <button type="submit" 
+                                            name="action" 
+                                            value="close-identity-b"
+                                            class="btn-danger">
+                                        Close Identity
+                                    </button>
+                                </div>
+                            </div>
+                        </section>                    
                     </div>
 
                     <!-- ==================== COLUMN 3: RESULT (placeholder) ==================== -->
                     <div class="matrix-column">
                         <h2 class="column-title">Result</h2>
                         <section class="hero-card">
-                            <h3>Result of A ? B</h3>
-                            <p style="text-align:center; padding:2rem; color:#888;">A + B, A × B, etc. will appear here</p>
+                            <h3>A + B / A × B / etc.</h3>
+                            <p style="text-align:center; padding:2rem; color:#888;">
+                                The result of your chosen operation<br>
+                                between Matrix A and Matrix B will appear here.
+                            </p>
                             <table class="matrix-table" style="opacity:0.4;">
                                 <tr th:each="row : ${#numbers.sequence(0, size - 1)}">
                                     <td th:each="col : ${#numbers.sequence(0, size - 1)}" th:text="0"></td>

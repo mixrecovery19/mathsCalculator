@@ -8,7 +8,6 @@ body {
     justify-content: center;
     align-items: flex-start;    
     padding-top: 2rem;
-    min-height: auto;
 }
 .matrix-card {
     width: 420px;

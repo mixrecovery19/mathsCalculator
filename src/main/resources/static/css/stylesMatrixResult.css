@@ -5,13 +5,10 @@ body {
 }
 .matrix-page {
     margin-left: 260px;
-
     display: flex;
     justify-content: center;
     align-items: flex-start;
-
     width: calc(100% - 260px);
-
     padding: 2rem;
     box-sizing: border-box;
 }
@@ -134,11 +131,8 @@ body {
 }
 
 .matrix-table input {
-
     width: 100%;
-
     box-sizing: border-box;
-
 }
 
 .math-details {
@@ -203,4 +197,106 @@ body {
     text-align: center;
     margin-bottom: 0.5rem;
     color: #333;
+}
+.matrix-inputs-dashboard {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    margin-bottom: 1.5rem;
+}
+
+.matrix-fragment-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* top row: title, select, buttons */
+.matrix-control-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+}
+
+.matrix-control-row h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.matrix-control-row label {
+    font-weight: 600;
+}
+
+.matrix-control-row select {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: white;
+}
+
+/* dashboard buttons */
+.dashboard-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dashboard-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* actual matrix input table */
+.matrix-input-table {
+    border-collapse: separate;
+    border-spacing: 0.45rem;
+    margin: 0 auto;
+}
+
+.matrix-input-table td {
+    padding: 0;
+}
+
+/* smaller width, still tall enough to feel clickable */
+.matrix-input {
+    width: 62px;
+    height: 52px;
+    text-align: center;
+    border-radius: 12px;
+    border: 2px solid #ddd;
+    font-size: 1rem;
+    font-weight: 700;
+    box-sizing: border-box;
+    transition: 0.2s ease;
+}
+
+.matrix-input::placeholder {
+    color: #aaa;
+}
+
+.matrix-input:focus {
+    outline: none;
+    border-color: #05e16c;
+    box-shadow: 0 0 0 3px rgba(5, 225, 108, 0.18);
+}
+
+/* remove number spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
