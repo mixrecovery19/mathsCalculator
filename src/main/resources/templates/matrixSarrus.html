@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Sarrus Method</title>
+
+    <link rel="stylesheet"
+          href="/css/stylesSideBar.css">
+
+    <link rel="stylesheet"
+          href="/css/stylesMatrixResult.css">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <div th:replace="~{sidebar :: sidebar}">
+    </div>
+
+    <main class="matrix-page">
+
+        <form th:action="@{/matrices-sarrus}"
+              method="post">
+
+            <!-- Dashboard Header -->
+            <div th:replace="~{fragments/matrixSarrusHeader :: matrixSarrusHeader}">
+            </div>
+
+            <section class="hero-card">
+
+                <div class="matrix-container">
+
+                    <div class="matrix-card">
+
+                        <h2>
+                            Enter Values To Apply
+                            Your Own Sarrus
+                            Calculations To
+                        </h2>
+
+                        <p>
+                            Learn how to calculate
+                            the determinant of a
+                            3 × 3 matrix using the
+                            Sarrus method.
+                        </p>
+
+                        <!-- Keep matrix size -->
+                        <input type="hidden"
+                               name="size"
+                               th:value="${size}">
+
+                        <table class="matrix-table">
+
+                            <tr th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+
+                                <td th:each="colIndex : ${#numbers.sequence(0, size - 1)}">
+
+                                    <input type="number"
+                                           step="any"
+                                           class="matrix-input"
+
+                                           title="Matrix Sarrus cell value"
+
+                                           th:attr="
+                                               aria-label=
+                                               'Matrix cell at row '
+                                               + ${rowIndex}
+                                               + ', column '
+                                               + ${colIndex}"
+
+                                           th:title="
+                                               'Matrix cell at row '
+                                               + ${rowIndex}
+                                               + ', column '
+                                               + ${colIndex}"
+
+                                           th:placeholder="
+                                               '['
+                                               + ${rowIndex}
+                                               + ','
+                                               + ${colIndex}
+                                               + ']'"
+
+                                           th:name="
+                                               'cell_'
+                                               + ${rowIndex}
+                                               + '_'
+                                               + ${colIndex}"
+
+                                           th:value="
+                                               ${matrixSarrus != null
+                                               && matrixSarrus[rowIndex][colIndex] != 0
+                                               ? matrixSarrus[rowIndex][colIndex]
+                                               : ''}">
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                        <div class="button-group">
+
+                            <button type="submit"
+                                    name="action"
+                                    value="generate-sarrus"
+                                    class="btn-primary">
+
+                                Generate Sarrus Pyramid
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- Generated Sarrus Display -->
+            <section class="hero-card"
+                     th:if="${sarrusMatrix != null}">
+
+                <h2>Sarrus Pyramid</h2>
+
+                <table class="matrix-table">
+
+                    <tr th:each="row : ${sarrusMatrix}">
+
+                        <td th:each="value : ${row}"
+                            th:text="${value}">
+                        </td>
+
+                    </tr>
+
+                </table>
+
+                <h3>
+                    Determinant:
+                    <span th:text="${determinant}">
+                    </span>
+                </h3>
+
+            </section>
+
+        </form>
+
+    </main>
+
+</div>
+
+</body>
+</html>

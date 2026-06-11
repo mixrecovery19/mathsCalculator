@@ -29,211 +29,198 @@ public class MatrixController {
     }
 
    @PostMapping("/matrices/result")
-public String handleMatrixAction(
+        public String handleMatrixAction(
 
-        @RequestParam int size,
-        @RequestParam Map<String, String> params,
-        @RequestParam(defaultValue = "false")
-        boolean showDeterminant,
-        @RequestParam(defaultValue = "false")
-        boolean showTranspose,
-        @RequestParam(defaultValue = "false")
-        boolean showInverse,
-        @RequestParam(defaultValue = "false")
-        boolean showIdentity,
-        @RequestParam(defaultValue = "false")
-        boolean showDeterminantB,
-        @RequestParam(defaultValue = "false")
-        boolean showTransposeB,
-        @RequestParam(defaultValue = "false")
-        boolean showInverseB,
-        @RequestParam(defaultValue = "false")
-        boolean showIdentityB,
-        @RequestParam(defaultValue = "false")
-        boolean showAddition,
-        @RequestParam(defaultValue = "false")
-        boolean showSubtraction,
-        @RequestParam(defaultValue = "false")
-        boolean showMultiplication,
-        @RequestParam(defaultValue = "false")
-        boolean showSquareA,
-        @RequestParam(defaultValue = "false")
-        boolean showSquareB,
-        @RequestParam(defaultValue = "false")
-        boolean showScalarA,
-        @RequestParam(defaultValue = "false")
-        boolean showScalarB,
-        @RequestParam(defaultValue = "1") double scalarValue,
+                @RequestParam int size,
+                @RequestParam Map<String, String> params,
+                @RequestParam(defaultValue = "false")
+                boolean showDeterminant,
+                @RequestParam(defaultValue = "false")
+                boolean showTranspose,
+                @RequestParam(defaultValue = "false")
+                boolean showInverse,
+                @RequestParam(defaultValue = "false")
+                boolean showIdentity,
+                @RequestParam(defaultValue = "false")
+                boolean showDeterminantB,
+                @RequestParam(defaultValue = "false")
+                boolean showTransposeB,
+                @RequestParam(defaultValue = "false")
+                boolean showInverseB,
+                @RequestParam(defaultValue = "false")
+                boolean showIdentityB,
+                @RequestParam(defaultValue = "false")
+                boolean showAddition,
+                @RequestParam(defaultValue = "false")
+                boolean showSubtraction,
+                @RequestParam(defaultValue = "false")
+                boolean showMultiplication,
+                @RequestParam(defaultValue = "false")
+                boolean showSquareA,
+                @RequestParam(defaultValue = "false")
+                boolean showSquareB,
+                @RequestParam(defaultValue = "false")
+                boolean showScalarA,
+                @RequestParam(defaultValue = "false")
+                boolean showScalarB,
+                @RequestParam(defaultValue = "1") double scalarValue,
 
-        @RequestParam(required = false) String action, Model model) {    
+                @RequestParam(required = false) String action, Model model) {    
 
-    if ("change-size".equals(action)) {
+        if ("change-size".equals(action)) {
 
-    model.addAttribute("matrixA", new double[size][size]);   
-    model.addAttribute("matrixB", new double[size][size]);   
-    model.addAttribute("size", size);
-    model.addAttribute("showAddition", false);
-    model.addAttribute("showSubtraction", false);
-    model.addAttribute("showMultiplication", false);
-    model.addAttribute("scalarValue", 1);    
+        model.addAttribute("matrixA", new double[size][size]);   
+        model.addAttribute("matrixB", new double[size][size]);   
+        model.addAttribute("size", size);
+        model.addAttribute("showAddition", false);
+        model.addAttribute("showSubtraction", false);
+        model.addAttribute("showMultiplication", false);
+        model.addAttribute("scalarValue", 1);    
 
-    return "matrixResult";
-}   
+        return "matrixResult";
+        }   
 
-    double[][] matrixA = buildMatrixA(size, params);
+        double[][] matrixA = buildMatrixA(size, params);
 
-    double[][] matrixB = buildMatrixB(size, params);    
+        double[][] matrixB = buildMatrixB(size, params);    
 
-    boolean newShowDet = false;
-    boolean newShowTrans = false;
-    boolean newShowInv = false;
-    boolean newShowId = false;
+        boolean newShowDet = false;
+        boolean newShowTrans = false;
+        boolean newShowInv = false;
+        boolean newShowId = false;
 
-    boolean newShowDetB = false;
-    boolean newShowTransB = false;
-    boolean newShowInvB = false;
-    boolean newShowIdB = false;
+        boolean newShowDetB = false;
+        boolean newShowTransB = false;
+        boolean newShowInvB = false;
+        boolean newShowIdB = false;
 
-    boolean newShowAddition = false;
-    boolean newShowSubtraction = false;
-    boolean newShowMultiplication = false;
-    boolean newShowSquareA = false;
-    boolean newShowSquareB = false;
-    boolean newShowScalarA = false;
-    boolean newShowScalarB = false;   
+        boolean newShowAddition = false;
+        boolean newShowSubtraction = false;
+        boolean newShowMultiplication = false;
+        boolean newShowSquareA = false;
+        boolean newShowSquareB = false;
+        boolean newShowScalarA = false;
+        boolean newShowScalarB = false;   
 
-    if (action != null && !action.isEmpty()) {
+        if (action != null && !action.isEmpty()) {
 
-        // Matrix update buttons
-        if ("update-matrix-a".equals(action)
-                || "update-matrix-b".equals(action)) {
+                // Matrix update buttons
+                if ("update-matrix-a".equals(action)
+                        || "update-matrix-b".equals(action)) {
 
-            // Preserve Matrix A sections
-            newShowDet = showDeterminant;
-            newShowTrans = showTranspose;
-            newShowInv = showInverse;
-            newShowId = showIdentity;
-            // Preserve Matrix B sections
-            newShowDetB = showDeterminantB;
-            newShowTransB = showTransposeB;
-            newShowInvB = showInverseB;
-            newShowIdB = showIdentityB;
+                // Preserve Matrix A sections
+                newShowDet = showDeterminant;
+                newShowTrans = showTranspose;
+                newShowInv = showInverse;
+                newShowId = showIdentity;
+                // Preserve Matrix B sections
+                newShowDetB = showDeterminantB;
+                newShowTransB = showTransposeB;
+                newShowInvB = showInverseB;
+                newShowIdB = showIdentityB;
 
-            // Preserve result operations
-            newShowAddition = showAddition;
-            newShowSubtraction = showSubtraction;
-            newShowMultiplication = showMultiplication;
-            newShowSquareA = showSquareA;
-            newShowSquareB = showSquareB;
-            newShowScalarA = showScalarA;
-            newShowScalarB = showScalarB;
+                // Preserve result operations
+                newShowAddition = showAddition;
+                newShowSubtraction = showSubtraction;
+                newShowMultiplication = showMultiplication;
+                newShowSquareA = showSquareA;
+                newShowSquareB = showSquareB;
+                newShowScalarA = showScalarA;
+                newShowScalarB = showScalarB;
 
-        } else {
+                } else {
 
-            // Matrix A
-            newShowDet =
-                    switchAction(action, "determinant", showDeterminant);                    
-
-            newShowTrans =
-                    switchAction(
-                            action,
-                            "transpose",
-                            showTranspose
-                    );
-
-            newShowInv =
-                    switchAction(
-                            action,
-                            "inverse",
-                            showInverse
-                    );
-
-            newShowId =
-                    switchAction(
-                            action,
-                            "identity",
-                            showIdentity
-                    );
-
-            // Matrix B
-            newShowDetB =
-                    switchAction(
-                            action,
-                            "determinant-b",
-                            showDeterminantB
-                    );
-
-            newShowTransB =
-                    switchAction(
-                            action,
-                            "transpose-b",
-                            showTransposeB
-                    );
-
-            newShowInvB =
-                    switchAction(
-                            action,
-                            "inverse-b",
-                            showInverseB
-                    );
-
-            newShowIdB =
-                    switchAction(
-                            action,
-                            "identity-b",
-                            showIdentityB
-                    );
-
-                // Result operations
-                newShowAddition =
+                // Matrix A
+                newShowDet = switchAction(action, "determinant", showDeterminant);                   
+                newShowTrans = switchAction(action, "transpose", showTranspose);                       
+                newShowInv =
                         switchAction(
                                 action,
-                                "addition",
-                                showAddition
+                                "inverse",
+                                showInverse
                         );
+                newShowId =
+                        switchAction(
+                                action,
+                                "identity",
+                                showIdentity
+                        );
+                // Matrix B
+                newShowDetB =
+                        switchAction(
+                                action,
+                                "determinant-b",
+                                showDeterminantB
+                        );
+                newShowTransB =
+                        switchAction(
+                                action,
+                                "transpose-b",
+                                showTransposeB
+                        );
+                newShowInvB =
+                        switchAction(
+                                action,
+                                "inverse-b",
+                                showInverseB
+                        );
+                newShowIdB =
+                        switchAction(
+                                action,
+                                "identity-b",
+                                showIdentityB
+                        );
+
+                        // Result operations
+                newShowAddition =
+                                switchAction(
+                                        action,
+                                        "addition",
+                                        showAddition
+                                );
 
                 newShowSubtraction =
-                        switchAction(
-                                action,
-                                "subtraction",
-                                showSubtraction
-                        );
+                                switchAction(
+                                        action,
+                                        "subtraction",
+                                        showSubtraction
+                                );
 
                 newShowMultiplication =
-                        switchAction(
-                                action,
-                                "multiplication",
-                                showMultiplication
-                        );
+                                switchAction(
+                                        action,
+                                        "multiplication",
+                                        showMultiplication
+                                );
 
                 newShowSquareA =
-                        switchAction(
-                                action,
-                                "square-a",
-                                showSquareA
-                        );
+                                switchAction(
+                                        action,
+                                        "square-a",
+                                        showSquareA
+                                );
 
                 newShowSquareB =
-                        switchAction(
-                                action,
-                                "square-b",
-                                showSquareB
-                        );
+                                switchAction(
+                                        action,
+                                        "square-b",
+                                        showSquareB
+                                );
 
                 newShowScalarA =
-                    switchAction(
-                            action,
-                            "scalar-a",
-                            showScalarA
-                    );
+                        switchAction(
+                                action,
+                                "scalar-a",
+                                showScalarA
+                        );
                 newShowScalarB =
-                    switchAction(
-                            action,
-                            "scalar-b",
-                            showScalarB
-                    );
+                        switchAction(
+                                action,
+                                "scalar-b",
+                                showScalarB
+                        );
+                }
         }
-    }
 
         model.addAttribute("matrixA", matrixA);
         model.addAttribute("matrixB", matrixB);
@@ -364,17 +351,17 @@ public String handleMatrixAction(
                         return matrix;
                 }
 
-    private void restoreOpenSections(
-                Model model,
-                double[][] matrixA,
-                boolean showDeterminant,
-                boolean showTranspose,
-                boolean showInverse,
-                boolean showIdentity,
-                boolean showScalarA,
-                boolean showSquareA,
-                double scalarValue
-            ) {
+        private void restoreOpenSections(
+                        Model model,
+                        double[][] matrixA,
+                        boolean showDeterminant,
+                        boolean showTranspose,
+                        boolean showInverse,
+                        boolean showIdentity,
+                        boolean showScalarA,
+                        boolean showSquareA,
+                        double scalarValue
+                ) {
 
         model.addAttribute("matrixService", matrixService); // kept only because original template used it
 
@@ -410,19 +397,19 @@ public String handleMatrixAction(
         
     }
 
-    private void restoreOpenSectionsB(
-            Model model,
-            double[][] matrixB,
-            boolean showDeterminantB,
-            boolean showTransposeB,
-            boolean showInverseB,
-            boolean showIdentityB,
-            boolean showScalarB,
-            boolean showSquareB,
-            double scalarValue
-            ) {
+        private void restoreOpenSectionsB(
+                Model model,
+                double[][] matrixB,
+                boolean showDeterminantB,
+                boolean showTransposeB,
+                boolean showInverseB,
+                boolean showIdentityB,
+                boolean showScalarB,
+                boolean showSquareB,
+                double scalarValue
+                ) {
 
-        model.addAttribute("matrixService", matrixService);
+                model.addAttribute("matrixService", matrixService);
 
         if (showDeterminantB) {
             double determinant = matrixService.determinant(matrixB);

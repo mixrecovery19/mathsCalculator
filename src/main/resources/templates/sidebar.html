@@ -8,17 +8,15 @@
 <body>
 <div th:fragment="sidebar" class="sidebar">
     <div class="sidebar-header">
-        <h2>My Wiki</h2>
-            <p th:if="${user == null}">Guest Mode</p>            
-            <p th:if="${user != null}">Welcome,
-                <span th:text="${user.username}"></span>
+        <h2>My Wiki</h2>                      
+            <p>Welcome to Mixrecovery19's Math                
             </p>
     </div>
 
     <nav class="sidebar-nav">
         <a th:href="@{/}">Home</a>        
         <a th:href="@{/matrixResult}">Matrices</a>
-        <a th:if="${user != null}" th:href="@{/articles/new}">Create Article</a>
+        <a th:href="@{/matrix-sarrus}">Matrices(Sarrus)</a>
         <a th:if="${user == null}" th:href="@{/login}">Login</a>
         <a th:if="${user != null}" th:href="@{/logout}">Logout</a>
         <a th:if="${user == null}" th:href="@{/create-user-account}">Create Account</a>

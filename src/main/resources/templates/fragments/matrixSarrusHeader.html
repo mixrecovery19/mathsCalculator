@@ -1,0 +1,44 @@
+<div th:fragment="matrixSarrusHeader" class="matrix-inputs-dashboard">
+    <div class="matrix-controls matrix-fragment-card">
+        <div class="matrix-control-row">
+            <h1>Matrix(Sarrus Method)</h1>
+            <label for="size">Matrix Size:</label>
+            <select id="size" name="size" aria-label="Matrix Size">                
+                <option value="3" th:selected="${size == 3}">3 × 3</option>
+                <option value="4" th:selected="${size == 4}">4 × 4</option>
+            </select>
+            <button type="submit"
+                    name="action"
+                    value="change-size"
+                    class="btn-secondary dashboard-btn">
+                Change Size
+            </button>
+            <button type="submit"
+                    name="action"
+                    value="update-matrix-sarrus"
+                    class="btn-primary dashboard-btn">
+                Update Matrices
+            </button>
+        </div>
+
+        <input type="hidden"
+               name="size"
+               th:value="${size ?: 2}">
+
+        <table class="matrix-input-table">
+            <tr th:each="row : ${#numbers.sequence(0, (size ?: 2) - 1)}">
+                <td th:each="col : ${#numbers.sequence(0, (size ?: 2) - 1)}">
+                    <input type="number"
+                           step="any"
+                           title="Matrix Sarruscell value"
+                           placeholder="0"
+                           th:id="'cell_' + ${row} + '_' + ${col}"
+                           th:name="'cell_' + ${row} + '_' + ${col}"
+                           th:value="${matrixSarrus != null && matrixSarrus[row][col] != 0 ? matrixSarrus[row][col] : ''}"
+                           class="matrix-input">
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
