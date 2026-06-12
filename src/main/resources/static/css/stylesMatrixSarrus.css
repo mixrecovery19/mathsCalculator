@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-/* 🔹 Page background */
+/* Page background */
 body {
     font-family: -apple-system,
                  BlinkMacSystemFont,
@@ -12,21 +12,82 @@ body {
                  Roboto,
                  Arial,
                  sans-serif;
-                  background: 
+    background:
         linear-gradient(rgba(244, 248, 251, 0.85), rgba(244, 248, 251, 0.85)),
         url("/images/mathsimage2.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: #2c3e50;
     min-height: 100vh;
+    opacity: 1;
+    transition:
+        opacity 0.22s ease,
+        transform 0.18s ease;
 }
+
+body.loading {
+    opacity: 0.75;
+    transform: translateY(4px);
+    pointer-events: none;
+}
+
+/* Logged backgrounds */
+.logged-out-bg {
+    background:
+        linear-gradient(rgba(244, 248, 251, 0.9), rgba(244, 248, 251, 0.9)),
+        url("/images/mathsimage2.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.logged-in-bg {
+    background:
+        linear-gradient(rgba(244, 248, 251, 0.85), rgba(244, 248, 251, 0.85)),
+        url("/images/mathsimage2.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Layout */
 .matrix-page {
     margin-left: 260px;
+    width: calc(100% - 260px);
+    padding: 2rem;
+
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    width: calc(100% - 260px);
-    padding: 2rem;
-    box-sizing: border-box;
 }
+
+.matrix-page form {
+    width: 100%;
+}
+
+.hero-card,
+.status-card,
+.preview-card {
+    width: 100%;
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e8edf3;
+
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* Cards */
+.matrix-container {
+    display: flex;
+    justify-content: center;
+}
+
 .matrix-card {
     width: 420px;
     background: white;
@@ -34,122 +95,143 @@ body {
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
+
 .matrix-card h1 {
     margin-bottom: 2rem;
 }
-.matrix-card form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
+
 .matrix-card select {
     padding: 12px;
     border-radius: 8px;
     font-size: 1rem;
 }
+
+/* Buttons */
 .button-group {
     display: flex;
     justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
 }
+
 .button-group button,
-.button-group a {
+.button-group a,
+.dashboard-btn {
     padding: 12px 24px;
     border: none;
     border-radius: 30px;
+
     font-size: 15px;
     font-weight: 600;
+
     cursor: pointer;
     transition: all 0.2s ease;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     text-decoration: none;
-    box-sizing: border-box;
 }
-/* 🔹 Primary button (Articles) */
+
+.dashboard-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.dashboard-btn:hover {
+    transform: translateY(-1px);
+}
+
 .btn-primary {
     background-color: rgb(70, 236, 70);
     color: black;
 }
+
 .btn-primary:hover {
     background-color: #05e16c;
 }
-/* 🔹 Secondary button (Login) */
+
 .btn-secondary {
     background-color: #95a5a6;
     color: white;
 }
+
 .btn-secondary:hover {
     background-color: #7f8c8d;
 }
-/* 🔹 Danger button (Logout) */
+
 .btn-danger {
     background-color: #e74c3c;
     color: white;
 }
+
 .btn-danger:hover {
     background-color: #c0392b;
 }
-.matrix-results-container {
-    width: 900px;
-    margin: auto;
 
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.result-card {
-    background: white;
-
-    border-radius: 16px;
-    padding: 2rem;
-
-    box-shadow:
-        0 4px 16px
-        rgba(0,0,0,0.12);
-}
-.matrix-table {
+/* Matrix tables */
+.matrix-table,
+.matrix-input-table,
+.sarrus-table {
+    width: auto;
     margin: 1.5rem auto;
 
     border-collapse: separate;
     border-spacing: 10px;
+    table-layout: fixed;
 }
 
-.matrix-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: auto;
-}
-
-.matrix-table td {
-    min-width: 65px;
-    padding: 10px 12px;
+.matrix-table td,
+.matrix-input-table td,
+.sarrus-table td {
+    width: 62px;
+    height: 52px;
+    padding: 0;
+    border: none;
     text-align: center;
-
-    border: 1px solid #ddd;
-    border-radius: 8px;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    font-size: clamp(
-        0.75rem,
-        1vw,
-        1rem
-    );
-
-    transition: all 0.2s ease;
 }
 
-.matrix-table input {
-    width: 100%;
+/* Matrix input/display cells */
+.matrix-input {
+    width: 62px;
+    height: 52px;
+
+    display: block;
+
+    text-align: center;
+    border-radius: 12px;
+    border: 2px solid #ddd;
+
+    background: white;
+    color: #2c3e50;
+
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 52px;
+
     box-sizing: border-box;
+    transition: 0.2s ease;
 }
 
+.matrix-input::placeholder {
+    color: #aaa;
+}
+
+.matrix-input:focus {
+    outline: none;
+    border-color: #05e16c;
+    box-shadow: 0 0 0 3px rgba(5, 225, 108, 0.18);
+}
+
+/* Diagonal highlighting */
+.diagonal-positive {
+    background: #fff4a8 !important;
+    border: 3px solid #f1c40f !important;
+}
+
+/* Details blocks */
 .math-details {
     margin: 1rem 0;
     background: #f5f8fc;
@@ -167,6 +249,7 @@ body {
 .math-details summary:hover {
     color: #2980b9;
 }
+
 .math-description {
     margin-top: 1rem;
     line-height: 1.6;
@@ -175,42 +258,43 @@ body {
     word-wrap: break-word;
     white-space: normal;
 }
-.hero-card,
-.status-card,
-.preview-card {
 
-    width: 100%;
-    box-sizing: border-box;
+/* Multi-column matrix layouts used elsewhere */
+.matrix-results-container {
+    width: 900px;
+    margin: auto;
 
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
-
-    box-shadow:
-        0 6px 20px
-        rgba(0,0,0,0.08);
-
-    border: 1px solid #e8edf3;
-
-    overflow-wrap: break-word;
-    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
+
+.result-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
 .matrix-container.three-columns {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2rem;
     align-items: start;
 }
+
 .matrix-column {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
+
 .column-title {
     text-align: center;
     margin-bottom: 0.5rem;
     color: #333;
 }
+
 .matrix-inputs-dashboard {
     background: white;
     padding: 1.25rem;
@@ -218,13 +302,14 @@ body {
     box-shadow: 0 4px 16px rgba(0,0,0,0.12);
     margin-bottom: 1.5rem;
 }
+
 .matrix-fragment-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
 }
-/* top row: title, select, buttons */
+
 .matrix-control-row {
     display: flex;
     align-items: center;
@@ -232,6 +317,7 @@ body {
     gap: 0.9rem;
     flex-wrap: wrap;
 }
+
 .matrix-control-row h1 {
     margin: 0;
     font-size: 1.5rem;
@@ -240,6 +326,7 @@ body {
 .matrix-control-row label {
     font-weight: 600;
 }
+
 .matrix-control-row select {
     padding: 10px 14px;
     border-radius: 10px;
@@ -249,49 +336,7 @@ body {
     background: white;
 }
 
-/* dashboard buttons */
-.dashboard-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 30px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-.dashboard-btn:hover {
-    transform: translateY(-1px);
-}
-/* actual matrix input table */
-.matrix-input-table {
-    border-collapse: separate;
-    border-spacing: 0.45rem;
-    margin: 0 auto;
-}
-.matrix-input-table td {
-    padding: 0;
-}
-/* smaller width, still tall enough to feel clickable */
-.matrix-input {
-    width: 62px;
-    height: 52px;
-    text-align: center;
-    border-radius: 12px;
-    border: 2px solid #ddd;
-    font-size: 1rem;
-    font-weight: 700;
-    box-sizing: border-box;
-    transition: 0.2s ease;
-}
-.matrix-input::placeholder {
-    color: #aaa;
-}
-.matrix-input:focus {
-    outline: none;
-    border-color: #05e16c;
-    box-shadow: 0 0 0 3px rgba(5, 225, 108, 0.18);
-}
-/* remove number spinners */
+/* Remove number spinners */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -302,32 +347,81 @@ input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
-body {
-    opacity: 1;
-    transition:
-        opacity 0.22s ease,
-        transform 0.18s ease;
+.sarrus-answer-table {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
-body.loading {
-    opacity: 0.75;
-    transform: translateY(4px);
-    pointer-events: none;
+
+.sarrus-answer-table td {
+    width: 62px;
+    height: 52px;
+    padding: 0;
 }
-/* 🔹 Logged OUT background */
-.logged-out-bg {
-    background: 
-        linear-gradient(rgba(244, 248, 251, 0.9), rgba(244, 248, 251, 0.9)),
-        url("/images/mathsimage2.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+
+.sarrus-answer-table td:empty {
+    border: none;
 }
-/* 🔹 Logged IN background */
-.logged-in-bg {
-    background: 
-        linear-gradient(rgba(244, 248, 251, 0.85), rgba(244, 248, 251, 0.85)),
-        url("/images/mathsimage2.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+
+.sarrus-answer-cell {
+    background: #f4f4f4;
+    color: #2c3e50;
+}
+
+.diagonal-positive {
+    background: #fff4a8;
+    border-color: #f1c40f;
+}
+.sarrus-layout {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+/* Stop auto-centering only for these */
+.sarrus-layout .matrix-input-table {
+    margin: 0;
+}
+
+/* push the top row right */
+.sarrus-answer-table.top {
+    margin-left: 144px;
+}
+
+/* push bottom row slightly left */
+.sarrus-answer-table.bottom {
+    margin-left: 0;
+}
+/* Positive diagonal 1 */
+.diagonal-positive-1 {
+    background: #fff4a8;
+    border-color: #f1c40f;
+}
+
+/* Positive diagonal 2 */
+.diagonal-positive-2 {
+    background: #cfe8ff;
+    border-color: #5dade2;
+}
+
+/* Positive diagonal 3 */
+.diagonal-positive-3 {
+    background: #d5f5d5;
+    border-color: #58d68d;
+}
+
+/* Negative diagonal 1 */
+.diagonal-negative-1 {
+    background: #ffd6d6;
+    border-color: #e57373;
+}
+
+/* Negative diagonal 2 */
+.diagonal-negative-2 {
+    background: #f3d9ff;
+    border-color: #bb6bd9;
+}
+
+/* Negative diagonal 3 */
+.diagonal-negative-3 {
+    background: #ffe5c2;
+    border-color: #f39c12;
 }

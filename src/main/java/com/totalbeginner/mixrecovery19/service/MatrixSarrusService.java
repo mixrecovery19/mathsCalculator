@@ -55,4 +55,73 @@ public class MatrixSarrusService {
 
         return positiveDiagonalSum - negativeDiagonalSum;
     }
+
+    public double calculatePositiveStep1(double[][] matrix) {
+    return
+            matrix[0][0]
+            *
+            matrix[1][1]
+            *
+            matrix[2][2];
+    }
+
+    public double calculatePositiveStep2(
+            double[][] matrix
+    ) {
+
+        return
+                matrix[0][1]
+                *
+                matrix[1][2]
+                *
+                matrix[2][3];
+    }
+    public double calculatePositiveStep3(
+            double[][] matrix
+    ) {
+
+        return
+                matrix[0][2]
+                *
+                matrix[1][3]
+                *
+                matrix[2][4];
+    }
+
+    public double calculateNegativeStep1(
+            double[][] matrix
+    ) {
+
+        return
+                matrix[0][2]
+                *
+                matrix[1][1]
+                *
+                matrix[2][0];
+    }
+
+    public double calculateNegativeStep2(
+            double[][] matrix
+    ) {
+
+        return
+                matrix[0][3]
+                *
+                matrix[1][2]
+                *
+                matrix[2][1];
+    }
+
+    public double calculateNegativeStep3(
+            double[][] matrix
+    ) {
+
+        return
+                matrix[0][4]
+                *
+                matrix[1][3]
+                *
+                matrix[2][2];
+    }
+    
 }

@@ -3,77 +3,47 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sarrus Method</title>
-
-    <link rel="stylesheet"
-          href="/css/stylesSideBar.css">
-
-    <link rel="stylesheet"
-          href="/css/stylesMatrixResult.css">
+    <link rel="stylesheet" href="/css/stylesSideBar.css">
+    <link rel="stylesheet" href="/css/stylesMatrixResult.css">
 </head>
-
 <body>
-
 <div class="app-layout">
-
-    <div th:replace="~{sidebar :: sidebar}">
-    </div>
-
+    <div th:replace="~{sidebar :: sidebar}"></div>
     <main class="matrix-page">
-
-        <form th:action="@{/matrices-sarrus}"
-              method="post">
-
+        <form th:action="@{/matrices-sarrus}" method="post">
             <!-- Dashboard Header -->
-            <div th:replace="~{fragments/matrixSarrusHeader :: matrixSarrusHeader}">
-            </div>
-
+            <div th:replace="~{fragments/matrixSarrusHeader :: matrixSarrusHeader}"></div>
             <section class="hero-card">
 
                 <div class="matrix-container">
-
                     <div class="matrix-card">
-
-                        <h2>
-                            Enter Values To Apply
-                            Your Own Sarrus
-                            Calculations To
-                        </h2>
-
+                        <h2>Enter Values To Apply Your Own Sarrus Calculations To</h2>
                         <p>
                             Learn how to calculate
                             the determinant of a
                             3 × 3 matrix using the
                             Sarrus method.
                         </p>
-
                         <!-- Keep matrix size -->
+                        <input type="hidden" name="size" th:value="${size}">
                         <input type="hidden"
-                               name="size"
-                               th:value="${size}">
-
+                            name="currentStep"
+                            th:value="${currentStep}">
                         <table class="matrix-table">
-
                             <tr th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
-
                                 <td th:each="colIndex : ${#numbers.sequence(0, size - 1)}">
-
                                     <input type="number"
                                            step="any"
                                            class="matrix-input"
-
                                            title="Matrix Sarrus cell value"
-
                                            th:attr="
                                                aria-label=
                                                'Matrix cell at row '
                                                + ${rowIndex}
                                                + ', column '
                                                + ${colIndex}"
-
                                            th:title="
                                                'Matrix cell at row '
                                                + ${rowIndex}
@@ -99,60 +69,267 @@
                                                ? matrixSarrus[rowIndex][colIndex]
                                                : ''}">
                                 </td>
-
                             </tr>
-
                         </table>
-
                         <div class="button-group">
-
                             <button type="submit"
                                     name="action"
                                     value="generate-sarrus"
                                     class="btn-primary">
-
                                 Generate Sarrus Pyramid
                             </button>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </section>
 
-            <!-- Generated Sarrus Display -->
-            <section class="hero-card"
-                     th:if="${sarrusMatrix != null}">
+     <!-- Generated Sarrus Display -->
+<section class="hero-card"
+         th:if="${sarrusMatrix != null}">
 
-                <h2>Sarrus Pyramid</h2>
+    <h2>Sarrus Pyramid</h2>
+    <div class="sarrus-layout">
 
-                <table class="matrix-table">
+    <!-- TOP NEGATIVE ANSWER ROW -->
+    <table class="matrix-input-table sarrus-answer-table top">
+        <tr>
+            <td>
+                <input type="text"
+                       class="matrix-input sarrus-answer-cell"                       
+                       readonly>
+            </td>
 
-                    <tr th:each="row : ${sarrusMatrix}">
+            <td>
+                <input type="text"
+                       class="matrix-input sarrus-answer-cell"                      
+                       readonly>
+            </td>
 
-                        <td th:each="value : ${row}"
-                            th:text="${value}">
-                        </td>
+            <td>
+                <input type="text"
+                        id="negativeStep1"
+                       class="matrix-input sarrus-answer-cell"
+                       th:value="${negativeStep1}"
+                       readonly>
+            </td>
 
-                    </tr>
+            <td>
+                <input type="text"
+                        id="negativeStep2"
+                       class="matrix-input sarrus-answer-cell"
+                       th:value="${negativeStep2}"
+                       readonly>
+            </td>
 
-                </table>
+            <td>
+                <input type="text"
+                        id="negativeStep3"
+                       class="matrix-input sarrus-answer-cell"
+                       th:value="${negativeStep3}"
+                       readonly>
+            </td>
+        </tr>
+    </table>
 
-                <h3>
-                    Determinant:
-                    <span th:text="${determinant}">
-                    </span>
-                </h3>
+    <!-- 5 × 3 SARRUS MATRIX -->
+    <!-- 5 × 3 SARRUS MATRIX -->
+<table class="matrix-input-table">
 
-            </section>
+    <tr th:each="row,rowStat : ${sarrusMatrix}">
 
-        </form>
+        <td th:each="value,colStat : ${row}">
 
-    </main>
+            <input type="number"
+                   class="matrix-input"
+
+                   th:id="
+                   'cell-'
+                   + ${rowStat.index}
+                   + '-'
+                   + ${colStat.index}"
+
+                   th:value="${value}"
+                   readonly
+
+                   th:classappend="
+                   ${(currentStep == 1
+                   && rowStat.index == 0
+                   && colStat.index == 0)
+                   ||
+                   (currentStep == 1
+                   && rowStat.index == 1
+                   && colStat.index == 1)
+                   ||
+                   (currentStep == 1
+                   && rowStat.index == 2
+                   && colStat.index == 2)}
+                   ? ' diagonal-positive'
+                   : ''">
+
+        </td>
+
+    </tr>
+
+</table>
+
+    <!-- BOTTOM POSITIVE ANSWER ROW -->
+    <table class="matrix-input-table sarrus-answer-table bottom">
+        <tr>
+            <td>
+                <input type="text"
+                       class="matrix-input sarrus-answer-cell"                       
+                       readonly>
+            </td>
+            <td>
+                <input type="text"
+                       class="matrix-input sarrus-answer-cell"                       
+                       readonly>
+            </td>
+            <td>
+                <input type="text"
+                        id="positiveStep1"
+                       class="matrix-input sarrus-answer-cell"
+                       th:value="${positiveStep1}"
+                       readonly>
+            </td>
+            <td><input type="text"
+                        id="positiveStep2"
+                       class="matrix-input sarrus-answer-cell"
+                       th:value="${positiveStep2}"
+                       readonly></td>
+            <td>
+                <input type="text"
+                          id="positiveStep3"
+                       class="matrix-input sarrus-answer-cell"
+                       th:value="${positiveStep3}"
+                       readonly>
+                    </td>
+        </tr>
+    </table>
+</div>
+<div class="button-group">
+
+    <button type="submit"
+            name="action"
+            value="previous-sarrus-step"
+            class="btn-secondary">
+
+        Previous Step
+
+    </button>
+
+    <button type="submit"
+            name="action"
+            value="next-sarrus-step"
+            class="btn-primary">
+
+        Next Step
+
+    </button>
 
 </div>
+</section>
 
+        </form>
+    </main>
+</div>
+<script th:inline="javascript">
+    window.onload = function () {
+        const currentStep = [[${currentStep}]];
+
+        clearColours();
+
+        if (currentStep >= 1) {
+
+            colourCells(
+                ["cell-0-0",
+                "cell-1-1",
+                "cell-2-2",
+            "positiveStep1"],
+                "#fff4a8"
+            );
+        }
+
+    if (currentStep >= 2) {
+
+        colourCells(
+            ["cell-0-1",
+             "cell-1-2",
+             "cell-2-3",
+             "positiveStep2"],
+            "#cfe8ff"
+        );
+    }
+
+    if (currentStep >= 3) {
+
+        colourCells(
+            ["cell-0-2",
+             "cell-1-3",
+             "cell-2-4",
+             "positiveStep3"],
+            "#d5f5d5"
+        );
+    }
+    if (currentStep >= 4) {
+
+        colourCells(
+            ["cell-2-0",
+             "cell-1-1",
+             "cell-0-2",
+             "negativeStep1"],
+            "#f9d5d5"
+        );
+    }
+    if (currentStep >= 5) {
+        colourCells(
+            ["cell-2-1",
+             "cell-1-2",
+             "cell-0-3",
+             "negativeStep2"],
+            "#ffe6bf"
+        );
+    }
+    if (currentStep >= 6) {
+        colourCells(
+            ["cell-2-2",
+             "cell-1-3",
+             "cell-0-4",
+             "negativeStep3"],
+             "#ead7ff"
+        );
+    }
+};
+
+function colourCells(cellIds, colour) {
+
+    cellIds.forEach(id => {
+
+        const cell =
+            document.getElementById(id);
+
+        if (cell) {
+
+            cell.style.backgroundColor =
+                colour;
+        }
+    });
+}
+
+function clearColours() {
+
+    document
+        .querySelectorAll(".matrix-input")
+        .forEach(cell => {
+
+            cell.style.backgroundColor =
+                "";
+
+            cell.style.borderColor =
+                "";
+        });
+}
+
+</script>
 </body>
 </html>
