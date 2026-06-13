@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>2 x 2 Matrix Determinant Calculator</title>
+    <link rel="stylesheet" href="/css/stylesSideBar.css">    
+    <link rel="stylesheet" href="/css/stylesMatrixTwoByTwo.css">
+    <script src="/js/overlayhelper.js"></script>
+</head>
+<body>
+    <div class="app-layout">
+    <div th:replace="~{sidebar :: sidebar}"></div>
+    <main class="matrix-page">
+        <form th:action="@{/matrix-two-by-two}" method="post">            
+            <div th:replace="~{fragments/matrixTwoByTwoHeader :: matrixTwoByTwoHeader}"></div>
+            <section class="hero-card"> 
+                <div class="two-by-two-stage-two">               
+                        <h2>2. This is your 2 x 2 Matrix </h2>                      
+                        <details class="math-details">
+                            <summary>Calculating the Determinant of 2 x 2 Matrix</summary>
+                                <p class="math-description">
+                                    When you click "Generate 2 x 2 Determinant" your initial 2 x 2 matrix will be used to calculate the determinant.<br>
+                                    The determinant of a 2 x 2 matrix is calculated as (ad - bc), where a, b, c, and d are the elements of the matrix.<br>
+                                    This allows you to easily calculate the determinant working through the 1/ad-bc formula.
+                                </p>
+                        </details>                    
+                        <input type="hidden" name="size" th:value="${size}">
+                        <input type="hidden" name="currentStep" th:value="${currentStep}">
+                        <input type="hidden" name="positiveTotal" th:value="${positiveTotal}">
+                        <input type="hidden" name="negativeTotal" th:value="${negativeTotal}">
+                        <table class="matrix-table matrix-table-readonly">
+                            <tr th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+                                <td th:each="colIndex : ${#numbers.sequence(0, size - 1)}">
+                                    <input type="text" class="matrix-input matrix-readonly"
+                                        title="Initial matrix value"
+                                        aria-label="Initial matrix value"
+                                        readonly
+                                        th:value="
+                                            ${matrixTwoByTwo != null
+                                            && matrixTwoByTwo[rowIndex][colIndex] != 0
+                                            ? matrixTwoByTwo[rowIndex][colIndex]
+                                            : ''}">
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="button-group">
+                            <button type="submit" name="action" value="generate-two-by-two" class="btn-primary">
+                                Generate 2 x 2 Walkthrough
+                            </button>
+                        </div> 
+                    </div>                 
+            </section>   
+            <section class="hero-card" th:if="${hasWalkthrough}">
+                <div class="two-by-two-stage-two">   
+                <h2>3. 2 x 2 Matrix</h2>
+                    <details class="math-details">
+                    <summary>Step Process To Calculate 2 x 2 Matrix Determinant</summary>
+                        <p class="math-description">
+                            Here you can click through each step of the 1/ad-bc process to calculate the determinant of a 2 x 2 matrix.
+                        </p>
+                    </details>      
+                        <div class="two-by-two-layout">  
+                        <table class="matrix-input-table two-by-two-answer-table top">
+                            <tr>
+                                <td>
+                                    <input type="text"
+                                        class="matrix-input two-by-two-answer-cell"                       
+                                        title="Empty answer cell"
+                                        aria-label="Empty answer cell"
+                                        readonly>
+                                </td>
+                                <td>
+                                    <input type="text"
+                                        class="matrix-input two-by-two-answer-cell"                       
+                                        title="Empty answer cell"
+                                        aria-label="Empty answer cell"
+                                        readonly>
+                                </td>
+                                <td>
+                                    <input type="text"
+                                            id="negativeStep1"
+                                        class="matrix-input two-by-two-answer-cell"
+                                        th:value="${negativeStep1}"                      
+                                        title="Negative step 1"
+                                        aria-label="Negative step 1"
+                                        readonly>
+                                </td>                   
+                            </tr>
+                        </table>
+                    
+                        <table class="matrix-input-table">
+                            <tr th:each="row,rowStat : ${walkthroughTwoByTwoMatrix}">
+                                <td th:each="value,colStat : ${row}">
+                                    <input type="number"
+                                    class="matrix-input matrix-readonly"
+                                    th:id="
+                                    'cell-'
+                                    + ${rowStat.index}
+                                    + '-'
+                                    + ${colStat.index}"
+                                    th:value="${value}"
+                                    title="2 x 2 matrix value"
+                                    aria-label="2 x 2 matrix value"
+                                    readonly>
+                                </td>
+                                <!-- NEW RESULT COLUMN -->
+                                <td th:if="${rowStat.index == 0}">
+                                    <input type="text"                
+                                        class="matrix-input two-by-two-answer-cell"                
+                                        title="Empty answer cell"
+                                        aria-label="Empty answer cell"
+                                        readonly>
+                                </td>
+                                <td th:if="${rowStat.index == 1}">
+                                    <input type="text"
+                                        id="determinant"
+                                        class="matrix-input two-by-two-answer-cell determinant-cell"
+                                        th:value="${determinant}"
+                                        title="Determinant"
+                                        aria-label="Determinant"
+                                        readonly>
+                                </td>
+                                
+                            </tr>
+                        </table>
+                        <!-- BOTTOM POSITIVE ANSWER ROW -->
+                        <table class="matrix-input-table two-by-two-answer-table bottom">
+                            <tr>
+                                <td>
+                                    <input type="text"
+                                        class="matrix-input two-by-two-answer-cell"                       
+                                        title="Empty answer cell"
+                                        aria-label="Empty answer cell"
+                                        readonly>
+                                </td>
+                                <td>
+                                    <input type="text"
+                                        class="matrix-input two-by-two-answer-cell"                       
+                                        title="Empty answer cell"
+                                        aria-label="Empty answer cell"
+                                        readonly>
+                                </td>
+                                <td>
+                                    <input type="text"
+                                            id="positiveStep1"
+                                        class="matrix-input two-by-two-answer-cell"
+                                        th:value="${positiveStep1}"                       
+                                        title="Positive step 1"
+                                        aria-label="Positive step 1"
+                                        readonly>
+                                </td>
+                                        
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit"
+                                name="action"
+                                value="previous-two-by-two-step"
+                                class="btn-secondary">
+                            Previous Step
+                        </button>
+                        <button type="submit"
+                                name="action"
+                                value="next-two-by-two-step"
+                                class="btn-primary">
+                            Next Step
+                        </button>
+                    </div>
+                    <div class="determinant-result-container" th:if="${currentStep >= 3}">
+                    <h2>Final Determinant</h2>
+                        <div class="determinant-result-box">
+                            <label>Determinant of your 2 x 2 Matrix</label>
+                            <input type="text"
+                                id="finalDeterminant"
+                                class="final-determinant-input"
+                                th:value="${determinant}"
+                                aria-label="Final determinant"
+                                title="Final determinant"
+                                readonly>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </main>
+</div>
+<script th:inline="javascript">
+    window.onload = function () {
+
+    const currentStep =
+        [[${currentStep ?: 0}]];
+
+    clearColours();
+
+    // STEP 1
+    if (currentStep >= 1) {
+
+        colourCells(
+            [
+                "cell-0-0",
+                "cell-1-1",
+                "positiveStep1"
+            ],
+            "#fff4a8"
+        );
+    }
+
+    // STEP 2
+    if (currentStep >= 2) {
+
+        colourCells(
+            [
+                "cell-0-1",
+                "cell-1-0",
+                "negativeStep1"
+            ],
+            "#f9d5d5"
+        );
+    }
+
+    // STEP 3
+    if (currentStep >= 3) {
+
+        colourCells(
+            [
+                "determinant",
+                "finalDeterminant"
+            ],
+            "#ffff99"
+        );
+    }
+};
+
+    function colourCells(cellIds, colour) {
+
+        cellIds.forEach(id => {
+
+            const cell = document.getElementById(id);
+
+            if (cell) {
+                cell.style.backgroundColor = colour;
+            }
+        });
+    }
+
+    function clearColours() {
+        document
+            .querySelectorAll(".matrix-input")
+            .forEach(cell => {
+                cell.style.backgroundColor = "";
+                cell.style.borderColor = "";
+            });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<div th:fragment="matrixTwoByTwoHeader" class="matrix-inputs-dashboard">
+    <div class="matrix-controls matrix-fragment-card">
+        <div class="matrix-control-row">
+            <h1>2 x 2 Determinant Calculator (Sarrus Method)</h1>                             
+            
+        </div>
+         <h2>1. Enter Values To Form Your 2 x 2 Matrix</h2>
+         <details class="math-details">
+            <summary>Calculating the Determinant of a 2 x 2 Matrix</summary>
+                <p class="math-description">
+                    The determinant helps determine whether a matrix can be inverted.<br>
+                    The first step of calculating the inverse of any matrix is to calculate the determinant.<br>
+                    Unlike the 3 x 3 determinat, the 2 x 2 determinant can be calculated using a simple formula.<br>
+                    For a 2 x 2 matrix the determinant is calculated as (ad - bc).<br>
+                    If the determinant is zero, the matrix is singular and does not have an inverse.<br>
+                    If the determinant is non-zero you can proceed to calculate the inverse.
+                    Enter your values, press Create Matrix to see a step by step walkthrough of how to calculate a 2 x 2 determinant.
+                </p>
+        </details>                             
+        <input type="hidden" name="size" th:value="${size ?: 2}">
+        <table class="matrix-input-table">
+            <tr th:each="row : ${#numbers.sequence(0, (size ?: 2) - 1)}">
+                <td th:each="col : ${#numbers.sequence(0, (size ?: 2) - 1)}">
+                    <input type="number"
+                           step="any"
+                           title="Matrix 2 x 2 cell value"
+                           placeholder="0"
+                           th:id="'cell_' + ${row} + '_' + ${col}"
+                           th:name="'cell_' + ${row} + '_' + ${col}"
+                           th:value="${matrixTwoByTwo != null && matrixTwoByTwo[row][col] != 0 ? matrixTwoByTwo[row][col] : ''}"
+                           class="matrix-input">
+                </td>
+            </tr>
+        </table>
+        <button title="Update Matrix"
+                type="submit"
+                name="action"
+                value="update-matrix-two-by-two"
+                class="btn-primary dashboard-btn">
+            <span th:text="${hasMatrixValues}
+                ? 'Update Matrix'
+                : 'Create Matrix'">
+            </span>
+
+        </button>
+    </div>
+</div>
