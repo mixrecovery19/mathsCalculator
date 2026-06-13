@@ -1,4 +1,4 @@
-package com.totalbeginner.mixrecovery19;
+package com.totalbeginner.mathsCalculator;
 
 public class Person {
     //fields

@@ -1,4 +1,4 @@
-package com.totalbeginner.mixrecovery19.service;
+package com.totalbeginner.mathsCalculator.service;
 
 import org.springframework.stereotype.Service;
 

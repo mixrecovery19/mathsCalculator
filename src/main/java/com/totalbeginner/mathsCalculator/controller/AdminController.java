@@ -1,6 +1,6 @@
-package com.totalbeginner.mixrecovery19.controller;
-import com.totalbeginner.mixrecovery19.model.Person;
-import com.totalbeginner.mixrecovery19.service.*;
+package com.totalbeginner.mathsCalculator.controller;
+import com.totalbeginner.mathsCalculator.model.Person;
+import com.totalbeginner.mathsCalculator.service.*;
 
 import jakarta.servlet.http.HttpSession;
 

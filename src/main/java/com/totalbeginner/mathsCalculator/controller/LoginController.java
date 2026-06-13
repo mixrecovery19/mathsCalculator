@@ -1,6 +1,6 @@
 /* this is a login controller, spring boot uses controllers to handle https requests and map the urls
  */
-package com.totalbeginner.mixrecovery19.controller;
+package com.totalbeginner.mathsCalculator.controller;
 
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
@@ -15,8 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 
-import com.totalbeginner.mixrecovery19.model.*;
-import com.totalbeginner.mixrecovery19.service.*;
+import com.totalbeginner.mathsCalculator.model.*;
+import com.totalbeginner.mathsCalculator.service.*;
 
 @Controller
 public class LoginController {

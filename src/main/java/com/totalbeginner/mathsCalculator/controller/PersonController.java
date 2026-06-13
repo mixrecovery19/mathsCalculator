@@ -1,12 +1,12 @@
-package com.totalbeginner.mixrecovery19.controller;
+package com.totalbeginner.mathsCalculator.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.totalbeginner.mixrecovery19.service.*;
-import com.totalbeginner.mixrecovery19.model.*;
+import com.totalbeginner.mathsCalculator.service.*;
+import com.totalbeginner.mathsCalculator.model.*;
 // arguably this is the main controller class for the Person entity and handles Person-related actions
 @Controller
 public class PersonController {

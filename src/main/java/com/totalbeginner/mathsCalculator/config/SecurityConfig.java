@@ -1,4 +1,4 @@
-package com.totalbeginner.mixrecovery19.config;
+package com.totalbeginner.mathsCalculator.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

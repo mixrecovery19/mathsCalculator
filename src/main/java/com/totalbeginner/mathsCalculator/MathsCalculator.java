@@ -1,13 +1,13 @@
-package com.totalbeginner.mixrecovery19;
+package com.totalbeginner.mathsCalculator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Mixrecovery19Application {
+public class MathsCalculator{
 
 	public static void main(String[] args) {
-		SpringApplication.run(Mixrecovery19Application.class, args);
+		SpringApplication.run(MathsCalculator.class, args);
 	}
 
 }

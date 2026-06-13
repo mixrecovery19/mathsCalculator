@@ -1,10 +1,10 @@
-package com.totalbeginner.mixrecovery19.repository;
+package com.totalbeginner.mathsCalculator.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.totalbeginner.mixrecovery19.model.*;
+import com.totalbeginner.mathsCalculator.model.*;
 
 public interface PersonRepository
         extends JpaRepository<Person, Long> {

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.totalbeginner</groupId>
-	<artifactId>mixrecovery19</artifactId>
+	<artifactId>mathsCalculator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mixrecovery19</name>
+	<name>mathsCalculator</name>
 	<description/>
 	<url/>
 	<licenses>

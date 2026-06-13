@@ -1,6 +1,6 @@
-package com.totalbeginner.mixrecovery19.controller;
+package com.totalbeginner.mathsCalculator.controller;
 
-import com.totalbeginner.mixrecovery19.service.MatrixService;
+import com.totalbeginner.mathsCalculator.service.MatrixService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +30,6 @@ public class MatrixController {
 
    @PostMapping("/matrices/result")
         public String handleMatrixAction(
-
                 @RequestParam int size,
                 @RequestParam Map<String, String> params,
                 @RequestParam(defaultValue = "false")
@@ -68,14 +67,13 @@ public class MatrixController {
                 @RequestParam(required = false) String action, Model model) {    
 
         if ("change-size".equals(action)) {
-
-        model.addAttribute("matrixA", new double[size][size]);   
-        model.addAttribute("matrixB", new double[size][size]);   
-        model.addAttribute("size", size);
-        model.addAttribute("showAddition", false);
-        model.addAttribute("showSubtraction", false);
-        model.addAttribute("showMultiplication", false);
-        model.addAttribute("scalarValue", 1);    
+                model.addAttribute("matrixA", new double[size][size]);   
+                model.addAttribute("matrixB", new double[size][size]);   
+                model.addAttribute("size", size);
+                model.addAttribute("showAddition", false);
+                model.addAttribute("showSubtraction", false);
+                model.addAttribute("showMultiplication", false);
+                model.addAttribute("scalarValue", 1);    
 
         return "matrixResult";
         }   

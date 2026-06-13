@@ -1,10 +1,10 @@
-package com.totalbeginner.mixrecovery19;
+package com.totalbeginner.mathsCalculator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Mixrecovery19ApplicationTests {
+class MathsCalculatorApplicationTests {
 
 	@Test
 	void contextLoads() {

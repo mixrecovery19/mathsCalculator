@@ -1,12 +1,12 @@
-package com.totalbeginner.mixrecovery19.service;
+package com.totalbeginner.mathsCalculator.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.lang.NonNull;
 import java.util.List;
 
-import com.totalbeginner.mixrecovery19.model.*;
-import com.totalbeginner.mixrecovery19.repository.*;
+import com.totalbeginner.mathsCalculator.model.*;
+import com.totalbeginner.mathsCalculator.repository.*;
 
 @Service
 public class PersonService {

@@ -1,6 +1,6 @@
-package com.totalbeginner.mixrecovery19.controller;
+package com.totalbeginner.mathsCalculator.controller;
 
-import com.totalbeginner.mixrecovery19.service.MatrixSarrusService;
+import com.totalbeginner.mathsCalculator.service.MatrixSarrusService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

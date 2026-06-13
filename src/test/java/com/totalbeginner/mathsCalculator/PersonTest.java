@@ -1,4 +1,4 @@
-package com.totalbeginner.mixrecovery19;
+package com.totalbeginner.mathsCalculator;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

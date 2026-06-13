@@ -1,4 +1,4 @@
-package com.totalbeginner.mixrecovery19.model;
+package com.totalbeginner.mathsCalculator.model;
 import jakarta.persistence.*;
 
 @Entity// JPA annotation to mark this class as a database entity
