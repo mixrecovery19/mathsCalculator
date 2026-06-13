@@ -15,22 +15,25 @@ import java.util.Map;
                 this.matrixSarrusService = matrixSarrusService;
         }
 
-        @GetMapping("/matrix-sarrus")
+       @GetMapping("/matrix-sarrus")
         public String matrixSarrusPage(Model model) {
 
-                int defaultSize = 3;
+        model.addAttribute(
+                "size",
+                3
+        );
 
-                model.addAttribute(
-                        "size",
-                        defaultSize
-                );
+        model.addAttribute(
+                "matrixSarrus",
+                new double[3][3]
+        );
 
-                model.addAttribute(
-                        "matrixSarrus",
-                        new double[3][3]
-                );
+        model.addAttribute(
+                "hasMatrixValues",
+                false
+        );
 
-                return "matrixSarrus";
+        return "matrixSarrus";
         }
 
         @PostMapping("/matrices-sarrus")
@@ -45,18 +48,33 @@ import java.util.Map;
 
         double[][] matrix = buildMatrix(size, params);
         int newStep = currentStep;
-
-        if ("next-sarrus-step".equals(action)) {
-                newStep++;
-        } else if (
-                "previous-sarrus-step"
-                        .equals(action)
-        ) {
-                newStep--;
-        }
+                if ("generate-sarrus".equals(action)) {
+                        newStep = 0; // Reset to first step when generating a new matrix
+                } else if ("next-sarrus-step".equals(action)) {
+                        newStep++;
+                } else if (
+                        "previous-sarrus-step"
+                                .equals(action)
+                ) {
+                        newStep--;
+                }
         // Prevent going too far
-        newStep = Math.max(0, Math.min(newStep, 8));                   
+        newStep = Math.max(0, Math.min(newStep, 9));    
+        boolean hasMatrixValues = false;
+
+        for (double[] row : matrix) {
+        for (double value : row) {
+                if (value != 0) {
+                hasMatrixValues = true;
+                break;
+                }
+        }
+        }               
                 
+        model.addAttribute(
+                "hasMatrixValues",
+                hasMatrixValues
+        );
         model.addAttribute(
                 "currentStep",
                 newStep
@@ -93,66 +111,90 @@ import java.util.Map;
         Double positiveStep1 = null;
         Double positiveStep2 = null;
         Double positiveStep3 = null;
+        Double positiveTotal = null;
         Double negativeStep1 = null;
         Double negativeStep2 = null;
         Double negativeStep3 = null;
+        Double negativeTotal = null;
+        Double finalDeterminant = null;
 
-      // Step 1
-if (newStep >= 1) {
+        // Step 1
+        if (newStep >= 1) {
+                positiveStep1 =
+                        matrixSarrusService
+                                .calculatePositiveStep1(
+                                        sarrusMatrix
+                                );
+                }
 
-    positiveStep1 =
-            matrixSarrusService
-                    .calculatePositiveStep1(
-                            sarrusMatrix
-                    );
-}
+        // Step 2
+        if (newStep >= 2) {
 
-// Step 2
-if (newStep >= 2) {
-
-    positiveStep2 =
-            matrixSarrusService
-                    .calculatePositiveStep2(
-                            sarrusMatrix
-                    );
-}
-
-// Step 3
-if (newStep >= 3) {
-
-    positiveStep3 =
-            matrixSarrusService
-                    .calculatePositiveStep3(
-                            sarrusMatrix
-                    );
-}
-if (newStep >= 4) {
-        negativeStep1 =
+        positiveStep2 =
                 matrixSarrusService
-                        .calculateNegativeStep1(
+                        .calculatePositiveStep2(
                                 sarrusMatrix
                         );
-}
-if (newStep >= 5) {
-        negativeStep2 =
-                matrixSarrusService
-                        .calculateNegativeStep2(
-                                sarrusMatrix
-                        );
-}
-if (newStep >= 6) {
-        negativeStep3 =
-                matrixSarrusService
-                        .calculateNegativeStep3(
-                                sarrusMatrix
-                        );
-}
-
+        }
+        // Step 3
+        if (newStep >= 3) {
+                positiveStep3 =
+                        matrixSarrusService
+                                .calculatePositiveStep3(
+                                        sarrusMatrix
+                                );
+        }
+        if (newStep >= 4) {
+                negativeStep1 =
+                        matrixSarrusService
+                                .calculateNegativeStep1(
+                                        sarrusMatrix
+                                );
+        }
+        if (newStep >= 5) {
+                negativeStep2 =
+                        matrixSarrusService
+                                .calculateNegativeStep2(
+                                        sarrusMatrix
+                                );
+        }
+        if (newStep >= 6) {
+                negativeStep3 =
+                        matrixSarrusService
+                                .calculateNegativeStep3(
+                                        sarrusMatrix
+                                );
+        }
+        if (newStep >= 7 && positiveStep1 != null && positiveStep2 != null && positiveStep3 != null) {
+                positiveTotal =
+                        matrixSarrusService
+                                .calculatePositiveTotal(
+                                        positiveStep1,
+                                        positiveStep2,
+                                        positiveStep3
+                                );
+        }
+        if (newStep >= 8 && negativeStep1 != null && negativeStep2 != null && negativeStep3 != null) {
+                negativeTotal =
+                        matrixSarrusService                                
+                                .calculateNegativeTotal(
+                                        negativeStep1,
+                                        negativeStep2,
+                                        negativeStep3
+                                );
+                        }
+        if (newStep >= 9 && positiveTotal != null && negativeTotal != null) {
+                finalDeterminant =
+                        matrixSarrusService                                
+                        .calculateDeterminant(
+                                        positiveTotal,
+                                        negativeTotal
+                                );
+                        }
         model.addAttribute(
                 "sarrusMatrix",
                 sarrusMatrix
         );
-
         model.addAttribute(
                 "determinant",
                 determinant
@@ -169,9 +211,12 @@ if (newStep >= 6) {
                 "positiveStep3",
                 positiveStep3
         );
+        model.addAttribute("positiveTotal", positiveTotal);
         model.addAttribute("negativeStep1", negativeStep1);
         model.addAttribute("negativeStep2", negativeStep2);
         model.addAttribute("negativeStep3", negativeStep3);
+        model.addAttribute("negativeTotal", negativeTotal);
+        model.addAttribute("determinant", finalDeterminant);
     }
     return "matrixSarrus";
 }

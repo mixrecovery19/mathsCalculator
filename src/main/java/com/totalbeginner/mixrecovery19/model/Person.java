@@ -1,8 +1,5 @@
 package com.totalbeginner.mixrecovery19.model;
-
-import java.time.LocalDate;
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity// JPA annotation to mark this class as a database entity
 public class Person {

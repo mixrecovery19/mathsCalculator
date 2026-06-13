@@ -1,9 +1,12 @@
+:root {
+    --matrix-width: 62px;
+    --matrix-height: 52px;
+}
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 /* Page background */
 body {
     font-family: -apple-system,
@@ -27,28 +30,9 @@ body {
 }
 
 body.loading {
-    opacity: 0.75;
-    transform: translateY(4px);
+    opacity: 0.88;
+    filter: blur(1px);
     pointer-events: none;
-}
-
-/* Logged backgrounds */
-.logged-out-bg {
-    background:
-        linear-gradient(rgba(244, 248, 251, 0.9), rgba(244, 248, 251, 0.9)),
-        url("/images/mathsimage2.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.logged-in-bg {
-    background:
-        linear-gradient(rgba(244, 248, 251, 0.85), rgba(244, 248, 251, 0.85)),
-        url("/images/mathsimage2.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 /* Layout */
@@ -66,9 +50,7 @@ body.loading {
     width: 100%;
 }
 
-.hero-card,
-.status-card,
-.preview-card {
+.hero-card{
     width: 100%;
     background: white;
     border-radius: 20px;
@@ -133,6 +115,9 @@ body.loading {
 
     text-decoration: none;
 }
+.button-group button:hover {
+    transform: translateY(-2px);
+}
 
 .dashboard-btn {
     padding: 10px 20px;
@@ -186,33 +171,30 @@ body.loading {
 .matrix-table td,
 .matrix-input-table td,
 .sarrus-table td {
-    width: 62px;
-    height: 52px;
+    width: var(--matrix-width);
+    height: var(--matrix-height);
     padding: 0;
     border: none;
     text-align: center;
 }
-
 /* Matrix input/display cells */
 .matrix-input {
-    width: 62px;
-    height: 52px;
-
+    width: var(--matrix-width);
+    height: var(--matrix-height);
     display: block;
-
     text-align: center;
     border-radius: 12px;
     border: 2px solid #ddd;
-
     background: white;
     color: #2c3e50;
-
     font-size: 1rem;
     font-weight: 700;
     line-height: 52px;
-
     box-sizing: border-box;
-    transition: 0.2s ease;
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.15s ease;
 }
 
 .matrix-input::placeholder {
@@ -223,12 +205,6 @@ body.loading {
     outline: none;
     border-color: #05e16c;
     box-shadow: 0 0 0 3px rgba(5, 225, 108, 0.18);
-}
-
-/* Diagonal highlighting */
-.diagonal-positive {
-    background: #fff4a8 !important;
-    border: 3px solid #f1c40f !important;
 }
 
 /* Details blocks */
@@ -294,7 +270,12 @@ body.loading {
     margin-bottom: 0.5rem;
     color: #333;
 }
-
+.matrix-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
 .matrix-inputs-dashboard {
     background: white;
     padding: 1.25rem;
@@ -381,10 +362,6 @@ input[type="number"] {
     margin: 0;
 }
 
-/* push the top row right */
-.sarrus-answer-table.top {
-    margin-left: 144px;
-}
 
 /* push bottom row slightly left */
 .sarrus-answer-table.bottom {
@@ -424,4 +401,87 @@ input[type="number"] {
 .diagonal-negative-3 {
     background: #ffe5c2;
     border-color: #f39c12;
+}
+.sarrus-stage-two {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sarrus-stage-two h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.sarrus-stage-two .math-details {
+    width: 100%;
+    max-width: 850px;
+    margin-bottom: 1.5rem;
+}
+ .matrix-inputs-dashboard .math-details {
+    width: 100%;
+    max-width: 850px;
+}
+.determinant-result-container {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.determinant-result-box {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+
+    background: linear-gradient(
+        135deg,
+        #fff9c4,
+        #ffe082
+    );
+
+    border: 3px solid #f1c40f;
+    border-radius: 20px;
+
+    padding: 1.5rem 2rem;
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,0.12);
+
+    animation: determinantPop 0.45s ease;
+}
+
+.determinant-result-box label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #555;
+}
+
+.final-determinant-input {
+    width: 180px;
+    height: 90px;
+
+    border-radius: 18px;
+    border: 3px solid #f1c40f;
+
+    background: white;
+    color: #2c3e50;
+
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+
+    box-shadow:
+        inset 0 2px 6px rgba(0,0,0,0.08);
+}
+
+@keyframes determinantPop {
+    0% {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
