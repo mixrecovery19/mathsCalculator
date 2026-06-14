@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/stylesSideBar.css">
     <link rel="stylesheet" href="/css/stylesMatrixResult.css">
     <script src="/js/overlayhelper.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <div class="app-layout">
@@ -51,13 +52,16 @@
                             <h2>Matrix Determinant</h2>
                             <details class="math-details">
                                 <summary>What does the determinant mean?</summary>
-                                <p class="math-description">
-                                    The determinant helps determine whether a matrix can be inverted.<br>
-                                    For a 2 × 2 matrix, the determinant is calculated using <strong>ad − bc</strong>.<br>
-                                    For larger matrices, the determinant can be calculated using cofactor expansion,<br>
-                                    where the matrix is broken into smaller matrices called minors.<br>
-                                    If the determinant equals <strong>0</strong>, the matrix has no inverse.
-                                </p>
+                                    <p class="math-description">
+                                        The determinant helps determine whether a matrix can be inverted.<br><br>
+                                        For a 2 × 2 matrix, the determinant is calculated using: \[\det(A)=ad-bc\]
+                                        For larger matrices, the determinant can be calculated using
+                                        cofactor expansion: \[\det(A)=\sum_{j=1}^{n}(-1)^{1+j}a_{1j}\det(M_{1j})\]
+                                        where the matrix is broken into smaller matrices called
+                                        <strong>minors</strong>.<br><br>
+                                        If the determinant equals <strong>0</strong>, the matrix has no inverse
+                                        and is called a <strong>singular matrix</strong>.
+                                    </p>
                             </details>
 
                             <div class="button-group">
@@ -69,7 +73,6 @@
                                     Calculate Determinant
                                 </button>
                             </div>
-
                             <div th:if="${determinant != null}">
                                 <h3>Determinant: <span th:text="${formattedDeterminant}"></span></h3>
                                 <div class="button-group">
@@ -88,11 +91,16 @@
                             <h2>Transposed Matrix</h2>
                             <details class="math-details">
                                 <summary>What does the transpose mean?</summary>
-                                <p class="math-description">
-                                    A transpose matrix is created by swapping rows and columns. 
-                                    The first row becomes the first column, the second row becomes the second column, and so on. 
-                                    This process is the same for 2×2, 3×3, and larger matrices. It is often written as Aᵀ.
-                                </p>
+                                    <p class="math-description">
+                                        A transpose matrix is created by swapping rows and columns.<br><br>
+                                        The first row becomes the first column, the second row becomes
+                                        the second column, and so on. This process works for
+                                        2 × 2, 3 × 3, and larger matrices.<br><br>
+                                        A transpose is written as:\[A^T\]
+                                        For example: \[A=\begin{bmatrix}a & b \\c & d\end{bmatrix}\quad \Rightarrow \quad 
+                                        A^T=\begin{bmatrix}a & c \\b & d\end{bmatrix}\]
+                                        Notice how the rows become columns and the columns become rows.
+                                    </p>
                             </details>
                             <div class="button-group">
                                 <button th:if="${transpose == null}" 
@@ -125,13 +133,23 @@
                             <h2>Inverse Matrix</h2>
                             <details class="math-details">
                                 <summary>What does the inverse mean?</summary>
-                                <p class="math-description">
-                                    The inverse of a matrix A is another matrix A⁻¹ such that when you multiply them together, you get the identity matrix.<br>
-                                    Not all matrices have an inverse; only square matrices with a non-zero determinant have inverses.<br>
-                                    For a 2 × 2 matrix, the inverse is calculated using the formula <strong>(1/det(A)) × adj(A)</strong>.<br>
-                                    For larger matrices, the inverse can be calculated using cofactor expansion and the adjugate matrix.<br>
-                                    If the determinant equals <strong>0</strong>, the matrix has no inverse.
-                                </p>
+                                    <p class="math-description">
+                                        The inverse of a matrix A is another matrix,
+                                        written as \(A^{-1}\), such that when multiplied
+                                        together they produce the identity matrix:<br><br>
+                                        \[A A^{-1} = I\]
+                                        Not all matrices have an inverse; only
+                                        square matrices with a non-zero determinant
+                                        can be inverted.<br><br>
+                                        For a 2 × 2 matrix, the inverse is calculated using:
+                                        \[A^{-1}=\frac{1}{ad-bc}\begin{bmatrix}d & -b \\-c & a\end{bmatrix}\]
+                                        where \(ad-bc\) is the determinant of the matrix.<br><br>
+                                        For larger matrices, the inverse is calculated
+                                        using cofactors, minors, and the adjugate matrix.<br><br>
+                                        If the determinant equals:
+                                        \[\det(A)=0\]
+                                        the matrix is singular and does not have an inverse.
+                                    </p>
                             </details>
 
                             <div class="button-group">
@@ -146,7 +164,7 @@
 
                             <div th:if="${inverse != null}">
                                 <h3>Inverse Matrix Fraction Form</h3>
-                                <h5>(1/det(A))</h5>
+                                <h5>\[\frac{1}{\det(A)}\]</h5>
                                 <table class="matrix-table">
                                     <tr th:each="row : ${inverse}">
                                         <td th:each="value : ${row}"
@@ -154,9 +172,8 @@
                                         </td>
                                     </tr>
                                 </table>
-
                                 <h3>Inverse Matrix Decimal Form</h3>
-                                <h5>(1/det(A) Calculated)</h5>
+                                <h5>\[\frac{1}{\det(A)}\text{(Calculated)}\]</h5>
                                 <table class="matrix-table">
                                     <tr th:each="row : ${inverse}">
                                         <td th:each="value : ${row}"
@@ -164,11 +181,9 @@
                                         </td>
                                     </tr>
                                 </table>
-
                                 <div th:if="${inverseError != null}">
                                     <p th:text="${inverseError}"></p>
                                 </div>
-
                                 <div class="button-group">
                                     <button type="submit" 
                                             name="action" 
@@ -185,16 +200,25 @@
                             <h2>Identity Matrix</h2>
                             <details class="math-details">
                                 <summary>What does the identity matrix mean?</summary>
-                                <p class="math-description">
-                                   The identity matrix is a special square matrix that acts as the multiplicative identity in matrix multiplication. It is denoted as I and has 1s on the diagonal and 0s elsewhere. For example, the 3 × 3 identity matrix looks like this:<br>
-                                    <strong>
-                                    [1 0 0]<br>
-                                    [0 1 0]<br>
-                                    [0 0 1]
-                                    </strong><br>
-                                    When you multiply any matrix A by the identity matrix I (of compatible size), you get A back: A × I = A and I × A = A.<br>
-                                    The identity matrix plays a crucial role in linear algebra, especially when working with inverses, as it serves as the "do nothing" element for matrix multiplication.
-                                </p>
+                                    <p class="math-description">
+                                        The identity matrix is a special square matrix
+                                        that acts as the multiplicative identity in
+                                        matrix multiplication. It is denoted as
+                                        \(I\) and contains <strong>1s along the main diagonal</strong>
+                                        and <strong>0s everywhere else</strong>.<br><br>
+                                        For example, the 3 × 3 identity matrix is written as:
+                                        \[I_3 = \begin{bmatrix}1 & 0 & 0 \\0 & 1 & 0 \\0 & 0 & 1\end{bmatrix}\]
+                                        When multiplying any compatible matrix
+                                        \(A\) by the identity matrix, the matrix
+                                        remains unchanged:
+                                        \[AI = A\]
+                                        and
+                                        \[IA = A\]
+                                        This is why the identity matrix is often
+                                        called the <strong>"do nothing"</strong> matrix in
+                                        linear algebra and plays an important role
+                                        when calculating inverse matrices.
+                                    </p>
                             </details>
 
                             <div class="button-group">
@@ -245,15 +269,17 @@
                             <h2>Matrix B Determinant</h2>
                             <details class="math-details">
                                 <summary>What does the determinant mean?</summary>
-                                <p class="math-description">
-                                    The determinant helps determine whether a matrix can be inverted.<br>
-                                    For a 2 × 2 matrix, the determinant is calculated using <strong>ad − bc</strong>.<br>
-                                    For larger matrices, the determinant can be calculated using cofactor expansion,<br>
-                                    where the matrix is broken into smaller matrices called minors.<br>
-                                    If the determinant equals <strong>0</strong>, the matrix has no inverse.
-                                </p>
+                                    <p class="math-description">
+                                        The determinant helps determine whether a matrix can be inverted.<br><br>
+                                        For a 2 × 2 matrix, the determinant is calculated using: \[\det(B)=ad-bc\]
+                                        For larger matrices, the determinant can be calculated using
+                                        cofactor expansion: \[\det(B)=\sum_{j=1}^{n}(-1)^{1+j}b_{1j}\det(M_{1j})\]
+                                        where the matrix is broken into smaller matrices called
+                                        <strong>minors</strong>.<br><br>
+                                        If the determinant equals <strong>0</strong>, the matrix has no inverse
+                                        and is called a <strong>singular matrix</strong>.
+                                    </p>
                             </details>
-
                             <div class="button-group">
                                 <button th:if="${determinantB == null}" 
                                         type="submit" 
@@ -282,11 +308,16 @@
                             <h2>Transposed Matrix B</h2>
                             <details class="math-details">
                                 <summary>What does the transpose mean?</summary>
-                                <p class="math-description">
-                                    A transpose matrix is created by swapping rows and columns. 
-                                    The first row becomes the first column, the second row becomes the second column, and so on. 
-                                    This process is the same for 2×2, 3×3, and larger matrices. It is often written as Bᵀ.
-                                </p>
+                                    <p class="math-description">
+                                        A transpose matrix is created by swapping rows and columns.<br><br>
+                                        The first row becomes the first column, the second row becomes
+                                        the second column, and so on. This process works for
+                                        2 × 2, 3 × 3, and larger matrices.<br><br>
+                                        A transpose is written as:\[B^T\]
+                                        For example: \[B=\begin{bmatrix}a & b \\c & d\end{bmatrix}\quad \Rightarrow \quad 
+                                        B^T=\begin{bmatrix}a & c \\b & d\end{bmatrix}\]
+                                        Notice how the rows become columns and the columns become rows.
+                                    </p>
                             </details>
 
                             <div class="button-group">
@@ -321,13 +352,23 @@
                             <h2>Inverse Matrix B</h2>
                             <details class="math-details">
                                 <summary>What does the inverse mean?</summary>
-                                <p class="math-description">
-                                    The inverse of a matrix B is another matrix B⁻¹ such that when you multiply them together, you get the identity matrix.<br>
-                                    Not all matrices have an inverse; only square matrices with a non-zero determinant have inverses.<br>
-                                    For a 2 × 2 matrix, the inverse is calculated using the formula <strong>(1/det(B)) × adj(B)</strong>.<br>
-                                    For larger matrices, the inverse can be calculated using cofactor expansion and the adjugate matrix.<br>
-                                    If the determinant equals <strong>0</strong>, the matrix has no inverse.
-                                </p>
+                                    <p class="math-description">
+                                        The inverse of a matrix B is another matrix,
+                                        written as \(B^{-1}\), such that when multiplied
+                                        together they produce the identity matrix:<br><br>
+                                        \[B B^{-1} = I\]
+                                        Not all matrices have an inverse; only
+                                        square matrices with a non-zero determinant
+                                        can be inverted.<br><br>
+                                        For a 2 × 2 matrix, the inverse is calculated using:
+                                        \[B^{-1}=\frac{1}{ad-bc}\begin{bmatrix}d & -b \\-c & a\end{bmatrix}\]
+                                        where \(ad-bc\) is the determinant of the matrix.<br><br>
+                                        For larger matrices, the inverse is calculated
+                                        using cofactors, minors, and the adjugate matrix.<br><br>
+                                        If the determinant equals:
+                                        \[\det(B)=0\]
+                                        the matrix is singular and does not have an inverse.
+                                    </p>
                             </details>
 
                             <div class="button-group">
@@ -342,7 +383,7 @@
 
                             <div th:if="${inverseB != null}">
                                 <h3>Inverse Matrix Fraction Form</h3>
-                                <h5>(1/det(B))</h5>
+                                <h5>\[\frac{1}{\det(B)}\]</h5>
                                 <table class="matrix-table">
                                     <tr th:each="row : ${inverseB}">
                                         <td th:each="value : ${row}"
@@ -352,7 +393,7 @@
                                 </table>
 
                                 <h3>Inverse Matrix Decimal Form</h3>
-                                <h5>(1/det(B) Calculated)</h5>
+                                <h5>\[\frac{1}{\det(B)}\text{(Calculated)}\]</h5>
                                 <table class="matrix-table">
                                     <tr th:each="row : ${inverseB}">
                                         <td th:each="value : ${row}"
@@ -381,16 +422,25 @@
                             <h2>Identity Matrix B</h2>
                             <details class="math-details">
                                 <summary>What does the identity matrix mean?</summary>
-                                <p class="math-description">
-                                   The identity matrix is a special square matrix that acts as the multiplicative identity in matrix multiplication. It is denoted as I and has 1s on the diagonal and 0s elsewhere. For example, the 3 × 3 identity matrix looks like this:<br>
-                                    <strong>
-                                    [1 0 0]<br>
-                                    [0 1 0]<br>
-                                    [0 0 1]
-                                    </strong><br>
-                                    When you multiply any matrix A by the identity matrix I (of compatible size), you get A back: A × I = A and I × A = A.<br>
-                                    The identity matrix plays a crucial role in linear algebra, especially when working with inverses, as it serves as the "do nothing" element for matrix multiplication.
-                                </p>
+                                    <p class="math-description">
+                                            The identity matrix is a special square matrix
+                                            that acts as the multiplicative identity in
+                                            matrix multiplication. It is denoted as
+                                            \(I\) and contains <strong>1s along the main diagonal</strong>
+                                            and <strong>0s everywhere else</strong>.<br><br>
+                                            For example, the 3 × 3 identity matrix is written as:
+                                            \[I_3 = \begin{bmatrix}1 & 0 & 0 \\0 & 1 & 0 \\0 & 0 & 1\end{bmatrix}\]
+                                            When multiplying any compatible matrix
+                                            \(B\) by the identity matrix, the matrix
+                                            remains unchanged:
+                                            \[BI = B\]
+                                            and
+                                            \[IB = B\]
+                                            This is why the identity matrix is often
+                                            called the <strong>"do nothing"</strong> matrix in
+                                            linear algebra and plays an important role
+                                            when calculating inverse matrices.
+                                        </p>
                             </details>
 
                             <div class="button-group">
