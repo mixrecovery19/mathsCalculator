@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/stylesSideBar.css">    
     <link rel="stylesheet" href="/css/stylesMatrixTwoByTwo.css">
     <script src="/js/overlayhelper.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <div class="app-layout">
@@ -14,50 +15,22 @@
     <main class="matrix-page">
         <form th:action="@{/matrix-two-by-two}" method="post">            
             <div th:replace="~{fragments/matrixTwoByTwoHeader :: matrixTwoByTwoHeader}"></div>
-            <section class="hero-card"> 
-                <div class="two-by-two-stage-two">               
-                        <h2>2. This is your 2 x 2 Matrix </h2>                      
-                        <details class="math-details">
-                            <summary>Calculating the Determinant of 2 x 2 Matrix</summary>
-                                <p class="math-description">
-                                    When you click "Generate 2 x 2 Determinant" your initial 2 x 2 matrix will be used to calculate the determinant.<br>
-                                    The determinant of a 2 x 2 matrix is calculated as (ad - bc), where a, b, c, and d are the elements of the matrix.<br>
-                                    This allows you to easily calculate the determinant working through the 1/ad-bc formula.
-                                </p>
-                        </details>                    
-                        <input type="hidden" name="size" th:value="${size}">
-                        <input type="hidden" name="currentStep" th:value="${currentStep}">
-                        <input type="hidden" name="positiveTotal" th:value="${positiveTotal}">
-                        <input type="hidden" name="negativeTotal" th:value="${negativeTotal}">
-                        <table class="matrix-table matrix-table-readonly">
-                            <tr th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
-                                <td th:each="colIndex : ${#numbers.sequence(0, size - 1)}">
-                                    <input type="text" class="matrix-input matrix-readonly"
-                                        title="Initial matrix value"
-                                        aria-label="Initial matrix value"
-                                        readonly
-                                        th:value="
-                                            ${matrixTwoByTwo != null
-                                            && matrixTwoByTwo[rowIndex][colIndex] != 0
-                                            ? matrixTwoByTwo[rowIndex][colIndex]
-                                            : ''}">
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="button-group">
-                            <button type="submit" name="action" value="generate-two-by-two" class="btn-primary">
-                                Generate 2 x 2 Walkthrough
-                            </button>
-                        </div> 
-                    </div>                 
-            </section>   
-            <section class="hero-card" th:if="${hasWalkthrough}">
+                <input type="hidden" name="size" th:value="${size}">
+                <input type="hidden" name="currentStep" th:value="${currentStep}">
+                <input type="hidden" name="positiveTotal" th:value="${positiveTotal}">
+                <input type="hidden" name="negativeTotal" th:value="${negativeTotal}">            
+            <section class="hero-card walkthrough-card" th:if="${hasWalkthrough}">
                 <div class="two-by-two-stage-two">   
-                <h2>3. 2 x 2 Matrix</h2>
+                <h2>2. 2 x 2 Matrix Determinant Calculator Walkthrough</h2>
                     <details class="math-details">
                     <summary>Step Process To Calculate 2 x 2 Matrix Determinant</summary>
                         <p class="math-description">
-                            Here you can click through each step of the 1/ad-bc process to calculate the determinant of a 2 x 2 matrix.
+                            You can now click through each step of the (ad − bc) process used to calculate the determinant of a 2 × 2 matrix.<br>
+                            The determinant of a 2 × 2 matrix is calculated as (ad − bc), where a, b, c, and d are the elements of the matrix.<br>
+                            
+                            In matrices, we always refer to rows first and then columns. Therefore, a is Row 1 Column 1, b is Row 1 Column 2, c is Row 2 Column 1, and d is Row 2 Column 2.<br>
+                            We first calculate the positive diagonal using (a × d), then calculate the negative diagonal using (b × c), and finally subtract (b × c) from (a × d) to find the determinant.<br>
+                            This walkthrough allows you to visually calculate the determinant step by step.
                         </p>
                     </details>      
                         <div class="two-by-two-layout">  
@@ -87,8 +60,7 @@
                                         readonly>
                                 </td>                   
                             </tr>
-                        </table>
-                    
+                        </table>                    
                         <table class="matrix-input-table">
                             <tr th:each="row,rowStat : ${walkthroughTwoByTwoMatrix}">
                                 <td th:each="value,colStat : ${row}">

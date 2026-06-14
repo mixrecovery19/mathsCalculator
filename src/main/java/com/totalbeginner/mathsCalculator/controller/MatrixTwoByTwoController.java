@@ -64,8 +64,7 @@ import java.util.Map;
                 currentStepParam == null || currentStepParam.isBlank()
                         ? 0
                         : Integer.parseInt(currentStepParam);
-
-        boolean hasMatrixValues = true;
+        
         boolean hasWalkthrough = false;
 
         double positiveDiagonal =
@@ -118,7 +117,7 @@ model.addAttribute(
                         matrixTwoByTwo
                 )
 );
-        model.addAttribute("hasMatrixValues", hasMatrixValues);
+        
         model.addAttribute("hasWalkthrough", hasWalkthrough);
         model.addAttribute("currentStep", currentStep);
 
