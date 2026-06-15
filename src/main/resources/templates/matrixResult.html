@@ -14,25 +14,30 @@
         <div th:replace="~{sidebar :: sidebar}"></div>
         <main class="matrix-page">
             <!-- SINGLE FORM – powers the entire dashboard -->
-            <form th:action="@{/matrices/result}" method="post">
+            <form th:action="@{/matrices/result}" method="post" th:object="${matrixForm}">
                 <!-- ==================== DASHBOARD HEADER (controls + editable matrix) ==================== -->
                 <div th:replace="~{fragments/matrixHeaderA :: matrixHeaderA}"></div>
                 <div th:replace="~{fragments/matrixHeaderB :: matrixHeaderB}"></div>
 
                 <!-- Hidden state needed by the controller for toggles -->
-                <input type="hidden" name="showDeterminant" th:value="${determinant != null}">
-                <input type="hidden" name="showTranspose" th:value="${transpose != null}">
-                <input type="hidden" name="showInverse" th:value="${inverse != null}">
-                <input type="hidden" name="showIdentity" th:value="${identity != null}">
-                <input type="hidden" name="showDeterminantB" th:value="${determinantB != null}">
-                <input type="hidden" name="showTransposeB" th:value="${transposeB != null}">
-                <input type="hidden" name="showInverseB" th:value="${inverseB != null}">
-                <input type="hidden" name="showIdentityB" th:value="${identityB != null}">
-                <input type="hidden" name="showAddition" th:value="${showAddition}">
-                <input type="hidden" name="showSubtraction" th:value="${showSubtraction}">
-                <input type="hidden" name="showMultiplication" th:value="${showMultiplication}">
-                <input type="hidden" name="showSquareA" th:value="${squareA != null}">
-                <input type="hidden" name="showSquareB" th:value="${squareB != null}">
+             <input type="hidden" th:field="*{showDeterminant}">
+<input type="hidden" th:field="*{showTranspose}">
+<input type="hidden" th:field="*{showInverse}">
+<input type="hidden" th:field="*{showIdentity}">
+
+<input type="hidden" th:field="*{showDeterminantB}">
+<input type="hidden" th:field="*{showTransposeB}">
+<input type="hidden" th:field="*{showInverseB}">
+<input type="hidden" th:field="*{showIdentityB}">
+
+<input type="hidden" th:field="*{showAddition}">
+<input type="hidden" th:field="*{showSubtraction}">
+<input type="hidden" th:field="*{showMultiplication}">
+
+<input type="hidden" th:field="*{showSquareA}">
+<input type="hidden" th:field="*{showSquareB}">
+<input type="hidden" th:field="*{showScalarA}">
+<input type="hidden" th:field="*{showScalarB}">
 
                 <div class="matrix-container three-columns">
                     <!-- ==================== COLUMN 1: MATRIX A ==================== -->
@@ -639,8 +644,7 @@
                             <div class="scalar-input-wrapper">
                                 <input type="number"
                                     step="any"
-                                    name="scalarValue"
-                                    th:value="${scalarValue}"
+                                    th:field="*{scalarValue}"
                                     placeholder="k"
                                     class="matrix-input scalar-cell">
                             </div>
