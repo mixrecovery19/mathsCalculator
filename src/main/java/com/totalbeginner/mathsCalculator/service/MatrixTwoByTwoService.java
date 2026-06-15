@@ -90,26 +90,61 @@ public class MatrixTwoByTwoService {
                 negativeDiagonal
         );
     }
-    public String calculateInverseTwoByTwo(double[][] matrix) {
+    public double[][] buildInverseWalkthroughMatrix(
+        double[][] matrix,
+        int inverseCurrentStep
+) {
 
-        double determinant = determinantTwoByTwo(matrix);
+    double a = matrix[0][0];
+    double b = matrix[0][1];
+    double c = matrix[1][0];
+    double d = matrix[1][1];
 
-        if (determinant == 0) {
-            return "The matrix is singular and does not have an inverse.";
-        }
+    double[][] walkthrough =
+            new double[2][2];
 
-        double[][] inverse = new double[2][2];
+    walkthrough[0][0] = a;
+    walkthrough[0][1] = b;
+    walkthrough[1][0] = c;
+    walkthrough[1][1] = d;
 
-        inverse[0][0] = matrix[1][1] / determinant;
-        inverse[0][1] = -matrix[0][1] / determinant;
-        inverse[1][0] = -matrix[1][0] / determinant;
-        inverse[1][1] = matrix[0][0] / determinant;
+    if (inverseCurrentStep >= 1) {
 
-        return String.format(
-                "Inverse:\n[[%.2f, %.2f], [%.2f, %.2f]]",
-                inverse[0][0], inverse[0][1],
-                inverse[1][0], inverse[1][1]
-        );
+        walkthrough[0][0] = d;
+        walkthrough[0][1] = -b;
+        walkthrough[1][0] = -c;
+        walkthrough[1][1] = a;
     }
+
+    return walkthrough;
+}
+   public double[][] calculateInverseTwoByTwo(
+        double[][] matrix
+) {
+
+    double determinant =
+            determinantTwoByTwo(matrix);
+
+    if (determinant == 0) {
+        return new double[2][2];
+    }
+
+    double[][] inverse =
+            new double[2][2];
+
+    inverse[0][0] =
+            matrix[1][1] / determinant;
+
+    inverse[0][1] =
+            -matrix[0][1] / determinant;
+
+    inverse[1][0] =
+            -matrix[1][0] / determinant;
+
+    inverse[1][1] =
+            matrix[0][0] / determinant;
+
+    return inverse;
+}
     
 }
