@@ -1,45 +1,48 @@
+<script src="/js/overlayhelper.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <div th:fragment="matrixSarrusHeader" class="matrix-inputs-dashboard">
     <div class="matrix-controls matrix-fragment-card">
         <div class="matrix-control-row">
-            <h1>3 × 3 Determinant Calculator (Sarrus Method)</h1>                             
-            
+            <h1>3 × 3 Determinant Calculator (Sarrus Method)</h1>                            
         </div>
          <h2>1. Enter Values To Form Your 3 x 3 Matrix</h2>
-         <details class="math-details">
-                                <summary>Calculating the Determinant of a 3 × 3 Matrix using the Sarrus Method</summary>
-                                <p class="math-description">
-                                    The determinant helps determine whether a matrix can be inverted.<br>
-                                    For a 3 × 3 matrix, the determinant can be calculated using the Sarrus method.<br>
-                                    In essence the Sarrus method is a series of elementary mathematics, performed in order allowing 
-                                    to calculate the determinant efficiently manually.
-                                </p>
-                            </details>
-                             
+            <details class="math-details">
+                <summary>Calculating the Determinant of a 3 × 3 Matrix using the Sarrus Method</summary>
+                    <p class="math-description">
+                        The determinant helps determine whether a matrix
+                        can be inverted.<br><br>
+                        For a \(3 \times 3\) matrix, the determinant can be
+                        calculated using the <strong>Sarrus Method</strong>.<br><br>
+                        Given a matrix:\[A=\begin{bmatrix}a & b & c \\d & e & f \\ g & h & i \end{bmatrix} \]                                  
+                        the determinant is calculated by summing the
+                        downward diagonals and subtracting the upward
+                        diagonals:
+                        \[\det(A)=aei+bfg+cdh - ceg-bdi-afh\]
+                        In essence, the Sarrus method is a sequence of
+                        elementary multiplication and addition/subtraction
+                        steps performed in order, allowing the determinant
+                        of a \(3 \times 3\) matrix to be calculated manually
+                        in an efficient and visual way.
+                    </p>
+            </details>                             
         <input type="hidden" name="size" th:value="${size ?: 3}">
-        <table class="matrix-input-table">
-            <tr th:each="row : ${#numbers.sequence(0, (size ?: 2) - 1)}">
-                <td th:each="col : ${#numbers.sequence(0, (size ?: 2) - 1)}">
-                    <input type="number"
-                           step="any"
-                           title="Matrix Sarrus cell value"
-                           placeholder="0"
-                           th:id="'cell_' + ${row} + '_' + ${col}"
-                           th:name="'cell_' + ${row} + '_' + ${col}"
-                           th:value="${matrixSarrus != null && matrixSarrus[row][col] != 0 ? matrixSarrus[row][col] : ''}"
-                           class="matrix-input">
-                </td>
-            </tr>
-        </table>
-        <button title="Update Matrix"
-                type="submit"
-                name="action"
-                value="update-matrix-sarrus"
-                class="btn-primary dashboard-btn">
-            <span th:text="${hasMatrixValues}
-                ? 'Update Matrix'
-                : 'Create Matrix'">
-            </span>
-
+            <table class="matrix-input-table">
+                <tr th:each="row : ${#numbers.sequence(0, (size ?: 2) - 1)}">
+                    <td th:each="col : ${#numbers.sequence(0, (size ?: 2) - 1)}">
+                        <input type="number"
+                            step="any"
+                            title="Matrix Sarrus cell value"
+                            placeholder="0"
+                            th:id="'cell_' + ${row} + '_' + ${col}"
+                            th:name="'cell_' + ${row} + '_' + ${col}"
+                            th:value="${matrixSarrus != null && matrixSarrus[row][col] != 0 ? matrixSarrus[row][col] : ''}"
+                            class="matrix-input">
+                    </td>
+                </tr>
+            </table>
+        <button title="Update Matrix" type="submit" name="action" value="update-matrix-sarrus" class="btn-primary dashboard-btn">
+            <span th:text="${hasMatrixValues} ? 'Update Matrix' : 'Create Matrix'"></span>
         </button>
     </div>
-</div>
+</div> 
+        

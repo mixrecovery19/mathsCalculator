@@ -102,13 +102,10 @@ body.loading {
     padding: 12px 24px;
     border: none;
     border-radius: 30px;
-
     font-size: 15px;
     font-weight: 600;
-
     cursor: pointer;
     transition: all 0.2s ease;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,7 +115,9 @@ body.loading {
 .button-group button:hover {
     transform: translateY(-2px);
 }
-
+.continue-button-group {
+    margin-top: 2.5rem;
+}
 .dashboard-btn {
     padding: 10px 20px;
     font-size: 14px;
@@ -286,13 +285,11 @@ body.loading {
 .matrix-inputs-dashboard .button-group {
     margin-top: 0;
 }
-
 .matrix-fragment-card {
     display: flex;
     flex-direction: column;
     align-items: center;    
 }
-
 .matrix-control-row {
     display: flex;
     align-items: center;
@@ -300,16 +297,13 @@ body.loading {
     gap: 0.9rem;
     flex-wrap: wrap;
 }
-
 .matrix-control-row h1 {
     margin: 0;
     font-size: 1.5rem;
 }
-
 .matrix-control-row label {
     font-weight: 600;
 }
-
 .matrix-control-row select {
     padding: 10px 14px;
     border-radius: 10px;

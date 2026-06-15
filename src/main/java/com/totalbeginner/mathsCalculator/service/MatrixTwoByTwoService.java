@@ -90,5 +90,26 @@ public class MatrixTwoByTwoService {
                 negativeDiagonal
         );
     }
+    public String calculateInverseTwoByTwo(double[][] matrix) {
+
+        double determinant = determinantTwoByTwo(matrix);
+
+        if (determinant == 0) {
+            return "The matrix is singular and does not have an inverse.";
+        }
+
+        double[][] inverse = new double[2][2];
+
+        inverse[0][0] = matrix[1][1] / determinant;
+        inverse[0][1] = -matrix[0][1] / determinant;
+        inverse[1][0] = -matrix[1][0] / determinant;
+        inverse[1][1] = matrix[0][0] / determinant;
+
+        return String.format(
+                "Inverse:\n[[%.2f, %.2f], [%.2f, %.2f]]",
+                inverse[0][0], inverse[0][1],
+                inverse[1][0], inverse[1][1]
+        );
+    }
     
 }

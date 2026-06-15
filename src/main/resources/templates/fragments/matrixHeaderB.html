@@ -1,29 +1,20 @@
+<script src="/js/overlayhelper.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <div th:fragment="matrixHeaderB" class="matrix-inputs-dashboard">
     <div class="matrix-controls matrix-fragment-card">
-
         <div class="matrix-control-row">
             <h1>Matrix B</h1>
-
             <label for="sizeB">Matrix Size:</label>
-
             <select id="sizeB" name="size" aria-label="Matrix B Size">
                 <option value="2" th:selected="${size == 2}">2 × 2</option>
                 <option value="3" th:selected="${size == 3}">3 × 3</option>
                 <option value="4" th:selected="${size == 4}">4 × 4</option>
             </select>
-
-            <button type="submit"
-                    name="action"
-                    value="update-matrix-b"
-                    class="btn-primary dashboard-btn">
+            <button type="submit" name="action" value="update-matrix-b" class="btn-primary dashboard-btn">
                 Update Matrices
             </button>
         </div>
-
-        <input type="hidden"
-               name="size"
-               th:value="${size ?: 2}">
-
+        <input type="hidden" name="size" th:value="${size ?: 2}">
         <table class="matrix-input-table">
             <tr th:each="row : ${#numbers.sequence(0, (size ?: 2) - 1)}">
                 <td th:each="col : ${#numbers.sequence(0, (size ?: 2) - 1)}">
@@ -38,6 +29,5 @@
                 </td>
             </tr>
         </table>
-
     </div>
 </div>

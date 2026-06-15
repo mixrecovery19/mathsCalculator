@@ -1,6 +1,8 @@
 package com.totalbeginner.mathsCalculator.controller;
 
 import com.totalbeginner.mathsCalculator.service.MatrixService;
+import com.totalbeginner.mathsCalculator.service.MatrixRequestParser;
+import com.totalbeginner.mathsCalculator.model.MatrixResultViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,11 @@ import java.util.Map;
 public class MatrixController {
 
     private final MatrixService matrixService;
+        private final MatrixRequestParser matrixRequestParser;
 
-    public MatrixController(MatrixService matrixService) {
+    public MatrixController(MatrixService matrixService, MatrixRequestParser matrixRequestParser) {
         this.matrixService = matrixService;
+        this.matrixRequestParser = matrixRequestParser;
     }
 
     @GetMapping("/matrixResult")
@@ -78,9 +82,8 @@ public class MatrixController {
         return "matrixResult";
         }   
 
-        double[][] matrixA = buildMatrixA(size, params);
-
-        double[][] matrixB = buildMatrixB(size, params);    
+        double[][] matrixA = matrixRequestParser.buildMatrix(size, params, "cell_");
+        double[][] matrixB = matrixRequestParser.buildMatrix(size, params, "cellB_");                
 
         boolean newShowDet = false;
         boolean newShowTrans = false;
@@ -322,32 +325,7 @@ public class MatrixController {
                 if (calculate.equals(action)) return true;
                 if (close.equals(action)) return false;
                 return currentValue; // no change for this section
-        }   
-
-        private double[][] buildMatrixA(int size, Map<String, String> params) {
-                double[][] matrix = new double[size][size];
-                for (int row = 0; row < size; row++) {
-                for (int col = 0; col < size; col++) {
-                        String key = "cell_" + row + "_" + col;
-                        String value = params.get(key);
-                        matrix[row][col] = (value == null || value.isBlank()) ? 0 : Double.parseDouble(value);                
-                }
-                }
-                return matrix;
-        }
-
-        private double[][] buildMatrixB(int size, Map<String, String> params) {
-                double[][] matrix = new double[size][size];
-
-                        for (int row = 0; row < size; row++) {
-                                for (int col = 0; col < size; col++) {
-                                String key = "cellB_" + row + "_" + col;
-                                String value = params.get(key);
-                                matrix[row][col] = (value == null || value.isBlank()) ? 0 : Double.parseDouble(value);
-                                }
-                        }
-                        return matrix;
-                }
+        }           
 
         private void restoreOpenSections(
                         Model model,

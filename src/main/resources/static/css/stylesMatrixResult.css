@@ -331,3 +331,14 @@ body.loading {
     background-position: center;
     background-repeat: no-repeat;
 }
+.scalar-input-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.scalar-cell {
+    width: 70px;
+    height: 70px;
+    text-align: center;
+}

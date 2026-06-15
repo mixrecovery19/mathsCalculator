@@ -6,7 +6,8 @@
     <title>Sarrus Method</title>
     <link rel="stylesheet" href="/css/stylesSideBar.css">    
     <link rel="stylesheet" href="/css/stylesMatrixSarrus.css">
-    <script src="/js/overlayhelper.js"></script>
+    <script src="/js/overlayhelper.js"></script>       
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div class="app-layout">
@@ -14,17 +15,22 @@
     <main class="matrix-page">
         <form th:action="@{/matrices-sarrus}" method="post">            
             <div th:replace="~{fragments/matrixSarrusHeader :: matrixSarrusHeader}"></div>
-            <section class="hero-card"> 
-                <div class="sarrus-stage-two">               
+                <section class="hero-card"> 
+                    <div class="sarrus-stage-two">               
                         <h2>2. Generate Sarrus 5 x 3 Matrix from Your Initial 3 x 3 Matrix</h2>                      
-                        <details class="math-details">
+                            <details class="math-details">
                                 <summary>Calculating the Determinant using the Sarrus Method</summary>
-                                <p class="math-description">
-                                    When you click "Generate Sarrus 5 x 3 Matrix" your initial 3 x 3 matrix will be turned into a 5 x 3 matrix<br>
-                                    Where the first 2 rows will form row/column 4 and 5 with the exact same values as in row/column 1 and 2 respectively.<br>
-                                    This allows you to easily multiply through the positive and negative diagonals, where we can then add them forming a positive total and a negative total<br>
-                                Finally we can then subtract the negative total from the positive total which then give us the determinat of a 3 x 3 matrix.
-                                </p>
+                                    <p class="math-description">
+                                        When you click "Generate Sarrus 5 × 3 Matrix", your initial
+                                        \(3 \times 3\) matrix is extended by repeating the first two
+                                        columns on the right-hand side.<br><br>
+                                        Given:\[A=\begin{bmatrix}a & b & c \\d & e & f \\g & h & i\end{bmatrix}\]
+                                        the Sarrus method calculates:\[\det(A)=(aei+bfg+cdh) - (ceg+bdi+afh) \]
+                                        The downward diagonals form the positive total, and the upward
+                                        diagonals form the negative total.<br><br>
+                                        Finally, the determinant is calculated by subtracting the negative
+                                        total from the positive total.
+                                    </p>
                             </details>                    
                         <input type="hidden" name="size" th:value="${size}">
                         <input type="hidden" name="currentStep" th:value="${currentStep}">
@@ -45,223 +51,222 @@
                                 </td>
                             </tr>
                         </table>
-                        <div class="button-group">
-                            <button type="submit" name="action" value="generate-sarrus" class="btn-primary">
-                                Generate Sarrus 5 x 3 Matrix
-                            </button>
-                        </div> 
+                            <div class="button-group">
+                                <button type="submit" name="action" value="generate-sarrus" class="btn-primary">
+                                    Generate Sarrus 5 x 3 Matrix
+                                </button>
+                            </div> 
                         </div>                 
-            </section>
-   
-        <section class="hero-card" th:if="${sarrusMatrix != null}">
-            <div class="sarrus-stage-two">   
-            <h2>3. Sarrus 5 x 3 Matrix</h2>
-            <details class="math-details">
-                <summary>9 Step Process To Calculate 3 x 3 Matrix Determinant</summary>
-                    <p class="math-description">
-                        In step 3 you can click through each step of the Sarrus method, where you can clearly see the first 3 steps of multiiplying diagonally
-                        down the to form you positive values, then steps 4-6 perform the same multiplication but now up to form the negative values.<br>
-                        Finally steps 7-9 show you the totals of the positive and negative values, and then the determinant calculation by subtracting the negative total from the positive total.<br>
-                        <strong>Note:</strong>Remember, we are subtracting the positive from the negative, meaning, we subtract the negative total(top row) from the positive total(bottom row).
-                    </p>
-                </details>      
-            <div class="sarrus-layout">  
-            <table class="matrix-input-table sarrus-answer-table top">
-                <tr>
-                    <td>
-                        <input type="text"
-                            class="matrix-input sarrus-answer-cell"                       
-                            title="Empty answer cell"
-                            aria-label="Empty answer cell"
-                            readonly>
-                    </td>
-                    <td>
-                        <input type="text"
-                            class="matrix-input sarrus-answer-cell"                       
-                            title="Empty answer cell"
-                            aria-label="Empty answer cell"
-                            readonly>
-                    </td>
-                    <td>
-                        <input type="text"
+            </section>   
+            <section class="hero-card" th:if="${sarrusMatrix != null}">
+                <div class="sarrus-stage-two">   
+                <h2>3. Sarrus 5 x 3 Matrix</h2>
+                    <details class="math-details">
+                        <summary>9 Step Process To Calculate 3 x 3 Matrix Determinant</summary>
+                            <p class="math-description">
+                                In this step, you can click through each part of the Sarrus method.<br><br>
+                                Steps 1–3 multiply the downward diagonals:\[aei,\quad bfg,\quad cdh\]
+                                These values are added to form the positive total:
+                                \[aei+bfg+cdh\]
+                                Steps 4–6 multiply the upward diagonals:\[ceg,\quad bdi,\quad afh\]
+                                These values are added to form the negative total:
+                                \[ceg+bdi+afh\]
+                                Steps 7–9 show the positive total, the negative total, and the final
+                                determinant calculation:
+                                \[\det(A)=\text{positive total} - \text{negative total}\]
+                                <strong>Note:</strong> We subtract the negative total from the positive total.
+                            </p>
+                    </details>      
+                <div class="sarrus-layout">  
+                <table class="matrix-input-table sarrus-answer-table top">
+                    <tr>
+                        <td>
+                            <input type="text"
+                                class="matrix-input sarrus-answer-cell"                       
+                                title="Empty answer cell"
+                                aria-label="Empty answer cell"
+                                readonly>
+                        </td>
+                        <td>
+                            <input type="text"
+                                class="matrix-input sarrus-answer-cell"                       
+                                title="Empty answer cell"
+                                aria-label="Empty answer cell"
+                                readonly>
+                        </td>
+                        <td>
+                            <input type="text"
                                 id="negativeStep1"
-                            class="matrix-input sarrus-answer-cell"
-                            th:value="${negativeStep1}"                      
-                            title="Negative step 1"
-                            aria-label="Negative step 1"
-                            readonly>
-                    </td>
-                    <td>
-                        <input type="text"
-                                id="negativeStep2"
-                            class="matrix-input sarrus-answer-cell"
-                            th:value="${negativeStep2}"
-                            title="Negative step 2"
-                            aria-label="Negative step 2"
-                            readonly>
-                    </td>
-                    <td>
-                        <input type="text"
-                                id="negativeStep3"
-                            class="matrix-input sarrus-answer-cell"
-                            th:value="${negativeStep3}"
-                            title="Negative step 3"
-                            aria-label="Negative step 3"
-                            readonly>
-                    </td>
-                    <td>
-                        <input type="text"
-                                id="negativeTotal"
-                            class="matrix-input sarrus-answer-cell"
-                            th:value="${negativeTotal}"
-                            title="Negative total"
-                            aria-label="Negative total"
-                            readonly>
-                    </td>
-                </tr>
-            </table>
-        
-            <table class="matrix-input-table">
-                <tr th:each="row,rowStat : ${sarrusMatrix}">
-                    <td th:each="value,colStat : ${row}">
-                        <input type="number"
-                            class="matrix-input matrix-readonly"
-                            th:id="
-                            'cell-'
-                            + ${rowStat.index}
-                            + '-'
-                            + ${colStat.index}"
-                            th:value="${value}"
-                            title="Sarrus matrix value"
-                            aria-label="Sarrus matrix value"
-                            readonly
+                                class="matrix-input sarrus-answer-cell"
+                                th:value="${negativeStep1}"                      
+                                title="Negative step 1"
+                                aria-label="Negative step 1"
+                                readonly>
+                        </td>
+                        <td>
+                            <input type="text"
+                                    id="negativeStep2"
+                                class="matrix-input sarrus-answer-cell"
+                                th:value="${negativeStep2}"
+                                title="Negative step 2"
+                                aria-label="Negative step 2"
+                                readonly>
+                        </td>
+                        <td>
+                            <input type="text"
+                                    id="negativeStep3"
+                                class="matrix-input sarrus-answer-cell"
+                                th:value="${negativeStep3}"
+                                title="Negative step 3"
+                                aria-label="Negative step 3"
+                                readonly>
+                        </td>
+                        <td>
+                            <input type="text"
+                                    id="negativeTotal"
+                                class="matrix-input sarrus-answer-cell"
+                                th:value="${negativeTotal}"
+                                title="Negative total"
+                                aria-label="Negative total"
+                                readonly>
+                        </td>
+                    </tr>
+                </table>
+            
+                <table class="matrix-input-table">
+                    <tr th:each="row,rowStat : ${sarrusMatrix}">
+                        <td th:each="value,colStat : ${row}">
+                            <input type="number"
+                                class="matrix-input matrix-readonly"
+                                th:id="
+                                'cell-'
+                                + ${rowStat.index}
+                                + '-'
+                                + ${colStat.index}"
+                                th:value="${value}"
+                                title="Sarrus matrix value"
+                                aria-label="Sarrus matrix value"
+                                readonly
 
-                            th:classappend="
-                            ${(currentStep == 1
-                            && rowStat.index == 0
-                            && colStat.index == 0)
-                            ||
-                            (currentStep == 1
-                            && rowStat.index == 1
-                            && colStat.index == 1)
-                            ||
-                            (currentStep == 1
-                            && rowStat.index == 2
-                            && colStat.index == 2)}
-                            ? ' diagonal-positive'
-                            : ''">
+                                th:classappend="
+                                ${(currentStep == 1
+                                && rowStat.index == 0
+                                && colStat.index == 0)
+                                ||
+                                (currentStep == 1
+                                && rowStat.index == 1
+                                && colStat.index == 1)
+                                ||
+                                (currentStep == 1
+                                && rowStat.index == 2
+                                && colStat.index == 2)}
+                                ? ' diagonal-positive'
+                                : ''">
 
-                    </td>
-                    <!-- NEW RESULT COLUMN -->
-                    <td th:if="${rowStat.index == 0}">
-                        <input type="text"                
-                            class="matrix-input sarrus-answer-cell"                
-                            title="Empty answer cell"
-                            aria-label="Empty answer cell"
-                            readonly>
-                    </td>
-                    <td th:if="${rowStat.index == 1}">
-                        <input type="text"
-                            id="determinant"
-                            class="matrix-input sarrus-answer-cell determinant-cell"
-                            th:value="${determinant}"
-                            title="Determinant"
-                            aria-label="Determinant"
-                            readonly>
-                    </td>
-                    <td th:if="${rowStat.index == 2}">
-                        <input type="text"             
-                            class="matrix-input sarrus-answer-cell"                  
-                            title="Empty answer cell"
-                            aria-label="Empty answer cell"
-                            readonly>
-                    </td>
-                </tr>
-            </table>
-            <!-- BOTTOM POSITIVE ANSWER ROW -->
-            <table class="matrix-input-table sarrus-answer-table bottom">
-                <tr>
-                    <td>
-                        <input type="text"
-                            class="matrix-input sarrus-answer-cell"                       
-                            title="Empty answer cell"
-                            aria-label="Empty answer cell"
-                            readonly>
-                    </td>
-                    <td>
-                        <input type="text"
-                            class="matrix-input sarrus-answer-cell"                       
-                            title="Empty answer cell"
-                            aria-label="Empty answer cell"
-                            readonly>
-                    </td>
-                    <td>
-                        <input type="text"
-                                id="positiveStep1"
-                            class="matrix-input sarrus-answer-cell"
-                            th:value="${positiveStep1}"                       
-                            title="Positive step 1"
-                            aria-label="Positive step 1"
-                            readonly>
-                    </td>
-                    <td>
-                        <input type="text"
-                                id="positiveStep2"
-                            class="matrix-input sarrus-answer-cell"
-                            th:value="${positiveStep2}"
-                            title="Positive step 2"
-                            aria-label="Positive step 2"
-                            readonly>
-                    </td>
-                    <td><input type="text"
-                                id="positiveStep3"
-                            class="matrix-input sarrus-answer-cell"
-                            th:value="${positiveStep3}"
-                            aria-label="Positive step 3"
-                            title="Positive step 3"
-                            readonly></td>
-                    <td>
-                        <input type="text"
-                                id="positiveTotal"
-                            class="matrix-input sarrus-answer-cell"
-                            th:value="${positiveTotal}"
-                            aria-label="Positive total"
-                            title="Positive total"
-                            readonly>
-                    </td>                       
-                </tr>
-            </table>
-        </div>
-
-        <div class="button-group">
-            <button type="submit"
-                    name="action"
-                    value="previous-sarrus-step"
-                    class="btn-secondary">
-                Previous Step
-            </button>
-            <button type="submit"
-                    name="action"
-                    value="next-sarrus-step"
-                    class="btn-primary">
-                Next Step
-            </button>
-        </div>
-            <div class="determinant-result-container" th:if="${currentStep >= 9}">
-            <h2>Final Determinant</h2>
-                <div class="determinant-result-box">
-                    <label>Determinant of your 3 × 3 Matrix</label>
-                    <input type="text"
-                        id="finalDeterminant"
-                        class="final-determinant-input"
-                        th:value="${determinant}"
-                        aria-label="Final determinant"
-                        title="Final determinant"
-                        readonly>
+                        </td>
+                        <!-- NEW RESULT COLUMN -->
+                        <td th:if="${rowStat.index == 0}">
+                            <input type="text"                
+                                class="matrix-input sarrus-answer-cell"                
+                                title="Empty answer cell"
+                                aria-label="Empty answer cell"
+                                readonly>
+                        </td>
+                        <td th:if="${rowStat.index == 1}">
+                            <input type="text"
+                                id="determinant"
+                                class="matrix-input sarrus-answer-cell determinant-cell"
+                                th:value="${determinant}"
+                                title="Determinant"
+                                aria-label="Determinant"
+                                readonly>
+                        </td>
+                        <td th:if="${rowStat.index == 2}">
+                            <input type="text"             
+                                class="matrix-input sarrus-answer-cell"                  
+                                title="Empty answer cell"
+                                aria-label="Empty answer cell"
+                                readonly>
+                        </td>
+                    </tr>
+                </table>
+                <!-- BOTTOM POSITIVE ANSWER ROW -->
+                <table class="matrix-input-table sarrus-answer-table bottom">
+                    <tr>
+                        <td>
+                            <input type="text"
+                                class="matrix-input sarrus-answer-cell"                       
+                                title="Empty answer cell"
+                                aria-label="Empty answer cell"
+                                readonly>
+                        </td>
+                        <td>
+                            <input type="text"
+                                class="matrix-input sarrus-answer-cell"                       
+                                title="Empty answer cell"
+                                aria-label="Empty answer cell"
+                                readonly>
+                        </td>
+                        <td>
+                            <input type="text"
+                                    id="positiveStep1"
+                                class="matrix-input sarrus-answer-cell"
+                                th:value="${positiveStep1}"                       
+                                title="Positive step 1"
+                                aria-label="Positive step 1"
+                                readonly>
+                        </td>
+                        <td>
+                            <input type="text"
+                                    id="positiveStep2"
+                                class="matrix-input sarrus-answer-cell"
+                                th:value="${positiveStep2}"
+                                title="Positive step 2"
+                                aria-label="Positive step 2"
+                                readonly>
+                        </td>
+                        <td><input type="text"
+                                    id="positiveStep3"
+                                class="matrix-input sarrus-answer-cell"
+                                th:value="${positiveStep3}"
+                                aria-label="Positive step 3"
+                                title="Positive step 3"
+                                readonly></td>
+                        <td>
+                            <input type="text"
+                                    id="positiveTotal"
+                                class="matrix-input sarrus-answer-cell"
+                                th:value="${positiveTotal}"
+                                aria-label="Positive total"
+                                title="Positive total"
+                                readonly>
+                        </td>                       
+                    </tr>
+                </table>
+            </div>
+            <div class="button-group">
+                <button type="submit" name="action" value="previous-sarrus-step" class="btn-secondary">
+                    Previous Step
+                </button>
+                <button type="submit" name="action" value="next-sarrus-step" class="btn-primary">
+                    Next Step
+                </button>
+            </div>
+                <div class="determinant-result-container" th:if="${currentStep >= 9}">
+                    <h2>Final Determinant</h2>
+                        <div class="determinant-result-box">
+                            <label>Determinant of your 3 × 3 Matrix</label>
+                            <input type="text"
+                                id="finalDeterminant"
+                                class="final-determinant-input"
+                                th:value="${determinant}"
+                                aria-label="Final determinant"
+                                title="Final determinant"
+                                readonly>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
-        </section>
+            </section>
         </form>
     </main>
 </div>

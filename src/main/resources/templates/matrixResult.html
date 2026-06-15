@@ -65,27 +65,19 @@
                             </details>
 
                             <div class="button-group">
-                                <button th:if="${determinant == null}" 
-                                        type="submit" 
-                                        name="action" 
-                                        value="calculate-determinant"
-                                        class="btn-primary">
+                                <button th:if="${determinant == null}" type="submit" name="action" value="calculate-determinant" class="btn-primary">
                                     Calculate Determinant
                                 </button>
                             </div>
                             <div th:if="${determinant != null}">
                                 <h3>Determinant: <span th:text="${formattedDeterminant}"></span></h3>
                                 <div class="button-group">
-                                    <button type="submit" 
-                                            name="action" 
-                                            value="close-determinant"
-                                            class="btn-danger">
+                                    <button type="submit" name="action" value="close-determinant" class="btn-danger">
                                         Close Determinant
                                     </button>
                                 </div>
                             </div>
                         </section>
-
                         <!-- TRANSPOSE -->
                         <section class="hero-card">
                             <h2>Transposed Matrix</h2>
@@ -103,11 +95,7 @@
                                     </p>
                             </details>
                             <div class="button-group">
-                                <button th:if="${transpose == null}" 
-                                        type="submit" 
-                                        name="action" 
-                                        value="calculate-transpose"
-                                        class="btn-primary">
+                                <button th:if="${transpose == null}" type="submit" name="action" value="calculate-transpose" class="btn-primary">
                                     Calculate Transpose
                                 </button>
                             </div>
@@ -118,16 +106,12 @@
                                     </tr>
                                 </table>
                                 <div class="button-group">
-                                    <button type="submit" 
-                                            name="action" 
-                                            value="close-transpose"
-                                            class="btn-danger">
+                                    <button type="submit" name="action" value="close-transpose" class="btn-danger">
                                         Close Transpose
                                     </button>
                                 </div>
                             </div>
                         </section>
-
                         <!-- INVERSE -->
                         <section class="preview-card">
                             <h2>Inverse Matrix</h2>
@@ -151,13 +135,8 @@
                                         the matrix is singular and does not have an inverse.
                                     </p>
                             </details>
-
                             <div class="button-group">
-                                <button th:if="${inverse == null}" 
-                                        type="submit" 
-                                        name="action" 
-                                        value="calculate-inverse"
-                                        class="btn-primary">
+                                <button th:if="${inverse == null}" type="submit" name="action" value="calculate-inverse" class="btn-primary">
                                     Calculate Inverse
                                 </button>
                             </div>
@@ -185,10 +164,7 @@
                                     <p th:text="${inverseError}"></p>
                                 </div>
                                 <div class="button-group">
-                                    <button type="submit" 
-                                            name="action" 
-                                            value="close-inverse"
-                                            class="btn-danger">
+                                    <button type="submit" name="action" value="close-inverse" class="btn-danger">
                                         Close Inverse
                                     </button>
                                 </div>
@@ -263,7 +239,6 @@
                                 </tr>
                             </table>
                         </section>
-
                         <!-- DETERMINANT -->
                         <section class="status-card">
                             <h2>Matrix B Determinant</h2>
@@ -289,7 +264,6 @@
                                     Calculate B Determinant
                                 </button>
                             </div>
-
                             <div th:if="${determinantB != null}">
                                 <h3>Determinant: <span th:text="${formattedDeterminantB}"></span></h3>
                                 <div class="button-group">
@@ -302,7 +276,6 @@
                                 </div>
                             </div>
                         </section>
-
                         <!-- TRANSPOSE -->
                         <section class="hero-card">
                             <h2>Transposed Matrix B</h2>
@@ -319,7 +292,6 @@
                                         Notice how the rows become columns and the columns become rows.
                                     </p>
                             </details>
-
                             <div class="button-group">
                                 <button th:if="${transposeB == null}" 
                                         type="submit" 
@@ -329,7 +301,6 @@
                                     Calculate B Transpose
                                 </button>
                             </div>
-
                             <div th:if="${transposeB != null}">
                                 <table class="matrix-table">
                                     <tr th:each="row : ${transposeB}">
@@ -346,7 +317,6 @@
                                 </div>
                             </div>
                         </section>
-
                         <!-- INVERSE -->
                         <section class="preview-card">
                             <h2>Inverse Matrix B</h2>
@@ -370,7 +340,6 @@
                                         the matrix is singular and does not have an inverse.
                                     </p>
                             </details>
-
                             <div class="button-group">
                                 <button th:if="${inverseB == null}" 
                                         type="submit" 
@@ -380,7 +349,6 @@
                                     Calculate Inverse
                                 </button>
                             </div>
-
                             <div th:if="${inverseB != null}">
                                 <h3>Inverse Matrix Fraction Form</h3>
                                 <h5>\[\frac{1}{\det(B)}\]</h5>
@@ -391,7 +359,6 @@
                                         </td>
                                     </tr>
                                 </table>
-
                                 <h3>Inverse Matrix Decimal Form</h3>
                                 <h5>\[\frac{1}{\det(B)}\text{(Calculated)}\]</h5>
                                 <table class="matrix-table">
@@ -401,11 +368,9 @@
                                         </td>
                                     </tr>
                                 </table>
-
                                 <div th:if="${inverseErrorB != null}">
                                     <p th:text="${inverseErrorB}"></p>
                                 </div>
-
                                 <div class="button-group">
                                     <button type="submit" 
                                             name="action" 
@@ -416,7 +381,6 @@
                                 </div>
                             </div>
                         </section>
-
                         <!-- IDENTITY -->
                         <section class="preview-card">
                             <h2>Identity Matrix B</h2>
@@ -481,12 +445,13 @@
                         <h2>Matrix Squaring</h2>
                         <details class="math-details">
                             <summary>What is matrix squaring?</summary>
-                            <p class="math-description">
-                                Matrix squaring works by multiplying a matrix by itself.<br><br>
-                                <strong>A² = A × A</strong><br><br>
-                                <strong>B² = B × B</strong><br><br>
-                                The matrix must be square: same number of rows and columns.
-                            </p>
+                                <p class="math-description">
+                                    Matrix squaring works by multiplying a matrix by itself.<br><br>
+                                    For Matrix A:\[A^2 = A \times A\]
+                                    For Matrix B:\[B^2 = B \times B\]
+                                    A matrix must be square before it can be squared. This means it must have
+                                    the same number of rows and columns.
+                                </p>
                         </details>
                         <div class="button-group">
                             <button th:if="${squareA == null}" type="submit" name="action" value="calculate-square-a" class="btn-primary">
@@ -532,9 +497,14 @@
                                 <summary>What is matrix addition?</summary>
                                 <p class="math-description">
                                     Matrix addition works by adding matching positions together.<br><br>
-                                    Row 1 Column 1 in Matrix B is added to Row 1 Column 1 in Matrix A.<br><br>
-                                    This repeats for every cell.<br><br>
-                                    Both matrices must be the same size.
+                                    Matrix addition is written as:\[A + B\]
+                                    Each value is added according to its matching position in the matrix.
+                                    For example, Row 1 Column 1 in Matrix A is added to
+                                    Row 1 Column 1 in Matrix B.<br><br>
+                                    This process repeats for every cell:
+                                    \[(A+B)_{ij}=A_{ij}+B_{ij}\]
+                                    Both matrices must be the same size
+                                    (same number of rows and columns).
                                 </p>
                             </details>
                             <div class="button-group">
@@ -559,15 +529,20 @@
                        
                         <section class="hero-card">
                             <h2>Matrix Subtraction</h2>
-                            <details class="math-details">
-                                <summary>What is matrix subtraction?</summary>
-                                <p class="math-description">
-                                    Matrix subtraction works by subtracting matching positions together.<br><br>
-                                    Row 1 Column 1 in Matrix B is subtracted from Row 1 Column 1 in Matrix A.<br><br>
-                                    This repeats for every cell.<br><br>
-                                    Both matrices must be the same size.
-                                </p>
-                            </details>
+                                <details class="math-details">
+                                    <summary>What is matrix subtraction?</summary>
+                                        <p class="math-description">
+                                            Matrix subtraction works by subtracting matching positions together.<br><br>
+                                            Matrix subtraction is written as:\[A - B\]
+                                            Each value is subtracted according to its matching position
+                                            in the matrix. For example, Row 1 Column 1 in Matrix B is
+                                            subtracted from Row 1 Column 1 in Matrix A.<br><br>
+                                            This process repeats for every cell:
+                                            \[(A-B)_{ij}=A_{ij}-B_{ij}\]
+                                            Both matrices must be the same size
+                                            (same number of rows and columns).
+                                        </p>
+                                </details>
                             <div class="button-group">
                                 <button th:if="${subtractionResult == null}" type="submit" name="action" value="calculate-subtraction" class="btn-primary">
                                     Calculate Subtraction
@@ -587,23 +562,35 @@
                                 </div>
                             </div>
                         </section>
-
                         <!-- MULTIPLICATION -->
                         <section class="hero-card">
                             <h2>Matrix Multiplication</h2>
-                            <details class="math-details">
-                                <summary>What is matrix multiplication?</summary>
-                                <p class="math-description">
-                                    Matrix multiplication works differently from addition and subtraction.<br><br>
-                                    Each row in Matrix A is multiplied against each column in Matrix B.<br>
-                                    The products are then added together to produce each value in the resulting matrix.<br><br>
-                                    For example:<br><br>
-                                    Row 1 of Matrix A × Column 1 of Matrix B becomes the top-left result.<br><br>
-                                    This repeats for every row and every column.
-                                    The rule for matrix multiplication is that the number of columns in the first matrix (Matrix A) 
-                                    must equal the number of rows in the second matrix (Matrix B).<br><br>
-                                </p>
-                            </details>
+                                <details class="math-details">
+                                    <summary>What is matrix multiplication?</summary>
+                                        <p class="math-description">
+                                            Matrix multiplication works differently from
+                                            addition and subtraction.<br><br>
+                                            Matrix multiplication is written as:\[AB\]
+                                            Each row in Matrix A is multiplied against
+                                            each column in Matrix B. The products are then
+                                            added together to produce each value in the
+                                            resulting matrix.<br><br>
+                                            For example, Row 1 of Matrix A multiplied by
+                                            Column 1 of Matrix B produces the
+                                            top-left result.<br><br>
+                                            Matrix multiplication repeats for every row
+                                            and every column position:\[(AB)_{ij}=\sum_{k=1}^{n}A_{ik}B_{kj}\]
+                                            where:
+                                            \[i = \text{row}, \quad j = \text{column}, \quad k = \text{repeated multiplication step}\]
+                                            This is similar to nested programming loops,
+                                            where \(i\) and \(j\) move through the matrix
+                                            positions, while \(k\) repeats the multiplication
+                                            and addition process.<br><br>
+                                            The rule for matrix multiplication is:\[\text{columns of Matrix A}=\text{rows of Matrix B}\]
+                                            If this rule is not satisfied, the matrices
+                                            cannot be multiplied.
+                                        </p>
+                                </details>
                             <div class="button-group">
                                 <button th:if="${multiplicationResult == null}" type="submit" name="action" value="calculate-multiplication" class="btn-primary">
                                     Calculate Multiplication
@@ -623,116 +610,81 @@
                                 </div>
                             </div>
                         </section>
-                          <section class="hero-card">
-
-    <h2>Matrix Scalar</h2>
-
-    <details class="math-details">
-        <summary>
-            What is matrix scalar multiplication?
-        </summary>
-
-        <p class="math-description">
-            Matrix scalar multiplication involves multiplying every
-            element of a matrix by a scalar (a single number).<br><br>
-
-            <strong>k × A</strong><br><br>
-
-            where k is the scalar and A is the matrix.<br><br>
-
-            This operation scales the matrix by the factor of k.<br><br>
-
-            For example, if k = 2 and A is a 2 × 2 matrix,
-            then each element of A is multiplied by 2 to produce
-            the resulting matrix.<br><br>
-
-            The matrix can be any size, and the scalar can be
-            any real number.
-        </p>
-    </details>
-
-    <h3>Matrix Scalar Calculator</h3>
-
-    <input type="number"
-           step="any"
-           name="scalarValue"
-           th:value="${scalarValue}"
-           placeholder="Enter scalar value"
-           class="scalar-input">
-
-    <div class="button-group">
-
-        <button th:if="${scalarA == null}"
-                type="submit"
-                name="action"
-                value="calculate-scalar-a"
-                class="btn-primary">
-
-            Scalar Matrix A
-        </button>
-
-        <button th:if="${scalarB == null}"
-                type="submit"
-                name="action"
-                value="calculate-scalar-b"
-                class="btn-primary">
-
-            Scalar Matrix B
-        </button>
-
-    </div>
-
-    <!-- MATRIX A RESULT -->
-    <div th:if="${scalarA != null}">
-
-        <h3>Matrix A Scalar Result</h3>
-
-        <table class="matrix-table">
-            <tr th:each="row : ${scalarA}">
-                <td th:each="value : ${row}"
-                    th:text="${matrixService.formatNumber(value)}">
-                </td>
-            </tr>
-        </table>
-
-        <div class="button-group">
-            <button type="submit"
-                    name="action"
-                    value="close-scalar-a"
-                    class="btn-danger">
-
-                Close A Scalar
-            </button>
-        </div>
-
-    </div>
-
-    <!-- MATRIX B RESULT -->
-    <div th:if="${scalarB != null}">
-
-        <h3>Matrix B Scalar Result</h3>
-
-        <table class="matrix-table">
-            <tr th:each="row : ${scalarB}">
-                <td th:each="value : ${row}"
-                    th:text="${matrixService.formatNumber(value)}">
-                </td>
-            </tr>
-        </table>
-
-        <div class="button-group">
-            <button type="submit"
-                    name="action"
-                    value="close-scalar-b"
-                    class="btn-danger">
-
-                Close B Scalar
-            </button>
-        </div>
-
-    </div>
-
-</section>
+                        <section class="hero-card">
+                        <h2>Matrix Scalar</h2>
+                            <details class="math-details">
+                                <summary>What is matrix scalar multiplication?</summary>
+                                    <p class="math-description">
+                                        Matrix scalar multiplication involves multiplying
+                                        every element of a matrix by a scalar
+                                        (a single number).<br><br>
+                                        Scalar multiplication is written as:\[kA\]
+                                        where:
+                                        \[k = \text{scalar constant}\quad \text{and} \quad A = \text{matrix}\]
+                                        This operation scales every value in the matrix
+                                        by the factor \(k\).<br><br>
+                                        For example, if:\[k=2\]
+                                        and \[A=\begin{bmatrix} a & b \\ c & d\end{bmatrix}\]
+                                        then: \[2A=\begin{bmatrix}2a & 2b \\2c & 2d\end{bmatrix}\]
+                                        More generally, scalar multiplication repeats
+                                        for every row and column position:
+                                        \[(kA)_{ij}=k(A_{ij})\]
+                                        where \(i\) represents the row and \(j\)
+                                        represents the column.<br><br>
+                                        The matrix can be any size, and the scalar
+                                        can be any real number.
+                                    </p>
+                            </details>
+                            <h3>Matrix Scalar Calculator</h3>
+                            <div class="scalar-input-wrapper">
+                                <input type="number"
+                                    step="any"
+                                    name="scalarValue"
+                                    th:value="${scalarValue}"
+                                    placeholder="k"
+                                    class="matrix-input scalar-cell">
+                            </div>
+                            <div class="button-group">
+                                <button th:if="${scalarA == null}" type="submit" name="action" value="calculate-scalar-a" class="btn-primary">
+                                    Scalar Matrix A
+                                </button>
+                                <button th:if="${scalarB == null}" type="submit" name="action" value="calculate-scalar-b" class="btn-primary">
+                                    Scalar Matrix B
+                                </button>
+                            </div>
+                            <!-- MATRIX A RESULT -->
+                            <div th:if="${scalarA != null}">
+                                <h3>Matrix A Scalar Result</h3>
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${scalarA}">
+                                        <td th:each="value : ${row}"
+                                            th:text="${matrixService.formatNumber(value)}">
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="button-group">
+                                    <button type="submit" name="action" value="close-scalar-a" class="btn-danger">
+                                        Close A Scalar
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- MATRIX B RESULT -->
+                            <div th:if="${scalarB != null}">
+                            <h3>Matrix B Scalar Result</h3>
+                                <table class="matrix-table">
+                                    <tr th:each="row : ${scalarB}">
+                                        <td th:each="value : ${row}"
+                                            th:text="${matrixService.formatNumber(value)}">
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="button-group">
+                                    <button type="submit" name="action" value="close-scalar-b" class="btn-danger">
+                                        Close B Scalar
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
                     </div>
             </form>
         </main>
