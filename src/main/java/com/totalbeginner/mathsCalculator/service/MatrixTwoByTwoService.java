@@ -6,145 +6,69 @@ import org.springframework.stereotype.Service;
 public class MatrixTwoByTwoService {
 
     public double[][] buildTwoByTwoMatrix(double[][] matrix) {
-
-        if (matrix.length != 2 || matrix[0].length != 2) {
-
-            throw new IllegalArgumentException(
-                    "2 × 2 determinant requires a 2 × 2 matrix."
-            );
+        if (matrix == null || matrix.length != 2 || matrix[0].length != 2) {
+            throw new IllegalArgumentException("2 × 2 determinant requires a 2 × 2 matrix.");
         }
 
-        double[][] twoByTwo = new double[2][2];
-
-        for (int row = 0; row < 2; row++) {
-
-            for (int col = 0; col < 2; col++) {
-
-                twoByTwo[row][col] = matrix[row][col];
-            }
+        double[][] result = new double[2][2];
+        for (int i = 0; i < 2; i++) {
+            System.arraycopy(matrix[i], 0, result[i], 0, 2);
         }
-
-        return twoByTwo;
+        return result;
     }
 
-    /**
-     * Step 1
-     * Main diagonal (green)
-     * a × d
-     */
-    public double calculatePositiveDiagonal(
-            double[][] matrix
-    ) {
-
-        return
-                matrix[0][0]
-                *
-                matrix[1][1];
+    public double calculatePositiveDiagonal(double[][] matrix) {
+        return matrix[0][0] * matrix[1][1];
     }
 
-    /**
-     * Step 2
-     * Secondary diagonal (red)
-     * b × c
-     */
-    public double calculateNegativeDiagonal(
-            double[][] matrix
-    ) {
-
-        return
-                matrix[0][1]
-                *
-                matrix[1][0];
+    public double calculateNegativeDiagonal(double[][] matrix) {
+        return matrix[0][1] * matrix[1][0];
     }
 
-    /**
-     * Final determinant
-     * (a × d) - (b × c)
-     */
-    public double calculateDeterminant(
-            double positiveDiagonal,
-            double negativeDiagonal
-    ) {
-
-        return
-                positiveDiagonal
-                -
-                negativeDiagonal;
+    public double calculateDeterminant(double positiveDiagonal, double negativeDiagonal) {
+        return positiveDiagonal - negativeDiagonal;
     }
 
-    /**
-     * Convenience method
-     */
-    public double determinantTwoByTwo(
-            double[][] matrix
-    ) {
-
-        double positiveDiagonal =
-                calculatePositiveDiagonal(matrix);
-
-        double negativeDiagonal =
-                calculateNegativeDiagonal(matrix);
-
+    public double determinantTwoByTwo(double[][] matrix) {
         return calculateDeterminant(
-                positiveDiagonal,
-                negativeDiagonal
+                calculatePositiveDiagonal(matrix),
+                calculateNegativeDiagonal(matrix)
         );
     }
-    public double[][] buildInverseWalkthroughMatrix(
-        double[][] matrix,
-        int inverseCurrentStep
-) {
 
-    double a = matrix[0][0];
-    double b = matrix[0][1];
-    double c = matrix[1][0];
-    double d = matrix[1][1];
+    /**
+     * Returns the matrix state for the inverse walkthrough.
+     * Step 0 = original matrix, Step ≥ 1 = adjugate matrix.
+     */
+    public double[][] buildInverseWalkthroughMatrix(double[][] matrix, int step) {
+        double a = matrix[0][0];
+        double b = matrix[0][1];
+        double c = matrix[1][0];
+        double d = matrix[1][1];
 
-    double[][] walkthrough =
-            new double[2][2];
+        if (step >= 1) {
+            return new double[][]{
+                    {d, -b},
+                    {-c, a}
+            };
+        }
 
-    walkthrough[0][0] = a;
-    walkthrough[0][1] = b;
-    walkthrough[1][0] = c;
-    walkthrough[1][1] = d;
-
-    if (inverseCurrentStep >= 1) {
-
-        walkthrough[0][0] = d;
-        walkthrough[0][1] = -b;
-        walkthrough[1][0] = -c;
-        walkthrough[1][1] = a;
+        return new double[][]{
+                {a, b},
+                {c, d}
+        };
     }
 
-    return walkthrough;
-}
-   public double[][] calculateInverseTwoByTwo(
-        double[][] matrix
-) {
+    public double[][] calculateInverseTwoByTwo(double[][] matrix) {
+        double det = determinantTwoByTwo(matrix);
 
-    double determinant =
-            determinantTwoByTwo(matrix);
+        if (det == 0) {
+            return new double[2][2];
+        }
 
-    if (determinant == 0) {
-        return new double[2][2];
+        return new double[][]{
+                {matrix[1][1] / det, -matrix[0][1] / det},
+                {-matrix[1][0] / det, matrix[0][0] / det}
+        };
     }
-
-    double[][] inverse =
-            new double[2][2];
-
-    inverse[0][0] =
-            matrix[1][1] / determinant;
-
-    inverse[0][1] =
-            -matrix[0][1] / determinant;
-
-    inverse[1][0] =
-            -matrix[1][0] / determinant;
-
-    inverse[1][1] =
-            matrix[0][0] / determinant;
-
-    return inverse;
-}
-    
 }

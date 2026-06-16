@@ -11,42 +11,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
-@Controller
-public class MatrixTwoByTwoController {
-    private final MatrixTwoByTwoService matrixTwoByTwoService;
-    private final MatrixRequestParser matrixRequestParser;
+        @Controller
+        public class MatrixTwoByTwoController {
+        private final MatrixTwoByTwoService matrixTwoByTwoService;
+        private final MatrixRequestParser matrixRequestParser;
 
-    public MatrixTwoByTwoController(
-            MatrixTwoByTwoService matrixTwoByTwoService,
-            MatrixRequestParser matrixRequestParser
-    ) {
-        this.matrixTwoByTwoService = matrixTwoByTwoService;
-        this.matrixRequestParser = matrixRequestParser;
-    }
+        public MatrixTwoByTwoController(
+                MatrixTwoByTwoService matrixTwoByTwoService,
+                MatrixRequestParser matrixRequestParser
+        ) {
+                this.matrixTwoByTwoService = matrixTwoByTwoService;
+                this.matrixRequestParser = matrixRequestParser;
+        }
 
-    @GetMapping("/matrix-two-by-two")
-    public String matrixTwoByTwoPage(Model model) {
+        @GetMapping("/matrix-two-by-two")
+        public String matrixTwoByTwoPage(Model model) {
 
-        model.addAttribute("size", 2);
-        model.addAttribute("matrixTwoByTwo", new double[2][2]);
-        model.addAttribute("hasMatrixValues", false);
-        model.addAttribute("hasWalkthrough", false);
-        model.addAttribute("hasInverseWalkthrough", false);
-        model.addAttribute("currentStep", 0);
-        model.addAttribute("inverseCurrentStep", 0);
+                model.addAttribute("size", 2);
+                model.addAttribute("matrixTwoByTwo", new double[2][2]);
+                model.addAttribute("hasMatrixValues", false);
+                model.addAttribute("hasWalkthrough", false);
+                model.addAttribute("hasInverseWalkthrough", false);
+                model.addAttribute("currentStep", 0);
+                model.addAttribute("inverseCurrentStep", 0);
 
-        return "matrixTwoByTwo";
-    }
+                return "matrixTwoByTwo";
+        }
 
-    @PostMapping("/matrix-two-by-two")
-    public String handleTwoByTwo(@RequestParam Map<String, String> params, MatrixTwoByTwoForm form, Model model) {    
+        @PostMapping("/matrix-two-by-two")
+        public String handleTwoByTwo(@RequestParam Map<String, String> params, MatrixTwoByTwoForm form, Model model) {    
 
-        double[][] matrixTwoByTwo =
-                matrixRequestParser.buildMatrix(
-                        2,
-                        params,
-                        "cell_"
-                );
+                double[][] matrixTwoByTwo =
+                        matrixRequestParser.buildMatrix(
+                                2,
+                                params,
+                                "cell_"
+                        );
 
         String action = form.getAction();
         int currentStep = form.getCurrentStep();
@@ -161,12 +161,12 @@ public class MatrixTwoByTwoController {
 
         model.addAttribute(
                 "inverseStep1",
-                inverseCurrentStep >= 1 ? "Swap diagonal values" : ""
+                inverseCurrentStep >= 1 ? "Swap" : ""
         );
 
         model.addAttribute(
                 "inverseStep2",
-                inverseCurrentStep >= 2 ? "Negate off-diagonal values" : ""
+                inverseCurrentStep >= 2 ? "Negate" : ""
         );
 
         model.addAttribute(
@@ -179,7 +179,7 @@ public class MatrixTwoByTwoController {
         inverseCurrentStep >= 4
                 ? finalInverseMatrix
                 : new double[2][2]
-);
+        );
 
         return "matrixTwoByTwo";
     }

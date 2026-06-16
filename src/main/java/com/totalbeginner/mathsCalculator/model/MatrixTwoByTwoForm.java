@@ -6,7 +6,6 @@ import lombok.Data;
 public class MatrixTwoByTwoForm {
 
     private String action;
-
     private int currentStep = 0;
     private int inverseCurrentStep = 0;
 }

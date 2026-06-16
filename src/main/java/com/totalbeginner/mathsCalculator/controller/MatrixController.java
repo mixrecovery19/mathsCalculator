@@ -16,7 +16,7 @@ public class MatrixController {
     private final MatrixResultService matrixResultService;
 
         @GetMapping("/matrixResult")
-                public String matricesPage(Model model) {
+        public String matricesPage(Model model) {
 
                 int defaultSize = 2;
                 MatrixForm matrixForm = new MatrixForm();
