@@ -11,7 +11,7 @@
     <script src="/js/sarrusStepsColours.js"></script>
 </head>
 <body>
-    <div id="matrixSarrusPage"class="app-layout" th:data-current-step="${currentStep}">
+    <div id="matrixSarrusPage"class="app-layout" th:data-current-step="${result != null ? result.currentStep : 0}">
     <div th:replace="~{sidebar :: sidebar}"></div>
     <main class="matrix-page">
         <form th:action="@{/matrices-sarrus}" method="post">            
@@ -34,9 +34,9 @@
                                     </p>
                             </details>                    
                         <input type="hidden" name="size" th:value="${size}">
-                        <input type="hidden" name="currentStep" th:value="${currentStep}">
-                        <input type="hidden" name="positiveTotal" th:value="${positiveTotal}">
-                        <input type="hidden" name="negativeTotal" th:value="${negativeTotal}">
+                        <input type="hidden" name="currentStep" th:value="${result != null ? result.currentStep : 0}">
+                        <input type="hidden" name="positiveTotal" th:value="${result != null ? result.positiveTotal : ''}">
+                        <input type="hidden" name="negativeTotal" th:value="${result != null ? result.negativeTotal : ''}">
                         <table class="matrix-table matrix-table-readonly">
                             <tr th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
                                 <td th:each="colIndex : ${#numbers.sequence(0, size - 1)}">
@@ -59,7 +59,7 @@
                             </div> 
                         </div>                 
             </section>   
-            <section class="hero-card" th:if="${sarrusMatrix != null}">
+            <section class="hero-card" th:if="${result != null && result.sarrusMatrix != null}">
                 <div class="sarrus-stage-two">   
                 <h2>3. Sarrus 5 x 3 Matrix</h2>
                     <details class="math-details">
@@ -99,7 +99,7 @@
                             <input type="text"
                                 id="negativeStep1"
                                 class="matrix-input sarrus-answer-cell"
-                                th:value="${negativeStep1}"                      
+                                th:value="${result.negativeStep1}"                      
                                 title="Negative step 1"
                                 aria-label="Negative step 1"
                                 readonly>
@@ -108,7 +108,7 @@
                             <input type="text"
                                     id="negativeStep2"
                                 class="matrix-input sarrus-answer-cell"
-                                th:value="${negativeStep2}"
+                                th:value="${result.negativeStep2}"
                                 title="Negative step 2"
                                 aria-label="Negative step 2"
                                 readonly>
@@ -117,7 +117,7 @@
                             <input type="text"
                                     id="negativeStep3"
                                 class="matrix-input sarrus-answer-cell"
-                                th:value="${negativeStep3}"
+                                th:value="${result.negativeStep3}"
                                 title="Negative step 3"
                                 aria-label="Negative step 3"
                                 readonly>
@@ -126,7 +126,7 @@
                             <input type="text"
                                     id="negativeTotal"
                                 class="matrix-input sarrus-answer-cell"
-                                th:value="${negativeTotal}"
+                                th:value="${result.negativeTotal}"
                                 title="Negative total"
                                 aria-label="Negative total"
                                 readonly>
@@ -135,7 +135,7 @@
                 </table>
             
                 <table class="matrix-input-table">
-                    <tr th:each="row,rowStat : ${sarrusMatrix}">
+                    <tr th:each="row,rowStat : ${result.sarrusMatrix}">
                         <td th:each="value,colStat : ${row}">
                             <input type="number"
                                 class="matrix-input matrix-readonly"
@@ -150,15 +150,15 @@
                                 readonly
 
                                 th:classappend="
-                                ${(currentStep == 1
+                                ${(result.currentStep == 1
                                 && rowStat.index == 0
                                 && colStat.index == 0)
                                 ||
-                                (currentStep == 1
+                                (result.currentStep == 1
                                 && rowStat.index == 1
                                 && colStat.index == 1)
                                 ||
-                                (currentStep == 1
+                                (result.currentStep == 1
                                 && rowStat.index == 2
                                 && colStat.index == 2)}
                                 ? ' diagonal-positive'
@@ -177,7 +177,7 @@
                             <input type="text"
                                 id="determinant"
                                 class="matrix-input sarrus-answer-cell determinant-cell"
-                                th:value="${determinant}"
+                                th:value="${result.determinant}"
                                 title="Determinant"
                                 aria-label="Determinant"
                                 readonly>
@@ -212,7 +212,7 @@
                             <input type="text"
                                     id="positiveStep1"
                                 class="matrix-input sarrus-answer-cell"
-                                th:value="${positiveStep1}"                       
+                                th:value="${result.positiveStep1}"                       
                                 title="Positive step 1"
                                 aria-label="Positive step 1"
                                 readonly>
@@ -221,7 +221,7 @@
                             <input type="text"
                                     id="positiveStep2"
                                 class="matrix-input sarrus-answer-cell"
-                                th:value="${positiveStep2}"
+                                th:value="${result.positiveStep2}"
                                 title="Positive step 2"
                                 aria-label="Positive step 2"
                                 readonly>
@@ -229,7 +229,7 @@
                         <td><input type="text"
                                     id="positiveStep3"
                                 class="matrix-input sarrus-answer-cell"
-                                th:value="${positiveStep3}"
+                                th:value="${result.positiveStep3}"
                                 aria-label="Positive step 3"
                                 title="Positive step 3"
                                 readonly></td>
@@ -237,7 +237,7 @@
                             <input type="text"
                                     id="positiveTotal"
                                 class="matrix-input sarrus-answer-cell"
-                                th:value="${positiveTotal}"
+                                th:value="${result.positiveTotal}"
                                 aria-label="Positive total"
                                 title="Positive total"
                                 readonly>
@@ -260,7 +260,7 @@
                             <input type="text"
                                 id="finalDeterminant"
                                 class="final-determinant-input"
-                                th:value="${determinant}"
+                                th:value="${result.determinant}"
                                 aria-label="Final determinant"
                                 title="Final determinant"
                                 readonly>

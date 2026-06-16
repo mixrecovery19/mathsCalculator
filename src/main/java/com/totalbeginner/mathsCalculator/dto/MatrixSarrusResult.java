@@ -1,9 +1,9 @@
 package com.totalbeginner.mathsCalculator.dto;
 
-public class SarrusCalculationResult {
+public class MatrixSarrusResult {
 
     private double[][] sarrusMatrix;
-    private double determinant;
+    private Double determinant;
 
     private Double positiveStep1;
     private Double positiveStep2;
@@ -14,16 +14,19 @@ public class SarrusCalculationResult {
     private Double negativeStep2;
     private Double negativeStep3;
     private Double negativeTotal;
-
-    private Double finalDeterminant;
+    
     private int currentStep;
+
+    private double[][] originalMatrix;
+    private boolean hasMatrixValues;
+    private boolean sarrusGenerated;
 
     // Getters and Setters
     public double[][] getSarrusMatrix() { return sarrusMatrix; }
     public void setSarrusMatrix(double[][] sarrusMatrix) { this.sarrusMatrix = sarrusMatrix; }
 
-    public double getDeterminant() { return determinant; }
-    public void setDeterminant(double determinant) { this.determinant = determinant; }
+    public Double getDeterminant() { return determinant; }
+    public void setDeterminant(Double determinant) { this.determinant = determinant; }
 
     public Double getPositiveStep1() { return positiveStep1; }
     public void setPositiveStep1(Double positiveStep1) { this.positiveStep1 = positiveStep1; }
@@ -47,11 +50,17 @@ public class SarrusCalculationResult {
     public void setNegativeStep3(Double negativeStep3) { this.negativeStep3 = negativeStep3; }
 
     public Double getNegativeTotal() { return negativeTotal; }
-    public void setNegativeTotal(Double negativeTotal) { this.negativeTotal = negativeTotal; }
-
-    public Double getFinalDeterminant() { return finalDeterminant; }
-    public void setFinalDeterminant(Double finalDeterminant) { this.finalDeterminant = finalDeterminant; }
+    public void setNegativeTotal(Double negativeTotal) { this.negativeTotal = negativeTotal; }    
 
     public int getCurrentStep() { return currentStep; }
     public void setCurrentStep(int currentStep) { this.currentStep = currentStep; }
+
+    public double[][] getOriginalMatrix() { return originalMatrix; }
+    public void setOriginalMatrix(double[][] originalMatrix) { this.originalMatrix = originalMatrix; }
+
+    public boolean isHasMatrixValues() { return hasMatrixValues; }
+    public void setHasMatrixValues(boolean hasMatrixValues) { this.hasMatrixValues = hasMatrixValues; }
+    
+    public boolean isSarrusGenerated() { return sarrusGenerated; }
+    public void setSarrusGenerated(boolean sarrusGenerated) { this.sarrusGenerated = sarrusGenerated; }
 }

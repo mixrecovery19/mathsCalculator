@@ -1,33 +1,77 @@
 package com.totalbeginner.mathsCalculator.service;
 
 import org.springframework.stereotype.Service;
+import com.totalbeginner.mathsCalculator.dto.MatrixSarrusResult;
+import java.util.Map;
 
-        @Service
-        public class MatrixSarrusService {
+@Service
+public class MatrixSarrusService {
+      public MatrixSarrusResult buildSarrusResult(double[][] matrix, int currentStep) {
 
-        public double[][] buildSarrusMatrix(double[][] matrix) {
+        MatrixSarrusResult result = new MatrixSarrusResult();
 
-                if (matrix.length != 3 || matrix[0].length != 3) {
-                throw new IllegalArgumentException(
-                        "Sarrus method requires a 3 × 3 matrix."
-                );
-                }
+        double[][] sarrusMatrix = buildSarrusMatrix(matrix);
 
-                double[][] sarrus = new double[3][5];
-                // Copy original matrix
-                for (int row = 0; row < 3; row++) {
-                        for (int col = 0; col < 3; col++) {
+    result.setOriginalMatrix(matrix);
+    result.setSarrusMatrix(sarrusMatrix);
+    result.setCurrentStep(currentStep);    
+    result.setHasMatrixValues(hasMatrixValues(matrix));
 
-                                sarrus[row][col] = matrix[row][col];
-                        }
-                }
-                // Copy first two columns
-                for (int row = 0; row < 3; row++) {
-                sarrus[row][3] = matrix[row][0];
-                sarrus[row][4] = matrix[row][1];
-                }
-                return sarrus;
-        }
+    if (currentStep >= 1) {
+        result.setPositiveStep1(calculatePositiveStep1(sarrusMatrix));
+    }
+
+    if (currentStep >= 2) {
+        result.setPositiveStep2(calculatePositiveStep2(sarrusMatrix));
+    }
+
+    if (currentStep >= 3) {
+        result.setPositiveStep3(calculatePositiveStep3(sarrusMatrix));
+    }
+
+    if (currentStep >= 4) {
+        result.setNegativeStep1(calculateNegativeStep1(sarrusMatrix));
+    }
+
+    if (currentStep >= 5) {
+        result.setNegativeStep2(calculateNegativeStep2(sarrusMatrix));
+    }
+
+    if (currentStep >= 6) {
+        result.setNegativeStep3(calculateNegativeStep3(sarrusMatrix));
+    }
+
+    if (currentStep >= 7) {
+        result.setPositiveTotal(
+                calculatePositiveTotal(
+                        result.getPositiveStep1(),
+                        result.getPositiveStep2(),
+                        result.getPositiveStep3()
+                )
+        );
+    }
+
+    if (currentStep >= 8) {
+        result.setNegativeTotal(
+                calculateNegativeTotal(
+                        result.getNegativeStep1(),
+                        result.getNegativeStep2(),
+                        result.getNegativeStep3()
+                )
+        );
+    }
+
+    if (currentStep >= 9) {
+        result.setDeterminant(
+                calculateDeterminant(
+                        result.getPositiveTotal(),
+                        result.getNegativeTotal()
+                )
+        );
+    }
+
+    return result;
+}
 
         public double determinantSarrus(double[][] matrix) {
 
@@ -129,5 +173,60 @@ import org.springframework.stereotype.Service;
         ) {
                 return positiveTotal - negativeTotal;
         }
-    
+        public double[][] buildMatrix(int size, Map<String, String> params) {    
+
+                double[][] matrix = new double[size][size];
+
+                for (int row = 0; row < size; row++) {
+                for (int col = 0; col < size; col++) {
+
+                        String key = "cell_" + row + "_" + col;
+                        String value = params.get(key);
+
+                        matrix[row][col] = (value == null || value.isBlank())                        
+                                ? 0
+                                : Double.parseDouble(value);                        
+                }
+                }
+                return matrix;
+        }
+        public boolean hasMatrixValues(double[][] matrix) {
+                for (double[] row : matrix) {
+                        for (double value : row) {
+                        if (value != 0) {
+                                return true;
+                        }
+                        }
+                }
+                return false;
+                }
+                public double[][] buildSarrusMatrix(double[][] matrix) {
+
+    if (matrix.length != 3 || matrix[0].length != 3) {
+
+        throw new IllegalArgumentException(
+                "Sarrus method requires a 3 × 3 matrix."
+        );
+    }
+
+    double[][] sarrus = new double[3][5];
+
+    // Copy original matrix
+    for (int row = 0; row < 3; row++) {
+        for (int col = 0; col < 3; col++) {
+
+            sarrus[row][col] =
+                    matrix[row][col];
+        }
+    }
+
+    // Copy first two columns
+    for (int row = 0; row < 3; row++) {
+
+        sarrus[row][3] = matrix[row][0];
+        sarrus[row][4] = matrix[row][1];
+    }
+
+    return sarrus;
+}
 }
