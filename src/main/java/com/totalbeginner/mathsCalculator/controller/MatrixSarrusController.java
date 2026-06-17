@@ -2,7 +2,11 @@ package com.totalbeginner.mathsCalculator.controller;
 
 import com.totalbeginner.mathsCalculator.dto.MatrixSarrusResult;
 import com.totalbeginner.mathsCalculator.service.MatrixSarrusService;
+import com.totalbeginner.mathsCalculator.service.MatrixInverse3x3Service;
+import com.totalbeginner.mathsCalculator.dto.MatrixInverse3x3Result;
+import com.totalbeginner.mathsCalculator.controller.MatrixInverse3x3Controller;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +15,11 @@ import java.util.Map;
         public class MatrixSarrusController {
 
         private final MatrixSarrusService matrixSarrusService;
+        private final MatrixInverse3x3Controller matrixInverse3x3Controller;
 
-        public MatrixSarrusController(MatrixSarrusService matrixSarrusService) {        
+        public MatrixSarrusController(MatrixSarrusService matrixSarrusService, MatrixInverse3x3Controller matrixInverse3x3Controller) {        
                 this.matrixSarrusService = matrixSarrusService;
+                this.matrixInverse3x3Controller = matrixInverse3x3Controller;
         }
 
        @GetMapping("/matrix-sarrus")
@@ -81,13 +87,15 @@ import java.util.Map;
         model.addAttribute(
         "matrixSarrus",
         matrix
-);
+        );
 
-if ("generate-sarrus".equals(action)
+        if ("generate-sarrus".equals(action)
         ||
         "next-sarrus-step".equals(action)
         ||
-        "previous-sarrus-step".equals(action)) {
+        "previous-sarrus-step".equals(action)
+        ||
+        "continue-to-inverse".equals(action)) {
 
     MatrixSarrusResult result =
             matrixSarrusService
@@ -96,11 +104,22 @@ if ("generate-sarrus".equals(action)
                             newStep
                     );
 
-                model.addAttribute(
-                        "result",
-                        result
+    if ("continue-to-inverse".equals(action)) {
+
+        result.setShowInverseSection(true);
+
+        matrixInverse3x3Controller
+                .loadInverseSection(
+                        model,
+                        matrix
                 );
-        }
+    }
+
+    model.addAttribute(
+            "result",
+            result
+    );
+}
 
         return "matrixSarrus";
                 

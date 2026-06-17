@@ -253,21 +253,73 @@
                     Next Step
                 </button>
             </div>
-                <div class="determinant-result-container" th:if="${currentStep >= 9}">
-                    <h2>Final Determinant</h2>
-                        <div class="determinant-result-box">
-                            <label>Determinant of your 3 × 3 Matrix</label>
-                            <input type="text"
-                                id="finalDeterminant"
-                                class="final-determinant-input"
-                                th:value="${result.determinant}"
-                                aria-label="Final determinant"
-                                title="Final determinant"
-                                readonly>
-                        </div>
+                <div class="determinant-result-container" th:if="${result != null && result.currentStep >= 9}">
+                <h2>Final Determinant</h2>
+                    <div class="determinant-result-box">
+                        <label>Determinant of your 3 × 3 Matrix</label>
+                        <input type="text"
+                            id="finalDeterminant"
+                            class="final-determinant-input"
+                            th:value="${result.determinant}"
+                            aria-label="Final determinant"
+                            title="Final determinant"
+                            readonly>
+                    </div>
+                    <!-- INVERSE BUTTON -->
+                    <div class="button-group">
+                        <!-- VALID INVERSE -->
+                        <button th:if="${result.determinant != 0}" type="submit" name="action" value="continue-to-inverse" class="btn-primary">
+                            Continue To 3 × 3 Inverse
+                        </button>
+                        <!-- NO INVERSE -->
+                        <button th:if="${result.determinant == 0}" type="button" class="btn-no-inverse" disabled>
+                            Determinant = 0 • No Inverse Exists
+                        </button>
                     </div>
                 </div>
+                </div>
             </section>
+            <section class="hero-card" th:if="${inverseResult != null}">
+
+    <div class="sarrus-stage-two">
+
+        <h2>4. Begin the 3 × 3 Matrix Inverse</h2>
+
+        <details class="math-details">
+            <summary>Original Matrix Before Inverse Walkthrough</summary>
+
+            <p class="math-description">
+                Since your determinant is not zero, an inverse exists.
+                We now begin again with your original 3 × 3 matrix before
+                transforming it step-by-step into its inverse.
+            </p>
+        </details>
+
+        <table class="matrix-input-table matrix-table-readonly">
+            <tr th:each="row : ${inverseResult.originalMatrix}">
+                <td th:each="value : ${row}">
+                    <input type="text"
+                           class="matrix-input matrix-readonly"
+                           th:value="${value != 0 ? value : ''}"
+                           title="Original matrix value for inverse"
+                           aria-label="Original matrix value for inverse"
+                           readonly>
+                </td>
+            </tr>
+        </table>
+
+        <div class="button-group">
+            <button type="submit"
+                    name="action"
+                    value="start-inverse-step-1"
+                    class="btn-primary">
+                Begin Inverse Walkthrough
+            </button>
+        </div>
+
+    </div>
+
+</section>
         </form>
     </main>
 </div>

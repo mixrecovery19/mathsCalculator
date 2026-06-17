@@ -20,6 +20,7 @@ public class MatrixSarrusResult {
     private double[][] originalMatrix;
     private boolean hasMatrixValues;
     private boolean sarrusGenerated;
+    private boolean showInverseSection;
 
     // Getters and Setters
     public double[][] getSarrusMatrix() { return sarrusMatrix; }
@@ -63,4 +64,7 @@ public class MatrixSarrusResult {
     
     public boolean isSarrusGenerated() { return sarrusGenerated; }
     public void setSarrusGenerated(boolean sarrusGenerated) { this.sarrusGenerated = sarrusGenerated; }
+
+    public boolean isShowInverseSection() { return showInverseSection; }
+    public void setShowInverseSection(boolean showInverseSection) { this.showInverseSection = showInverseSection; }
 }

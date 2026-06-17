@@ -155,7 +155,16 @@ body.loading {
 .btn-danger:hover {
     background-color: #c0392b;
 }
-
+.btn-no-inverse {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: not-allowed;
+}
 /* Matrix tables */
 .matrix-table,
 .matrix-input-table,
