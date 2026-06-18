@@ -84,14 +84,14 @@
                     <tr>
                         <td>
                             <input type="text"
-                                class="matrix-input sarrus-answer-cell"                       
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"                       
                                 title="Empty answer cell"
                                 aria-label="Empty answer cell"
                                 readonly>
                         </td>
                         <td>
                             <input type="text"
-                                class="matrix-input sarrus-answer-cell"                       
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"                       
                                 title="Empty answer cell"
                                 aria-label="Empty answer cell"
                                 readonly>
@@ -99,7 +99,7 @@
                         <td>
                             <input type="text"
                                 id="negativeStep1"
-                                class="matrix-input sarrus-answer-cell"
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"
                                 th:value="${result.negativeStep1}"                      
                                 title="Negative step 1"
                                 aria-label="Negative step 1"
@@ -108,7 +108,7 @@
                         <td>
                             <input type="text"
                                     id="negativeStep2"
-                                class="matrix-input sarrus-answer-cell"
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"
                                 th:value="${result.negativeStep2}"
                                 title="Negative step 2"
                                 aria-label="Negative step 2"
@@ -117,7 +117,7 @@
                         <td>
                             <input type="text"
                                     id="negativeStep3"
-                                class="matrix-input sarrus-answer-cell"
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"
                                 th:value="${result.negativeStep3}"
                                 title="Negative step 3"
                                 aria-label="Negative step 3"
@@ -126,7 +126,7 @@
                         <td>
                             <input type="text"
                                     id="negativeTotal"
-                                class="matrix-input sarrus-answer-cell"
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"
                                 th:value="${result.negativeTotal}"
                                 title="Negative total"
                                 aria-label="Negative total"
@@ -138,7 +138,7 @@
                     <tr th:each="row,rowStat : ${result.sarrusMatrix}">
                         <td th:each="value,colStat : ${row}">
                             <input type="number"
-                                class="matrix-input matrix-readonly"
+                                class="matrix-input matrix-readonly matrix-cells-larger"
                                 th:id="
                                 'cell-'
                                 + ${rowStat.index}
@@ -148,7 +148,6 @@
                                 title="Sarrus matrix value"
                                 aria-label="Sarrus matrix value"
                                 readonly
-
                                 th:classappend="
                                 ${(result.currentStep == 1
                                 && rowStat.index == 0
@@ -168,7 +167,7 @@
                         <!-- NEW RESULT COLUMN -->
                         <td th:if="${rowStat.index == 0}">
                             <input type="text"                
-                                class="matrix-input sarrus-answer-cell"                
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"                
                                 title="Empty answer cell"
                                 aria-label="Empty answer cell"
                                 readonly>
@@ -176,7 +175,7 @@
                         <td th:if="${rowStat.index == 1}">
                             <input type="text"
                                 id="determinant"
-                                class="matrix-input sarrus-answer-cell determinant-cell"
+                                class="matrix-input sarrus-answer-cell determinant-cell matrix-cells-larger"
                                 th:value="${result.determinant}"
                                 title="Determinant"
                                 aria-label="Determinant"
@@ -184,7 +183,7 @@
                         </td>
                         <td th:if="${rowStat.index == 2}">
                             <input type="text"             
-                                class="matrix-input sarrus-answer-cell"                  
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"                  
                                 title="Empty answer cell"
                                 aria-label="Empty answer cell"
                                 readonly>
@@ -196,14 +195,14 @@
                     <tr>
                         <td>
                             <input type="text"
-                                class="matrix-input sarrus-answer-cell"                       
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"                       
                                 title="Empty answer cell"
                                 aria-label="Empty answer cell"
                                 readonly>
                         </td>
                         <td>
                             <input type="text"
-                                class="matrix-input sarrus-answer-cell"                       
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"                       
                                 title="Empty answer cell"
                                 aria-label="Empty answer cell"
                                 readonly>
@@ -211,7 +210,7 @@
                         <td>
                             <input type="text"
                                     id="positiveStep1"
-                                class="matrix-input sarrus-answer-cell"
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"
                                 th:value="${result.positiveStep1}"                       
                                 title="Positive step 1"
                                 aria-label="Positive step 1"
@@ -220,7 +219,7 @@
                         <td>
                             <input type="text"
                                     id="positiveStep2"
-                                class="matrix-input sarrus-answer-cell"
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"
                                 th:value="${result.positiveStep2}"
                                 title="Positive step 2"
                                 aria-label="Positive step 2"
@@ -228,7 +227,7 @@
                         </td>
                         <td><input type="text"
                                     id="positiveStep3"
-                                class="matrix-input sarrus-answer-cell"
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"
                                 th:value="${result.positiveStep3}"
                                 aria-label="Positive step 3"
                                 title="Positive step 3"
@@ -236,7 +235,7 @@
                         <td>
                             <input type="text"
                                     id="positiveTotal"
-                                class="matrix-input sarrus-answer-cell"
+                                class="matrix-input sarrus-answer-cell matrix-cells-larger"
                                 th:value="${result.positiveTotal}"
                                 aria-label="Positive total"
                                 title="Positive total"
@@ -280,175 +279,169 @@
                 </div>
             </section>
             <section class="hero-card" th:if="${inverseResult != null}">
-
-    <input type="hidden"
-           name="inverseCurrentStep"
-           th:value="${inverseResult.currentStep}">
-
-    <div id="matrixInverse3x3Page"
-         class="sarrus-stage-two"
-         th:data-inverse-current-step="${inverseResult.currentStep}">
-
-        <h2>4. Begin the 3 × 3 Matrix Inverse</h2>
-
-        <details class="math-details inverse-details">
-            <summary>Original Matrix Before Inverse Walkthrough</summary>
-            <p class="math-description">
-                Since your determinant is not zero, an inverse exists.
-                We now begin again with your original 3 × 3 matrix before
-                transforming it step-by-step into its inverse.
-            </p>
-        </details>
-
-        <div class="inverse-step-description">
-            <h3>Step <span th:text="${inverseResult.stepTitle}"></span></h3>
-            <p th:text="${inverseResult.stepDescription}"></p>
-        </div>
-
-        <div class="inverse-matrix-container">
-
-            <div class="inverse-working-panel">
-
-                <h3 class="matrix-panel-title">
-                    Original Working Matrix
-                </h3>
-
-                <table class="matrix-input-table matrix-table-readonly">
-
-                    <tr th:each="row,rowStat :
-                        ${inverseResult.currentStep == 0
-                            ? inverseResult.originalMatrix
-                            : (inverseResult.currentStep == 1
-                                ? inverseResult.transposedMatrix
-                                : (inverseResult.currentStep >= 4
-                                    ? inverseResult.helper4x4Matrix
-                                    : inverseResult.convertTo5x5Matrix))}">
-
-                        <td th:each="value,colStat : ${row}">
-
-                            <input
-                                type="text"
-
-                                th:id="'inverse-cell-' + ${rowStat.index} + '-' + ${colStat.index}"
-
-                                class="matrix-input matrix-readonly"
-
-                                th:value="${value != 0 ? value : ''}"
-
-                                readonly
-
-                                title="Matrix value"
-                                aria-label="Matrix value"
-
-                                th:classappend="
-                                    ${inverseResult.currentStep == 3
-                                        && (rowStat.index == 0 || colStat.index == 0)}
-                                        ? ' inverse-remove-cell'
-                                        : (${inverseResult.currentStep == 5
-                                            && (
-                                                (rowStat.index == 0 && colStat.index == 0)
-                                                ||
-                                                (rowStat.index == 1 && colStat.index == 1)                                                
-                                            )}
-                                            ? ' inverse-positive'
-                                            : (${inverseResult.currentStep == 6
-                                                && (
-                                                    (rowStat.index == 0 && colStat.index == 1)
-                                                    ||
-                                                    (rowStat.index == 1 && colStat.index == 0)                                                    
-                                                )}
-                                                ? ' inverse-negative'
-                                                : ''))">
-                        </td>
-
-                    </tr>
-
-                </table>
-
-                <div th:if="${inverseResult.currentStep >= 4}">
-
-                    <div class="inverse-calculation-row">
-
-                        <input
-                            id="positiveDiagonal"
-                            type="text"
-                            class="matrix-input calculation-cell"
-                            th:value="${inverseResult.diagonalPositiveValue}"
-                            readonly>
-
-                        <input
-                            id="negativeDiagonal"
-                            type="text"
-                            class="matrix-input calculation-cell"
-                            th:value="${inverseResult.diagonalNegativeValue}"
-                            readonly>
-
-                        <input
-                            id="diagonalResult"
-                            type="text"
-                            class="matrix-input calculation-cell"
-                            th:value="${inverseResult.diagonalResultValue}"
-                            readonly>
-
-                    </div>
-
-                    <div class="calculation-labels-row">
-                        <label>Diagonal Positive</label>
-                        <label>Diagonal Negative</label>
-                        <label>Result</label>
-                    </div>
-
+                <input type="hidden" name="inverseCurrentStep" th:value="${inverseResult.currentStep}">
+                <div id="matrixInverse3x3Page" class="sarrus-stage-two" th:data-inverse-current-step="${inverseResult.currentStep}">
+                <h2>4. Begin the 3 × 3 Matrix Inverse Walkthrough</h2>
+                    <details class="math-details inverse-details">
+                        <summary>Original Matrix Before Final Walkthrough</summary>
+                            <p class="math-description">
+                                Since your determinant is not zero, an inverse exists.
+                                We now begin again with your original matrix and work towards
+                                constructing the adjugate matrix.
+                            </p>
+                            <p class="math-description">Given:</p>
+                            <p>\[A=\begin{bmatrix}a & b & c \\d & e & f \\ g & h & i \end{bmatrix} \]</p>                           
+                            <p class="math-description">The inverse of a matrix is calculated using:</p>
+                            <p>\[A^{-1}=\frac{1}{\det(A)}\times\operatorname{adj}(A)\]</p>
+                            <p class="math-description">In this walkthrough, we first build the adjugate matrix:</p>
+                            <p>\[\operatorname{adj}(A)\]</p>
+                            <p class="math-description">
+                                Once the adjugate matrix is complete, each value is divided by the determinant
+                                to produce the true inverse matrix.
+                            </p>
+                    </details>
+                <div class="inverse-step-description">
+                    <h3>Step <span th:text="${inverseResult.stepTitle}"></span></h3>
+                    <p th:text="${inverseResult.stepDescription}"></p>
                 </div>
-
-            </div>
-
-            <div class="inverse-answer-section"
-                 th:if="${inverseResult.currentStep >= 4}">
-
-                <h3 class="matrix-panel-title">
-                    Final Inverse Matrix
-                </h3>
-
-                <table class="matrix-input-table matrix-table-readonly">
-                    <tr th:each="row,rowStat : ${inverseResult.inverseFinalAnswerMatrix}">
-                        <td th:each="value,colStat : ${row}">
-                            <input
-                                type="text"
-                                th:id="'inverse-answer-' + ${rowStat.index} + '-' + ${colStat.index}"
-                                class="matrix-input matrix-readonly"
-                                th:value="${value != null ? value : ''}"
-                                readonly
-                                title="Final inverse matrix cell"
-                                aria-label="Final inverse matrix cell">
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="button-group">
-
-            <button
-                type="submit"
-                name="action"
-                value="previous-3x3-inverse-step"
-                class="btn-secondary">
-                Previous Step
-            </button>
-
-            <button
-                type="submit"
-                name="action"
-                value="next-3x3-inverse-step"
-                class="btn-primary">
-                Next Step
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
+                <div class="inverse-matrix-container">
+                    <div class="inverse-working-panel">
+                        <h3 class="matrix-panel-title">Original Working Matrix</h3>
+                        <table class="matrix-input-table matrix-table-readonly">
+                            <tr th:each="row,rowStat :
+                                ${inverseResult.currentStep == 0
+                                    ? inverseResult.originalMatrix
+                                    : (inverseResult.currentStep == 1
+                                        ? inverseResult.transposedMatrix
+                                        : (inverseResult.currentStep >= 4
+                                            ? inverseResult.helper4x4Matrix
+                                            : inverseResult.convertTo5x5Matrix))}">
+                                <td th:each="value,colStat : ${row}">
+                                    <input
+                                        type="text"
+                                        th:id="'inverse-cell-' + ${rowStat.index} + '-' + ${colStat.index}"
+                                        class="matrix-input matrix-readonly matrix-cells-larger"
+                                        th:value="${value != 0 ? value : ''}"
+                                        readonly
+                                        title="Matrix value"
+                                        aria-label="Matrix value"
+                                        th:classappend="
+                                            ${inverseResult.currentStep == 3
+                                                && (rowStat.index == 0 || colStat.index == 0)}
+                                                ? ' inverse-remove-cell'
+                                                : (${inverseResult.currentStep == 5
+                                                    && (
+                                                        (rowStat.index == 0 && colStat.index == 0)
+                                                        ||
+                                                        (rowStat.index == 1 && colStat.index == 1)                                                
+                                                    )}
+                                                    ? ' inverse-positive'
+                                                    : (${inverseResult.currentStep == 6
+                                                        && (
+                                                            (rowStat.index == 0 && colStat.index == 1)
+                                                            ||
+                                                            (rowStat.index == 1 && colStat.index == 0)                                                    
+                                                        )}
+                                                        ? ' inverse-negative'
+                                                        : ''))">
+                                </td>
+                            </tr>
+                        </table>
+                        <div th:if="${inverseResult.currentStep >= 4}">
+                            <div class="inverse-calculation-row">
+                                <input
+                                    id="positiveDiagonal"
+                                    type="text"
+                                    class="matrix-input calculation-cell inverse-answer-cell"
+                                    title="Diagonal Positive"
+                                    th:value="${inverseResult.diagonalPositiveValue}"
+                                    readonly>
+                                <input
+                                    id="negativeDiagonal"
+                                    type="text"
+                                    class="matrix-input calculation-cell inverse-answer-cell"
+                                    title="Diagonal Negative"
+                                    th:value="${inverseResult.diagonalNegativeValue}"
+                                    readonly>
+                                <input
+                                    id="diagonalResult"
+                                    type="text"
+                                    class="matrix-input calculation-cell inverse-answer-cell"
+                                    title="Diagonal Result"
+                                    th:value="${inverseResult.diagonalResultValue}"
+                                    readonly>
+                            </div>
+                            <div class="calculation-labels-row">
+                                <label>Diagonal Positive</label>
+                                <label>Diagonal Negative</label>
+                                <label>Result</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inverse-answer-section"
+                        th:if="${inverseResult.currentStep >= 4}">
+                        <h3 class="matrix-panel-title">Final Adjugate Matrix</h3>
+                        <table class="matrix-input-table matrix-table-readonly ">
+                            <tr th:each="row,rowStat : ${inverseResult.finalAdjugateMatrix}">
+                                <td th:each="value,colStat : ${row}">
+                                    <input
+                                        type="text"
+                                        th:id="'inverse-answer-' + ${rowStat.index} + '-' + ${colStat.index}"
+                                        class="matrix-input matrix-readonly matrix-cells-larger"
+                                        th:value="${value != null ? value : ''}"
+                                        readonly
+                                        title="Final inverse matrix cell"
+                                        aria-label="Final inverse matrix cell">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button type="submit" name="action" value="previous-3x3-inverse-step" class="btn-secondary">
+                        Previous Step
+                    </button>
+                    <button type="submit" name="action" value="next-3x3-inverse-step" class="btn-primary">
+                        Next Step
+                    </button>
+                </div>
+                    <div class="determinant-result-container" th:if="${inverseResult.currentStep >= 32}">
+                    <h2>Your Final 3 × 3 Inverse</h2>
+                        <details class="math-details inverse-details">
+                            <summary>Inverse Matrix Formula</summary>
+                            <p class="math-description">
+                                The inverse of a matrix is calculated using:
+                            <p th:utext="'\\[A^{-1}=\\frac{1}{' + ${result.determinant} + '}\\times\\operatorname{adj}(A)\\]'"></p>
+                            <p class="math-description">Where:</p>
+                            <ul class="math-description">
+                                <li>\(A^{-1}\) = the inverse matrix</li>
+                                <li>\(\det(A)\) = the determinant</li>
+                                <li>\(\operatorname{adj}(A)\) = the adjugate matrix</li>
+                            </ul>
+                            <p class="math-description">
+                                In this walkthrough, you first calculated the determinant,
+                                then constructed the adjugate matrix, and finally divided
+                                every adjugate value by the determinant to produce the true inverse.
+                            </p>
+                        </details>
+                        <div class="determinant-result-box">
+                            <label>Final Inverse Matrix</label>
+                            <table class="matrix-input-table matrix-table-readonly">
+                                <tr th:each="row : ${inverseResult.finalInverseMatrix}">
+                                    <td th:each="value : ${row}">
+                                        <input type="text"
+                                            class="matrix-input matrix-readonly final-inverse-cell"
+                                            th:value="${value != null ? value : ''}"
+                                            readonly
+                                            title="Final inverse matrix cell"
+                                            aria-label="Final inverse matrix cell">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </form>
     </main>
 </div>

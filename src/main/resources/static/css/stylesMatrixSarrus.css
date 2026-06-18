@@ -28,48 +28,39 @@ body {
         opacity 0.22s ease,
         transform 0.18s ease;
 }
-
 body.loading {
     opacity: 0.88;
     filter: blur(1px);
     pointer-events: none;
 }
-
 /* Layout */
 .matrix-page {
     margin-left: 260px;
     width: calc(100% - 260px);
     padding: 2rem;
-
     display: flex;
     justify-content: center;
     align-items: flex-start;
 }
-
 .matrix-page form {
     width: 100%;
 }
-
 .hero-card{
     width: 100%;
     background: white;
     border-radius: 20px;
     padding: 2rem;
     margin-bottom: 2rem;
-
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     border: 1px solid #e8edf3;
-
     overflow-wrap: break-word;
     word-wrap: break-word;
 }
-
 /* Cards */
 .matrix-container {
     display: flex;
     justify-content: center;
 }
-
 .matrix-card {
     width: 420px;
     background: white;
@@ -77,17 +68,14 @@ body.loading {
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
-
 .matrix-card h1 {
     margin-bottom: 2rem;
 }
-
 .matrix-card select {
     padding: 12px;
     border-radius: 8px;
     font-size: 1rem;
 }
-
 /* Buttons */
 .button-group {
     display: flex;
@@ -95,40 +83,32 @@ body.loading {
     gap: 1rem;
     margin-top: 1rem;
 }
-
 .button-group button,
 .button-group a,
 .dashboard-btn {
     padding: 12px 24px;
     border: none;
     border-radius: 30px;
-
     font-size: 15px;
     font-weight: 600;
-
     cursor: pointer;
     transition: all 0.2s ease;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     text-decoration: none;
 }
 .button-group button:hover {
     transform: translateY(-2px);
 }
-
 .dashboard-btn {
     padding: 10px 20px;
     font-size: 14px;
     font-weight: 700;
 }
-
 .dashboard-btn:hover {
     transform: translateY(-1px);
 }
-
 .btn-primary {
     background-color: rgb(70, 236, 70);
     color: black;
@@ -435,50 +415,38 @@ input[type="number"] {
     margin-top: 2rem;
     text-align: center;
 }
-
 .determinant-result-box {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     gap: 0.8rem;
-
     background: linear-gradient(
         135deg,
         #fff9c4,
         #ffe082
     );
-
     border: 3px solid #f1c40f;
     border-radius: 20px;
-
     padding: 1.5rem 2rem;
-
     box-shadow:
         0 8px 24px rgba(0,0,0,0.12);
-
     animation: determinantPop 0.45s ease;
 }
-
 .determinant-result-box label {
     font-size: 1rem;
     font-weight: 700;
     color: #555;
 }
-
 .final-determinant-input {
     width: 180px;
     height: 90px;
-
     border-radius: 18px;
     border: 3px solid #f1c40f;
-
     background: white;
     color: #2c3e50;
-
     text-align: center;
     font-size: 2rem;
     font-weight: 800;
-
     box-shadow:
         inset 0 2px 6px rgba(0,0,0,0.08);
 }
@@ -502,54 +470,46 @@ input[type="number"] {
     gap: 1.25rem;
     margin: 1rem auto;
 }
-
 .inverse-working-panel,
 .inverse-answer-section {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .matrix-panel-title {
     margin: 0 0 0.35rem 0;
     line-height: 1.1;
     text-align: center;
 }
-
 .inverse-calculation-row {
     display: flex;
     justify-content: center;
     gap: 0.45rem;
     margin: 0.25rem 0 0.25rem 0;
 }
-
 .calculation-labels-row {
     display: flex;
     justify-content: center;
     gap: 0.45rem;
     margin-bottom: 0.25rem;
 }
-
 .calculation-labels-row label {
-    width: var(--matrix-width);
+    width: 90px;
     font-size: 0.68rem;
     line-height: 1.05;
     text-align: center;
     font-weight: 700;
 }
-
 .calculation-cell {
-    width: var(--matrix-width);
+    width: 90px;
     height: var(--matrix-height);
     text-align: center;
+    font-size: 0.9rem;
 }
-
 .inverse-working-panel .matrix-input-table,
 .inverse-answer-section .matrix-input-table {
     margin-top: 0.25rem;
 }
-
-
 .inverse-details .math-description {
     white-space: normal;
     word-wrap: break-word;
@@ -559,14 +519,25 @@ input[type="number"] {
     flex-direction: column;
     align-items: center;
 }
-.inverse-positive {
-    background:#fff4a8;
-    border-color:#f1c40f;
-}
+.inverse-answer-cell {
+    width: 90px;
+    height: 52px;
 
-.inverse-negative {
-    background:#ffd6d6;
-    border-color:#e74c3c;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+.matrix-cells-larger {
+    width: 90px;
+    height: 52px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+.final-inverse-cell {
+    width: 180px;
+    height: 55px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-align: center;
 }
 @keyframes determinantPop {
     0% {

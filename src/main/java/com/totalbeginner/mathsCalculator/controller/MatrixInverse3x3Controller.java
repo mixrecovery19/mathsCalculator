@@ -12,25 +12,14 @@ public class MatrixInverse3x3Controller {
 
     public MatrixInverse3x3Controller(
             MatrixInverse3x3Service matrixInverse3x3Service) {
-
         this.matrixInverse3x3Service = matrixInverse3x3Service;
     }
 
-    public void loadInverseSection(
-            Model model,
-            double[][] matrix,
-            int inverseCurrentStep
-    ) {
+    public void loadInverseSection(Model model, double[][] matrix, int inverseCurrentStep) {    
 
         MatrixInverse3x3Result result =
-                matrixInverse3x3Service.buildInverseResult(
-                        matrix,
-                        inverseCurrentStep
-                );
+                matrixInverse3x3Service.buildInverseResult(matrix, inverseCurrentStep);               
 
-        model.addAttribute(
-                "inverseResult",
-                result
-        );
+        model.addAttribute("inverseResult", result);        
     }    
 }

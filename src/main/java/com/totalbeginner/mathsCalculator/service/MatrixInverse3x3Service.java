@@ -1,15 +1,25 @@
 package com.totalbeginner.mathsCalculator.service;
 
 import com.totalbeginner.mathsCalculator.dto.MatrixInverse3x3Result;
-import com.totalbeginner.mathsCalculator.controller.MatrixInverse3x3Controller;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MatrixInverse3x3Service {
+    private final MatrixSarrusService matrixSarrusService;
+
+    public MatrixInverse3x3Service(MatrixSarrusService matrixSarrusService) {
+        this.matrixSarrusService = matrixSarrusService;
+    }
 
     private static final int FIRST_ROW = 0;
     private static final int SECOND_ROW = 1;
     private static final int THIRD_ROW = 2;
+   
+    private static final int FIRST_COLUMN = 0;
+    private static final int SECOND_COLUMN = 1;
+    private static final int THIRD_COLUMN = 2;
+   
+
     public MatrixInverse3x3Result buildInverseResult(double[][] matrix, int currentStep) {    
 
     MatrixInverse3x3Result result = new MatrixInverse3x3Result();
@@ -50,10 +60,10 @@ public class MatrixInverse3x3Service {
         if (currentStep >= 4) {
             result.setStepTitle("4: Now you should have a 4 x 4 matrix");
             result.setStepDescription(
-                    "Using this version of your transposed matrix, you can now calculate through the cells to form your inverse matrix."
+                    "Using this version of your transposed matrix, you can now calculate through the cells to form your adjugate matrix leading to the final inverse."
             );
             result.setHelper4x4Matrix(create4x4Matrix(result.getConvertTo5x5Matrix()));
-            result.setInverseFinalAnswerMatrix(createEmptyInverseMatrix());
+            result.setFinalAdjugateMatrix(createEmptyInverseMatrix());
         }
        
         if (currentStep >= 5) {
@@ -61,29 +71,18 @@ public class MatrixInverse3x3Service {
             result.setStepDescription(
                     "Multiply the downward diagonal elements."
             );
-            result.setDiagonalPositiveValue(
-                calculateDiagonalPositiveValue(
-                    result.getHelper4x4Matrix(),
-                    0,
-                    0
-                )
-            );
+                calculatePositive(result, FIRST_ROW, FIRST_COLUMN);              
+        
         }
         if (currentStep >= 6) {
             result.setStepTitle("6: Calculate Negative Diagonal");
             result.setStepDescription(
                     "Multiply the upward diagonal elements."
             );
-            result.setDiagonalNegativeValue(
-                calculateDiagonalNegativeValue(
-                    result.getHelper4x4Matrix(),
-                    0,
-                    0
-                )
-            );
+            calculateNegative(result, FIRST_ROW, FIRST_COLUMN);
         }
         if (currentStep >= 7) {
-            result.setStepTitle("7: Calculate Minor To Get First(A1) Of Your Inverse Matrix");
+            result.setStepTitle("7: Calculate Minor To Get First(A1) Of Your Adjugate Matrix");
             result.setStepDescription(
                     "Subtract the negative diagonal value from the positive diagonal value to get the minor."
             );
@@ -93,43 +92,200 @@ public class MatrixInverse3x3Service {
                             result.getDiagonalNegativeValue()
                     )
             );
-
-            Double[][] answerMatrix = createEmptyInverseMatrix();
-            answerMatrix[0][0] = result.getDiagonalResultValue();
-            result.setInverseFinalAnswerMatrix(answerMatrix);            
+            result.setFinalAdjugateMatrix(buildAnswerMatrix(result, currentStep)                
+            );            
         }
         if (currentStep >= 8) {
+            clearCalculationValues(result);
             result.setStepTitle("8: Calculate Positive Diagonal for A2 X B3");
-            result.setStepDescription(
-                    "Multiply the downward diagonal elements"
-            );
-            result.setDiagonalPositiveValue(
-                calculateDiagonalPositiveValue(result.getHelper4x4Matrix(), 0, 1));           
+            result.setStepDescription("Multiply the downward diagonal elements");            
+            calculatePositive(result, FIRST_ROW, SECOND_COLUMN);          
             
         }
         if (currentStep >= 9) {
             result.setStepTitle("9: Calculate Negative Diagonal");
-            result.setStepDescription(
-                    "Multiply the upward diagonal elements."
-            );
-            result.setDiagonalNegativeValue(
-                calculateDiagonalNegativeValue(
-                    result.getHelper4x4Matrix(),
-                    0,
-                    1
-                )
-            );
-        }
+            result.setStepDescription("Multiply the upward diagonal elements.");            
+            calculateNegative(result, FIRST_ROW, SECOND_COLUMN);
+        }           
+    
         if (currentStep >= 10) {
-            result.setStepTitle("10: Calculate Minor To Get Next (A2) Value Of Your Inverse Matrix");          
+            result.setStepTitle("10: Calculate Minor To Get Next (A2) Value Of Your Adjugate Matrix");          
             result.setStepDescription("Subtract the negative diagonal value from the positive diagonal value to get the minor.");           
 
             result.setDiagonalResultValue(
                     calculateDiagonalResultValue(result.getDiagonalPositiveValue(), result.getDiagonalNegativeValue())                    
             );
-            result.setInverseFinalAnswerMatrix(buildAnswerMatrix(result, currentStep)                
+            result.setFinalAdjugateMatrix(buildAnswerMatrix(result, currentStep)                
             );
         }
+        if (currentStep >= 11) {
+            clearCalculationValues(result);
+            result.setStepTitle("11: Calculate Positive Diagonal for A3 X B4");
+            result.setStepDescription("Multiply the downward diagonal elements");            
+            calculatePositive(result, FIRST_ROW, THIRD_COLUMN);          
+            
+        }
+        if (currentStep >= 12) {
+            result.setStepTitle("12: Calculate Negative Diagonal A4 x B3");
+            result.setStepDescription("Multiply the upward diagonal elements.");            
+            calculateNegative(result, FIRST_ROW, THIRD_COLUMN);
+        }
+        if (currentStep >= 13) {
+            result.setStepTitle("13: Calculate Minor To Get Next (A3) Value Of Your Adjugate Matrix");          
+            result.setStepDescription("Subtract the negative diagonal value from the positive diagonal value to get the minor.");
+            result.setDiagonalResultValue(
+                    calculateDiagonalResultValue(result.getDiagonalPositiveValue(), result.getDiagonalNegativeValue())                    
+            );
+            result.setFinalAdjugateMatrix(buildAnswerMatrix(result, currentStep)                
+            );
+        }
+        if (currentStep >= 14) {
+            clearCalculationValues(result);
+            result.setStepTitle("14: Calculate Positive Diagonal for B1 X C2");
+            result.setStepDescription("Multiply the downward diagonal elements");            
+            calculatePositive(result, SECOND_ROW, FIRST_COLUMN);          
+            
+        }
+        if (currentStep >= 15) {
+            result.setStepTitle("15: Calculate Negative Diagonal B2 x C1");
+            result.setStepDescription("Multiply the upward diagonal elements.");            
+            calculateNegative(result, SECOND_ROW, FIRST_COLUMN);
+        }
+        if (currentStep >= 16) {
+            result.setStepTitle("16: Calculate Minor To Get Next (B1) Value Of Your Adjugate Matrix");          
+            result.setStepDescription("Subtract the negative diagonal value from the positive diagonal value to get the minor.");
+            result.setDiagonalResultValue(
+                    calculateDiagonalResultValue(result.getDiagonalPositiveValue(), result.getDiagonalNegativeValue())                    
+            );
+            result.setFinalAdjugateMatrix(buildAnswerMatrix(result, currentStep)                
+            );
+        }
+        if (currentStep >= 17) {
+            clearCalculationValues(result);
+            result.setStepTitle("17: Calculate Positive Diagonal for B2 X C3");
+            result.setStepDescription("Multiply the downward diagonal elements");            
+            calculatePositive(result, SECOND_ROW, SECOND_COLUMN);          
+            
+        }
+        if (currentStep >= 18) {
+            result.setStepTitle("18: Calculate Negative Diagonal B3 x C2");
+            result.setStepDescription("Multiply the upward diagonal elements.");            
+            calculateNegative(result, SECOND_ROW, SECOND_COLUMN);
+        }
+        if (currentStep >= 19) {
+            result.setStepTitle("19: Calculate Minor To Get Next (B2) Value Of Your Adjugate Matrix");          
+            result.setStepDescription("Subtract the negative diagonal value from the positive diagonal value to get the minor.");
+            result.setDiagonalResultValue(
+                    calculateDiagonalResultValue(result.getDiagonalPositiveValue(), result.getDiagonalNegativeValue())                    
+            );
+            result.setFinalAdjugateMatrix(buildAnswerMatrix(result, currentStep)                
+            );
+        }
+        if (currentStep >= 20) {
+            clearCalculationValues(result);
+            result.setStepTitle("20: Calculate Positive Diagonal for B3 X C4");
+            result.setStepDescription("Multiply the downward diagonal elements");            
+            calculatePositive(result, SECOND_ROW, THIRD_COLUMN);    
+        }
+        if (currentStep >= 21) {
+            result.setStepTitle("21: Calculate Negative Diagonal B4 x C3");
+            result.setStepDescription("Multiply the upward diagonal elements.");            
+            calculateNegative(result, SECOND_ROW, THIRD_COLUMN);
+        }
+        if (currentStep >= 22) {
+            result.setStepTitle("22: Calculate Minor To Get Next (B3) Value Of Your Adjugate Matrix");          
+            result.setStepDescription("Subtract the negative diagonal value from the positive diagonal value to get the minor.");
+            result.setDiagonalResultValue(
+                    calculateDiagonalResultValue(result.getDiagonalPositiveValue(), result.getDiagonalNegativeValue())                    
+            );
+            result.setFinalAdjugateMatrix(buildAnswerMatrix(result, currentStep)                
+            );
+        }
+        if (currentStep >= 23) {
+            clearCalculationValues(result);
+            result.setStepTitle("23: Calculate Positive Diagonal for C1 X D2");
+            result.setStepDescription("Multiply the downward diagonal elements");            
+            calculatePositive(result, THIRD_ROW, FIRST_COLUMN); 
+        }
+        if (currentStep >= 24) {
+            result.setStepTitle("24: Calculate Negative Diagonal C2 x D1");
+            result.setStepDescription("Multiply the upward diagonal elements.");            
+            calculateNegative(result, THIRD_ROW, FIRST_COLUMN);
+        }
+        if (currentStep >= 25) {
+            result.setStepTitle("25: Calculate Minor To Get Next (C1) Value Of YOUR Adjugate Matrix");          
+            result.setStepDescription("Subtract the negative diagonal value from the positive diagonal value to get the minor.");
+            result.setDiagonalResultValue(
+                    calculateDiagonalResultValue(result.getDiagonalPositiveValue(), result.getDiagonalNegativeValue())                    
+            );
+            result.setFinalAdjugateMatrix(buildAnswerMatrix(result, currentStep)                
+            );
+        }
+        if (currentStep >= 26) {
+            clearCalculationValues(result);
+            result.setStepTitle("26: Calculate Positive Diagonal for C2 X D3");
+            result.setStepDescription("Multiply the downward diagonal elements");            
+            calculatePositive(result, THIRD_ROW, SECOND_COLUMN); 
+        }
+        if (currentStep >= 27) {
+            result.setStepTitle("27: Calculate Negative Diagonal C3 x D2");
+            result.setStepDescription("Multiply the upward diagonal elements.");            
+            calculateNegative(result, THIRD_ROW, SECOND_COLUMN);
+        }
+        if (currentStep >= 28) {
+            result.setStepTitle("28: Calculate Minor To Get Next (C2) Value Of YOUR Adjugate Matrix");          
+            result.setStepDescription("Subtract the negative diagonal value from the positive diagonal value to get the minor.");
+            result.setDiagonalResultValue(
+                    calculateDiagonalResultValue(result.getDiagonalPositiveValue(), result.getDiagonalNegativeValue())                    
+            );
+            result.setFinalAdjugateMatrix(buildAnswerMatrix(result, currentStep)                
+            );
+        }
+        if (currentStep >= 29) {
+            clearCalculationValues(result);
+            result.setStepTitle("29: Calculate Positive Diagonal for C3 X D1");
+            result.setStepDescription("Multiply the downward diagonal elements");            
+            calculatePositive(result, THIRD_ROW, THIRD_COLUMN); 
+        }
+        if (currentStep >= 30) {
+            result.setStepTitle("30: Calculate Negative Diagonal C1 x D3");
+            result.setStepDescription("Multiply the upward diagonal elements.");            
+            calculateNegative(result, THIRD_ROW, THIRD_COLUMN);
+        }
+        if (currentStep >= 31) {
+            result.setStepTitle("31: Calculate Minor To Get Next (C3) Value Of YOUR Adjugate Matrix as and Final Value For Your Adjugate Matrix");          
+            result.setStepDescription("Subtract the negative diagonal value from the positive diagonal value to get the minor.");
+            result.setDiagonalResultValue(
+                    calculateDiagonalResultValue(result.getDiagonalPositiveValue(), result.getDiagonalNegativeValue())                    
+            );
+            result.setFinalAdjugateMatrix(buildAnswerMatrix(result, currentStep)                
+            );
+        }
+        if (currentStep >= 32) {
+
+    result.setStepTitle("32: Your Final 3 × 3 Inverse");
+
+    result.setStepDescription(
+            "The final inverse is calculated by dividing every value in the adjugate matrix by the determinant."
+    );
+
+    double determinant =
+            matrixSarrusService.determinantSarrus(
+                    matrixSarrusService.buildSarrusMatrix(matrix)
+            );
+
+    Double[][] adjugateMatrix =
+            buildAnswerMatrix(result, currentStep);
+
+    result.setFinalAdjugateMatrix(adjugateMatrix);
+
+    result.setFinalInverseMatrix(
+            buildFinalInverseMatrix(
+                    adjugateMatrix,
+                    determinant
+            )
+    );
+}
         return result;
     }
     public double[][] transposeMatrix(double[][] matrix) {
@@ -174,15 +330,92 @@ public class MatrixInverse3x3Service {
     public Double calculateDiagonalNegativeValue(double[][] helper4x4Matrix, int row, int col){
         return helper4x4Matrix[row][col + 1] * helper4x4Matrix[row + 1][col];
     }
-    private Double[][] buildAnswerMatrix(MatrixInverse3x3Result result, int currentStep){   
+    private Double[][] buildAnswerMatrix(MatrixInverse3x3Result result, int currentStep) {
         Double[][] answer = createEmptyInverseMatrix();
-            if (currentStep >= 7) {
-                answer[0][0] = calculateMinor(result.getHelper4x4Matrix(), 0, 0);                        
-            }
-            if (currentStep >= 10) {
-                answer[0][1] = result.getDiagonalResultValue();
-            }
+        if (currentStep >= 7) {
+            answer[0][0] = calculateMinor(
+                    result.getHelper4x4Matrix(),
+                    FIRST_ROW,
+                    FIRST_COLUMN
+            );
+        }
+        if (currentStep >= 10) {
+            answer[0][1] = calculateMinor(
+                    result.getHelper4x4Matrix(),
+                    FIRST_ROW,
+                    SECOND_COLUMN
+            );
+        }
+        if (currentStep >= 13) {
+            answer[0][2] = calculateMinor(
+                    result.getHelper4x4Matrix(),
+                    FIRST_ROW,
+                    THIRD_COLUMN
+            );
+        }
+        if (currentStep >= 16) {
+            answer[1][0] = calculateMinor(
+                    result.getHelper4x4Matrix(),
+                    SECOND_ROW,
+                    FIRST_COLUMN
+            );
+        }
+        if (currentStep >= 19) {
+            answer[1][1] = calculateMinor(
+                    result.getHelper4x4Matrix(),
+                    SECOND_ROW,
+                    SECOND_COLUMN
+            );
+        }
+        if (currentStep >= 22) {
+            answer[1][2] = calculateMinor(
+                    result.getHelper4x4Matrix(),
+                    SECOND_ROW,
+                    THIRD_COLUMN
+            );
+        }
+        if (currentStep >= 25) {
+            answer[2][0] = calculateMinor(
+                    result.getHelper4x4Matrix(),
+                    THIRD_ROW,
+                    FIRST_COLUMN
+            );
+        }
+        if (currentStep >= 28) {
+            answer[2][1] = calculateMinor(
+                    result.getHelper4x4Matrix(),
+                    THIRD_ROW,
+                    SECOND_COLUMN
+            );
+        }
+        if (currentStep >= 31) {
+            answer[2][2] = calculateMinor(
+                    result.getHelper4x4Matrix(),
+                    THIRD_ROW,
+                    THIRD_COLUMN
+            );
+        }
+       
         return answer;
+    }
+    private void calculatePositive(MatrixInverse3x3Result result, int row, int col) {      
+            result.setDiagonalPositiveValue(
+                calculateDiagonalPositiveValue(
+                    result.getHelper4x4Matrix(),
+                    row,
+                    col
+                )
+            );
+        }
+
+    private void calculateNegative(MatrixInverse3x3Result result, int row, int col) {
+        result.setDiagonalNegativeValue(
+            calculateDiagonalNegativeValue(
+                result.getHelper4x4Matrix(),
+                row,
+                col
+            )
+        );
     }
 
     public Double calculateMinor(double[][] helper4x4Matrix, int row, int col) {   
@@ -193,4 +426,23 @@ public class MatrixInverse3x3Service {
 
         return calculateDiagonalResultValue(positiveDiagonalValue, negativeDiagonalValue);
     }
+
+    private void clearCalculationValues(MatrixInverse3x3Result result) {
+        result.setDiagonalPositiveValue(null);
+        result.setDiagonalNegativeValue(null);
+        result.setDiagonalResultValue(null);
+    }
+
+    private String[][] buildFinalInverseMatrix(Double[][] adjugateMatrix, double determinant) {
+        String[][] finalInverseMatrix = new String[3][3];
+
+            for (int row = 0; row < 3; row++) {
+                for (int col = 0; col < 3; col++) {
+                    if (adjugateMatrix[row][col] != null) {
+                        finalInverseMatrix[row][col] = adjugateMatrix[row][col] + " / " + determinant;
+                    }
+                }
+            }
+            return finalInverseMatrix;
+        }
 }

@@ -2,9 +2,7 @@ package com.totalbeginner.mathsCalculator.controller;
 
 import com.totalbeginner.mathsCalculator.dto.MatrixSarrusResult;
 import com.totalbeginner.mathsCalculator.service.MatrixSarrusService;
-import com.totalbeginner.mathsCalculator.service.MatrixInverse3x3Service;
-import com.totalbeginner.mathsCalculator.dto.MatrixInverse3x3Result;
-import com.totalbeginner.mathsCalculator.controller.MatrixInverse3x3Controller;
+
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
         @Controller
         public class MatrixSarrusController {
-
         private final MatrixSarrusService matrixSarrusService;
         private final MatrixInverse3x3Controller matrixInverse3x3Controller;
 
@@ -25,16 +22,12 @@ import java.util.Map;
        @GetMapping("/matrix-sarrus")
         public String matrixSarrusPage(Model model) {
 
-        model.addAttribute(
-                "size",
-                3
-        );
-
+        model.addAttribute("size", 3); 
+              
         model.addAttribute(
                 "matrixSarrus",
                 new double[3][3]
         );
-
         model.addAttribute(
                 "hasMatrixValues",
                 false
@@ -62,8 +55,7 @@ import java.util.Map;
                         newStep = 0; // Reset to first step when generating a new matrix
                 } else if ("next-sarrus-step".equals(action)) {
                         newStep++;
-                } else if (
-                        "previous-sarrus-step"
+                } else if ("previous-sarrus-step"
                                 .equals(action)
                 ) {
                         newStep--;
@@ -76,7 +68,7 @@ import java.util.Map;
                         inverseCurrentStep =
                                 Math.max(
                                         0,
-                                        Math.min(inverseCurrentStep, 20)
+                                        Math.min(inverseCurrentStep, 32)
                                 );
         // Prevent going too far
         newStep = Math.max(0, Math.min(newStep, 9));    
@@ -114,33 +106,20 @@ import java.util.Map;
         "previous-3x3-inverse-step".equals(action)) {
 
     MatrixSarrusResult result =
-            matrixSarrusService.buildSarrusResult(
-                    matrix,
-                    newStep
-            );
+            matrixSarrusService.buildSarrusResult(matrix, newStep);            
 
-    if ("continue-to-inverse".equals(action)
-            ||
-            "next-3x3-inverse-step".equals(action)
-            ||
-            "previous-3x3-inverse-step".equals(action)) {
+        if ("continue-to-inverse".equals(action)
+                ||
+                "next-3x3-inverse-step".equals(action)
+                ||
+                "previous-3x3-inverse-step".equals(action)) {
 
-        result.setShowInverseSection(true);
+                result.setShowInverseSection(true);
 
-        matrixInverse3x3Controller.loadInverseSection(
-                model,
-                matrix,
-                inverseCurrentStep
-        );
-    }
-
-    model.addAttribute(
-            "result",
-            result
-    );
-}
-
-        return "matrixSarrus";
-                
+                matrixInverse3x3Controller.loadInverseSection(model, matrix, inverseCurrentStep);        
+        }
+                model.addAttribute("result", result);    
+        }
+        return "matrixSarrus";                
         }
 }

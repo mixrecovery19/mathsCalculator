@@ -17,7 +17,9 @@ public class MatrixInverse3x3Result {
     private Double diagonalNegativeValue;
     private Double diagonalResultValue;
 
-    private Double[][] inverseFinalAnswerMatrix;
+    private Double[][] finalAdjugateMatrix;
+
+    private String[][] finalInverseMatrix;
 
     public double[][] getOriginalMatrix() {
         return originalMatrix;
@@ -69,11 +71,11 @@ public class MatrixInverse3x3Result {
     public void setHelper4x4Matrix(double[][] helper4x4Matrix) {
         this.helper4x4Matrix = helper4x4Matrix;
     }
-    public Double[][] getInverseFinalAnswerMatrix() {
-        return inverseFinalAnswerMatrix;
+    public Double[][] getFinalAdjugateMatrix() {
+        return finalAdjugateMatrix;
     }
-    public void setInverseFinalAnswerMatrix(Double[][] inverseFinalAnswerMatrix) {
-        this.inverseFinalAnswerMatrix = inverseFinalAnswerMatrix;
+    public void setFinalAdjugateMatrix(Double[][] finalAdjugateMatrix) {
+        this.finalAdjugateMatrix = finalAdjugateMatrix;
     }
     public Double getDiagonalPositiveValue() {
         return diagonalPositiveValue;
@@ -92,5 +94,11 @@ public class MatrixInverse3x3Result {
     }
     public void setDiagonalResultValue(Double diagonalResultValue) {
         this.diagonalResultValue = diagonalResultValue;
+    }
+    public String[][] getFinalInverseMatrix() {
+        return finalInverseMatrix;
+    }
+    public void setFinalInverseMatrix(String[][] finalInverseMatrix) {
+        this.finalInverseMatrix = finalInverseMatrix;
     }
 }
