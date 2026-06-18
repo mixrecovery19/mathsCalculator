@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 /* 🔹 Page background */
 body {
     font-family: -apple-system,
@@ -19,11 +18,11 @@ body {
     min-height: 100vh;
 }
 .matrix-page {
-    margin-left: 260px;
+    margin-left: 360px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    width: calc(100% - 260px);
+    width: calc(100% - 360px);
     padding: 2rem;
     box-sizing: border-box;
 }
@@ -113,13 +112,9 @@ body {
 }
 .matrix-table {
     margin: 1.5rem auto;
-
     border-collapse: separate;
     border-spacing: 10px;
-}
-
-.matrix-table {
-    width: 100%;
+     width: 100%;
     border-collapse: collapse;
     table-layout: auto;
 }
@@ -128,20 +123,16 @@ body {
     min-width: 65px;
     padding: 10px 12px;
     text-align: center;
-
     border: 1px solid #ddd;
     border-radius: 8px;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
     font-size: clamp(
         0.75rem,
         1vw,
         1rem
     );
-
     transition: all 0.2s ease;
 }
 
@@ -178,20 +169,16 @@ body {
 .hero-card,
 .status-card,
 .preview-card {
-
     width: 100%;
     box-sizing: border-box;
-
     background: white;
     border-radius: 20px;
     padding: 2rem;
-
     box-shadow:
         0 6px 20px
         rgba(0,0,0,0.08);
 
     border: 1px solid #e8edf3;
-
     overflow-wrap: break-word;
     word-wrap: break-word;
 }
@@ -341,4 +328,8 @@ body.loading {
     width: 70px;
     height: 70px;
     text-align: center;
+}
+.sidebar {
+    width: 360px;
+    flex-shrink: 0;
 }

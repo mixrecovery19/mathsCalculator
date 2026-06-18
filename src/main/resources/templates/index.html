@@ -26,7 +26,8 @@
         <section class="status-card">
             <div th:if="${user == null}" class="logged-out">
                 <strong>Guest Access</strong>
-                <p>You are currently browsing in read-only mode.</p>               
+                <p>You are currently browsing in read-only mode because I have not applied a login flow intentionally.<br>
+                I intentionally leftit as a placeholder for future development.</p>               
             </div>
             <div th:if="${user != null}" class="logged-in">
                 <strong>Logged In</strong>

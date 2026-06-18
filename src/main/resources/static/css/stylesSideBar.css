@@ -16,7 +16,7 @@ body {
 }
 
 .sidebar {
-    width: 260px;
+    width: 360px;
     min-height: 100vh;
     background: #1e293b;
     color: white;
@@ -60,11 +60,9 @@ body {
 }
 .main-content {
     flex: 1;
-
     display: flex;
     justify-content: center;
     align-items: flex-start;
-
     padding: 3rem;
 }
 .admin-section {
