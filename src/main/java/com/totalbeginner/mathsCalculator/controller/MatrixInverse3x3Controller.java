@@ -8,33 +8,29 @@ import org.springframework.ui.Model;
 @Controller
 public class MatrixInverse3x3Controller {
 
-    private final MatrixInverse3x3Service
-            matrixInverse3x3Service;
+    private final MatrixInverse3x3Service matrixInverse3x3Service;
 
     public MatrixInverse3x3Controller(
-            MatrixInverse3x3Service
-                    matrixInverse3x3Service
-    ) {
+            MatrixInverse3x3Service matrixInverse3x3Service) {
 
-        this.matrixInverse3x3Service =
-                matrixInverse3x3Service;
+        this.matrixInverse3x3Service = matrixInverse3x3Service;
     }
 
     public void loadInverseSection(
             Model model,
-            double[][] matrix
+            double[][] matrix,
+            int inverseCurrentStep
     ) {
 
         MatrixInverse3x3Result result =
-                matrixInverse3x3Service
-                        .buildInverseResult(
-                                matrix,
-                                0
-                        );
+                matrixInverse3x3Service.buildInverseResult(
+                        matrix,
+                        inverseCurrentStep
+                );
 
         model.addAttribute(
                 "inverseResult",
                 result
         );
-    }
+    }    
 }

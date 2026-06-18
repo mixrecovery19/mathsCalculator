@@ -51,6 +51,8 @@ import java.util.Map;
                 @RequestParam(required = false) String action,
                 @RequestParam(defaultValue = "0")
                 int currentStep,
+                @RequestParam(defaultValue = "0")
+                int inverseCurrentStep,
                 Model model
         ) {
 
@@ -66,6 +68,16 @@ import java.util.Map;
                 ) {
                         newStep--;
                 }
+                if ("next-3x3-inverse-step".equals(action)) {
+                        inverseCurrentStep++;
+                } else if ("previous-3x3-inverse-step".equals(action)) {
+                        inverseCurrentStep--;
+                        }
+                        inverseCurrentStep =
+                                Math.max(
+                                        0,
+                                        Math.min(inverseCurrentStep, 20)
+                                );
         // Prevent going too far
         newStep = Math.max(0, Math.min(newStep, 9));    
         boolean hasMatrixValues = matrixSarrusService.hasMatrixValues(matrix);
@@ -89,30 +101,37 @@ import java.util.Map;
         matrix
         );
 
-        if ("generate-sarrus".equals(action)
+       if ("generate-sarrus".equals(action)
         ||
         "next-sarrus-step".equals(action)
         ||
         "previous-sarrus-step".equals(action)
         ||
-        "continue-to-inverse".equals(action)) {
+        "continue-to-inverse".equals(action)
+        ||
+        "next-3x3-inverse-step".equals(action)
+        ||
+        "previous-3x3-inverse-step".equals(action)) {
 
     MatrixSarrusResult result =
-            matrixSarrusService
-                    .buildSarrusResult(
-                            matrix,
-                            newStep
-                    );
+            matrixSarrusService.buildSarrusResult(
+                    matrix,
+                    newStep
+            );
 
-    if ("continue-to-inverse".equals(action)) {
+    if ("continue-to-inverse".equals(action)
+            ||
+            "next-3x3-inverse-step".equals(action)
+            ||
+            "previous-3x3-inverse-step".equals(action)) {
 
         result.setShowInverseSection(true);
 
-        matrixInverse3x3Controller
-                .loadInverseSection(
-                        model,
-                        matrix
-                );
+        matrixInverse3x3Controller.loadInverseSection(
+                model,
+                matrix,
+                inverseCurrentStep
+        );
     }
 
     model.addAttribute(

@@ -9,6 +9,7 @@
     <script src="/js/overlayhelper.js"></script>       
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="/js/sarrusStepsColours.js"></script>
+    <script src="/js/inverse3x3StepsColors.js"></script>
 </head>
 <body>
     <div id="matrixSarrusPage"class="app-layout" th:data-current-step="${result != null ? result.currentStep : 0}">
@@ -132,8 +133,7 @@
                                 readonly>
                         </td>
                     </tr>
-                </table>
-            
+                </table>            
                 <table class="matrix-input-table">
                     <tr th:each="row,rowStat : ${result.sarrusMatrix}">
                         <td th:each="value,colStat : ${row}">
@@ -281,13 +281,18 @@
             </section>
             <section class="hero-card" th:if="${inverseResult != null}">
 
-    <div class="sarrus-stage-two">
+    <input type="hidden"
+           name="inverseCurrentStep"
+           th:value="${inverseResult.currentStep}">
+
+    <div id="matrixInverse3x3Page"
+         class="sarrus-stage-two"
+         th:data-inverse-current-step="${inverseResult.currentStep}">
 
         <h2>4. Begin the 3 × 3 Matrix Inverse</h2>
 
-        <details class="math-details">
+        <details class="math-details inverse-details">
             <summary>Original Matrix Before Inverse Walkthrough</summary>
-
             <p class="math-description">
                 Since your determinant is not zero, an inverse exists.
                 We now begin again with your original 3 × 3 matrix before
@@ -295,26 +300,150 @@
             </p>
         </details>
 
-        <table class="matrix-input-table matrix-table-readonly">
-            <tr th:each="row : ${inverseResult.originalMatrix}">
-                <td th:each="value : ${row}">
-                    <input type="text"
-                           class="matrix-input matrix-readonly"
-                           th:value="${value != 0 ? value : ''}"
-                           title="Original matrix value for inverse"
-                           aria-label="Original matrix value for inverse"
-                           readonly>
-                </td>
-            </tr>
-        </table>
+        <div class="inverse-step-description">
+            <h3>Step <span th:text="${inverseResult.stepTitle}"></span></h3>
+            <p th:text="${inverseResult.stepDescription}"></p>
+        </div>
+
+        <div class="inverse-matrix-container">
+
+            <div class="inverse-working-panel">
+
+                <h3 class="matrix-panel-title">
+                    Original Working Matrix
+                </h3>
+
+                <table class="matrix-input-table matrix-table-readonly">
+
+                    <tr th:each="row,rowStat :
+                        ${inverseResult.currentStep == 0
+                            ? inverseResult.originalMatrix
+                            : (inverseResult.currentStep == 1
+                                ? inverseResult.transposedMatrix
+                                : (inverseResult.currentStep >= 4
+                                    ? inverseResult.helper4x4Matrix
+                                    : inverseResult.convertTo5x5Matrix))}">
+
+                        <td th:each="value,colStat : ${row}">
+
+                            <input
+                                type="text"
+
+                                th:id="'inverse-cell-' + ${rowStat.index} + '-' + ${colStat.index}"
+
+                                class="matrix-input matrix-readonly"
+
+                                th:value="${value != 0 ? value : ''}"
+
+                                readonly
+
+                                title="Matrix value"
+                                aria-label="Matrix value"
+
+                                th:classappend="
+                                    ${inverseResult.currentStep == 3
+                                        && (rowStat.index == 0 || colStat.index == 0)}
+                                        ? ' inverse-remove-cell'
+                                        : (${inverseResult.currentStep == 5
+                                            && (
+                                                (rowStat.index == 0 && colStat.index == 0)
+                                                ||
+                                                (rowStat.index == 1 && colStat.index == 1)                                                
+                                            )}
+                                            ? ' inverse-positive'
+                                            : (${inverseResult.currentStep == 6
+                                                && (
+                                                    (rowStat.index == 0 && colStat.index == 1)
+                                                    ||
+                                                    (rowStat.index == 1 && colStat.index == 0)                                                    
+                                                )}
+                                                ? ' inverse-negative'
+                                                : ''))">
+                        </td>
+
+                    </tr>
+
+                </table>
+
+                <div th:if="${inverseResult.currentStep >= 4}">
+
+                    <div class="inverse-calculation-row">
+
+                        <input
+                            id="positiveDiagonal"
+                            type="text"
+                            class="matrix-input calculation-cell"
+                            th:value="${inverseResult.diagonalPositiveValue}"
+                            readonly>
+
+                        <input
+                            id="negativeDiagonal"
+                            type="text"
+                            class="matrix-input calculation-cell"
+                            th:value="${inverseResult.diagonalNegativeValue}"
+                            readonly>
+
+                        <input
+                            id="diagonalResult"
+                            type="text"
+                            class="matrix-input calculation-cell"
+                            th:value="${inverseResult.diagonalResultValue}"
+                            readonly>
+
+                    </div>
+
+                    <div class="calculation-labels-row">
+                        <label>Diagonal Positive</label>
+                        <label>Diagonal Negative</label>
+                        <label>Result</label>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="inverse-answer-section"
+                 th:if="${inverseResult.currentStep >= 4}">
+
+                <h3 class="matrix-panel-title">
+                    Final Inverse Matrix
+                </h3>
+
+                <table class="matrix-input-table matrix-table-readonly">
+                    <tr th:each="row,rowStat : ${inverseResult.inverseFinalAnswerMatrix}">
+                        <td th:each="value,colStat : ${row}">
+                            <input
+                                type="text"
+                                th:id="'inverse-answer-' + ${rowStat.index} + '-' + ${colStat.index}"
+                                class="matrix-input matrix-readonly"
+                                th:value="${value != null ? value : ''}"
+                                readonly
+                                title="Final inverse matrix cell"
+                                aria-label="Final inverse matrix cell">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
         <div class="button-group">
-            <button type="submit"
-                    name="action"
-                    value="start-inverse-step-1"
-                    class="btn-primary">
-                Begin Inverse Walkthrough
+
+            <button
+                type="submit"
+                name="action"
+                value="previous-3x3-inverse-step"
+                class="btn-secondary">
+                Previous Step
             </button>
+
+            <button
+                type="submit"
+                name="action"
+                value="next-3x3-inverse-step"
+                class="btn-primary">
+                Next Step
+            </button>
+
         </div>
 
     </div>
@@ -323,6 +452,5 @@
         </form>
     </main>
 </div>
-
 </body>
 </html>

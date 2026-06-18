@@ -482,7 +482,92 @@ input[type="number"] {
     box-shadow:
         inset 0 2px 6px rgba(0,0,0,0.08);
 }
+.inverse-remove-cell {
+    background-color: #f97316 !important;
+    color: white;
+    font-weight: 700;
+    border: 2px solid #ea580c;
+}
+.inverse-calculation-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+.inverse-matrix-container {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.25rem;
+    margin: 1rem auto;
+}
 
+.inverse-working-panel,
+.inverse-answer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.matrix-panel-title {
+    margin: 0 0 0.35rem 0;
+    line-height: 1.1;
+    text-align: center;
+}
+
+.inverse-calculation-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    margin: 0.25rem 0 0.25rem 0;
+}
+
+.calculation-labels-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-bottom: 0.25rem;
+}
+
+.calculation-labels-row label {
+    width: var(--matrix-width);
+    font-size: 0.68rem;
+    line-height: 1.05;
+    text-align: center;
+    font-weight: 700;
+}
+
+.calculation-cell {
+    width: var(--matrix-width);
+    height: var(--matrix-height);
+    text-align: center;
+}
+
+.inverse-working-panel .matrix-input-table,
+.inverse-answer-section .matrix-input-table {
+    margin-top: 0.25rem;
+}
+
+
+.inverse-details .math-description {
+    white-space: normal;
+    word-wrap: break-word;
+}
+.inverse-answer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.inverse-positive {
+    background:#fff4a8;
+    border-color:#f1c40f;
+}
+
+.inverse-negative {
+    background:#ffd6d6;
+    border-color:#e74c3c;
+}
 @keyframes determinantPop {
     0% {
         transform: scale(0.85);
