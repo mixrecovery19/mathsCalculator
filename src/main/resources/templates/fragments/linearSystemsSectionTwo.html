@@ -1,0 +1,154 @@
+<div th:fragment="linearSystemsSectionTwo">
+    <section class="hero-card walkthrough-card" th:if="${result.currentStep >= 1}">
+                    <div class="two-by-two-stage-two">   
+                    <h2>Calculate The Determinant of Matrix A</h2>
+                            <details class="math-details">                               
+                                    <summary>Why do we calculate the determinant of Matrix A?</summary>
+                                    <p class="math-description">
+                                        Before we can solve a linear system using the inverse matrix method,
+                                        we must first calculate the determinant of the coefficient matrix,
+                                        \(A\). The determinant tells us whether the matrix has an inverse.
+                                        If the determinant is zero, the inverse does not exist and this
+                                        method cannot be used.<br><br>
+                                        For the coefficient matrix \[A=\begin{bmatrix}a & b\\c & d\end{bmatrix}\]
+                                        the determinant is calculated using \[\det(A)=ad-bc\]
+                                        In matrices, we always identify elements by their
+                                        <strong>row first</strong> and then
+                                        <strong>column</strong> position.
+                                        \[a=A_{11},\quad
+                                        b=A_{12},\quad
+                                        c=A_{21},\quad
+                                        d=A_{22}
+                                        \]
+                                        The determinant is calculated in three stages:
+                                        \[\text{Step 1: } a \times d\]
+                                        \[\text{Step 2: } b \times c\]
+                                        \[\text{Step 3: } (a \times d) - (b \times c)\]
+                                        Use the walkthrough below to calculate the determinant of your
+                                        coefficient matrix before continuing to calculate its inverse.
+                                    </p>
+                            </details>      
+                            <div class="two-by-two-layout">  
+                            <table class="matrix-input-table two-by-two-answer-table top">
+                                <tr>
+                                    <td>
+                                        <input type="text"
+                                            class="matrix-input two-by-two-answer-cell"                       
+                                            title="Empty answer cell"
+                                            aria-label="Empty answer cell"
+                                            readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text"
+                                            class="matrix-input two-by-two-answer-cell"                       
+                                            title="Empty answer cell"
+                                            aria-label="Empty answer cell"
+                                            readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text"
+                                                id="negativeStep1"
+                                            class="matrix-input two-by-two-answer-cell"
+                                            th:value="${result.currentStep >= 3 ? result.negativeStep1 : ''}"                      
+                                            title="Negative step 1"
+                                            aria-label="Negative step 1"
+                                            readonly>
+                                    </td>                   
+                                </tr>
+                            </table>                    
+                            <table class="matrix-input-table">
+                                <tr th:each="row,rowStat : ${result.coefficientMatrix}">
+                                    <td th:each="value,colStat : ${row}">
+                                        <input type="number"
+                                        class="matrix-input matrix-readonly"
+                                        th:id="
+                                        'cell-'
+                                        + ${rowStat.index}
+                                        + '-'
+                                        + ${colStat.index}"
+                                        th:value="${value}"
+                                        title="2 x 2 matrix value"
+                                        aria-label="2 x 2 matrix value"
+                                        readonly>
+                                    </td>
+                                    <!-- NEW RESULT COLUMN -->
+                                    <td th:if="${rowStat.index == 0}">
+                                        <input type="text"                
+                                            class="matrix-input two-by-two-answer-cell"                
+                                            title="Empty answer cell"
+                                            aria-label="Empty answer cell"
+                                            readonly>
+                                    </td>
+                                    <td th:if="${rowStat.index == 1}">
+                                        <input type="text"
+                                            id="determinant"
+                                            class="matrix-input two-by-two-answer-cell determinant-cell"
+                                            th:value="${result.currentStep >= 4 ? result.determinant : ''}"
+                                            title="Determinant"
+                                            aria-label="Determinant"
+                                            readonly>
+                                    </td>
+                                    
+                                </tr>
+                            </table>
+                            <!-- BOTTOM POSITIVE ANSWER ROW -->
+                            <table class="matrix-input-table two-by-two-answer-table bottom">
+                                <tr>
+                                    <td>
+                                        <input type="text"
+                                            class="matrix-input two-by-two-answer-cell"                       
+                                            title="Empty answer cell"
+                                            aria-label="Empty answer cell"
+                                            readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text"
+                                            class="matrix-input two-by-two-answer-cell"                       
+                                            title="Empty answer cell"
+                                            aria-label="Empty answer cell"
+                                            readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text"
+                                                id="positiveStep1"
+                                            class="matrix-input two-by-two-answer-cell"
+                                            th:value="${result.currentStep >= 2 ? result.positiveStep1 : ''}"                       
+                                            title="Positive step 1"
+                                            aria-label="Positive step 1"
+                                            readonly>
+                                    </td>
+                                            
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="button-group">
+                            <button type="submit" name="action" value="previous-linear-system-step" class="btn-secondary">
+                                Previous Step
+                            </button>
+                            <button type="submit" name="action" value="next-linear-system-step" class="btn-primary">
+                                Next Step
+                            </button>
+                        </div>
+                        <div class="determinant-result-container" th:if="${result.currentStep >= 4}">
+                        <h2>Final Determinant</h2>
+                            <div class="determinant-result-box">
+                                <label>Determinant of your 2 x 2 Matrix</label>
+                                <input type="text"
+                                    id="finalDeterminant"
+                                    class="final-determinant-input"
+                                    th:value="${result.determinant}"
+                                    aria-label="Final determinant"
+                                    title="Final determinant"
+                                    readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${result.currentStep >= 4}">
+                        <div class="button-group continue-button-group">
+                            <button type="submit" name="action" value="start-inverse-walkthrough" class="btn-primary">
+                                Continue to Next Stage of Linear Systems Walkthrough
+                            </button>
+                        </div>
+                    </div>
+                </section>
+</div>

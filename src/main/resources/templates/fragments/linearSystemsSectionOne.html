@@ -1,0 +1,92 @@
+<div th:fragment="linearSystemsSectionOne">
+    <section class="hero-card">
+        <div class="matrix-fragment-card">
+            <h2>2. Construct the Matrix Equation</h2>
+            <details class="math-details">
+                <summary>Building the Matrix Representation</summary>
+                <p class="math-description">
+                    Your two simultaneous equations can now be written as
+                    a matrix equation.
+                    <br><br>
+                    The left matrix contains the coefficients of
+                    <strong>x</strong> and <strong>y</strong>,
+                    while the column vector on the right contains the
+                    constants.
+                    <br><br>
+                    Together they form
+                    \[A X = B\]
+                    where
+                    \[A=\begin{bmatrix}a & b\\d & e\end{bmatrix}
+                    \quad X=\begin{bmatrix}x\\y\end{bmatrix}
+                    \quad B=\begin{bmatrix}c\\f\end{bmatrix}\]
+                </p>
+            </details>
+            <div class="linear-system-layout">
+                <!-- Coefficient Matrix -->
+                <div class="coefficient-panel">
+                    <h3>Coefficient Matrix (A)</h3>
+                    <table class="matrix-input-table">
+                        <tr th:each="row : ${#numbers.sequence(0,1)}">
+                            <td th:each="col : ${#numbers.sequence(0,1)}">
+                                <input
+                                    type="text"
+                                    class="matrix-input"
+                                    readonly
+                                    title="Coefficient matrix value"
+                                    th:value="${result.coefficientMatrix[row][col]}">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- Unknown Vector -->
+                <div class="constants-panel">
+                    <h3>Unknown Vector (X)</h3>
+                    <table class="matrix-input-table">
+                        <tr>
+                            <td>
+                                <input
+                                    class="matrix-input"
+                                    value="x"
+                                    readonly
+                                    title="Unknown variable x">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input
+                                    class="matrix-input"
+                                    value="y"
+                                    readonly
+                                    title="Unknown variable y">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- Constants -->
+                <div class="constants-panel">
+                    <h3>Constants (B)</h3>
+                    <table class="matrix-input-table">
+                        <tr th:each="row : ${#numbers.sequence(0,1)}">
+                            <td>
+                                <input
+                                    type="text"
+                                    class="matrix-input"
+                                    readonly
+                                    title="Constant vector value"
+                                    th:value="${result.constantsVector[row]}">
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>                
+            </div>
+            <button
+                type="submit"
+                name="action"
+                value="proceed-to-step-two"
+                class="btn-primary dashboard-btn">
+                Continue
+            </button>
+        </div>
+    </section>
+</div>

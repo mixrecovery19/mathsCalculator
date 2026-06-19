@@ -1,0 +1,77 @@
+<script src="/js/overlayhelper.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<div th:fragment="solveLinearSystemsHeader" class="matrix-inputs-dashboard">
+
+    <div class="matrix-controls matrix-fragment-card">
+
+        <div class="matrix-control-row">
+            <h1>2 × 2 Linear System Solver</h1>
+        </div>
+
+        <h2>1. Enter the Coefficients for Your Two Equations</h2>
+
+        <details class="math-details">
+            <summary>Solving Simultaneous Linear Equations Using Matrices</summary>
+            <p class="math-description">
+                A pair of simultaneous equations can be written as a matrix equation.
+                <br><br>
+                For example,\[\begin{aligned}ax+by&=c\\dx+ey&=f\end{aligned}\]
+                can be written in matrix form as
+                \[\begin{bmatrix}a & b\\d & e\end{bmatrix}\times\begin{bmatrix}x\\y\end{bmatrix}
+                =\begin{bmatrix}c\\f\end{bmatrix}\]
+                Throughout this walkthrough you will:
+                <br><br>
+                • Enter the coefficients for your equations.<br>
+                • Build the coefficient matrix.<br>
+                • Calculate its determinant.<br>
+                • Find the inverse matrix.<br>
+                • Multiply the inverse by the constants vector.<br>
+                • Calculate the values of \(x\) and \(y\).
+            </p>
+        </details>
+        <input type="hidden" name="size" value="2">
+        <div class="linear-system-layout">        
+            <div>
+                <h3>Coefficient Matrix (A)</h3>
+                <table class="matrix-input-table">
+                    <tr th:each="row : ${#numbers.sequence(0,1)}">
+                        <td th:each="col : ${#numbers.sequence(0,1)}">
+                            <input type="number" 
+                                step="any"
+                                class="matrix-input"
+                                th:name="'a_' + ${row} + '_' + ${col}"
+                                th:id="'a_' + ${row} + '_' + ${col}"
+                                th:value="${result.coefficientMatrix[row][col] != 0 ? result.coefficientMatrix[row][col] : ''}"
+                                placeholder="0">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <h3>Constants (B)</h3>
+                <table class="matrix-input-table">
+                    <tr th:each="row : ${#numbers.sequence(0,1)}">
+                        <td>
+                            <input
+                                type="number"
+                                step="any"
+                                class="matrix-input"
+                                th:name="'b_' + ${row}"
+                                th:id="'b_' + ${row}"
+                                th:value="${result.constantsVector[row] != 0 ? result.constantsVector[row] : ''}"
+                                placeholder="0">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <button
+    type="submit"
+    name="action"
+    value="create-linear-system"
+    class="btn-primary dashboard-btn">
+    Create Linear System
+</button>
+    </div>
+</div>

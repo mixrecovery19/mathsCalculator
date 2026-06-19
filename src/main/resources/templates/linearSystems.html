@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Linear Systems</title>
+    <link rel="stylesheet" href="/css/stylesSideBar.css">
+    <link rel="stylesheet" href="/css/stylesLinearSystems.css">
+    <script src="/js/overlayhelper.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>   
+    <script src="/js/solveLinearSystemsStepsColours.js"></script>
+</head>
+<body>
+<div id="linearSystemsPage" class="app-layout" th:data-current-step="${result.currentStep}">
+    <div th:replace="~{sidebar :: sidebar}"></div>
+    <main class="matrix-page">
+        <form th:action="@{/linear-systems}" method="post">
+            <input type="hidden" name="currentStep" th:value="${result.currentStep}">
+            <div th:replace="~{fragments/linearSystemsHeader :: solveLinearSystemsHeader}"></div>
+            <div th:if="${result.hasMatrixValues}" th:replace="~{fragments/linearSystemsSectionOne :: linearSystemsSectionOne}"></div>
+            <div th:if="${result.currentStep >= 1}" th:replace="~{fragments/linearSystemsSectionTwo :: linearSystemsSectionTwo}"></div>
+            
+                <section class="hero-card">
+                    <h1>Linear Systems Calculator</h1>
+                    <details class="math-details">
+                        <summary>What is Elimination?</summary>
+                        <p class="math-description">
+                            Linear systems can be solved by eliminating one variable,
+                            solving for the remaining variable, and then substituting
+                            the answer back into the original equation.
+                        </p>
+                    </details>            
+                </section>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

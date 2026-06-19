@@ -100,8 +100,7 @@
                                             title="Determinant"
                                             aria-label="Determinant"
                                             readonly>
-                                    </td>
-                                    
+                                    </td>                                    
                                 </tr>
                             </table>
                             <!-- BOTTOM POSITIVE ANSWER ROW -->
@@ -129,8 +128,7 @@
                                             title="Positive step 1"
                                             aria-label="Positive step 1"
                                             readonly>
-                                    </td>
-                                            
+                                    </td>                                            
                                 </tr>
                             </table>
                         </div>
@@ -187,14 +185,11 @@
                                 <input type="text"
                                     title="Inverse matrix cell"
                                     class="matrix-input matrix-readonly"
-
                                     th:id="'inverse-cell-' 
                                     + ${rowStat.index}
                                     + '-'
                                     + ${colStat.index}"
-
                                     th:value="${value}"
-
                                     th:classappend="
                                     ${(inverseCurrentStep >= 1
                                     && rowStat.index == 0
@@ -205,7 +200,6 @@
                                     && colStat.index == 1)}
                                     ? ' diagonal-positive'
                                     : ''"
-
                                     readonly>
                             </td>
                         </tr>
@@ -273,7 +267,6 @@
                 </section>
             </form>
         </main>
-    </div>
-    
+    </div>    
 </body>
 </html>
