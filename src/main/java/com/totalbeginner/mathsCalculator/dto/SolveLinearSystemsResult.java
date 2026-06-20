@@ -13,6 +13,14 @@ public class SolveLinearSystemsResult {
     private int currentStep;
     private int determinantStep;
     private int inverseCurrentStep;
+    private int solveLinearStep;
+
+
+   private double xStep1;
+    private double xStep2;
+
+    private double yStep1;
+    private double yStep2;
 
     // Constructors
     public SolveLinearSystemsResult() {
@@ -87,5 +95,35 @@ public class SolveLinearSystemsResult {
     }
     public void setInverseCurrentStep(int inverseCurrentStep) {
         this.inverseCurrentStep = inverseCurrentStep;
+    }
+    public double getXStep1() {
+        return xStep1;
+    }
+    public void setXStep1(double xStep1) {
+        this.xStep1 = xStep1;
+    }
+    public double getXStep2() {
+        return xStep2;
+    }
+    public void setXStep2(double xStep2) {
+        this.xStep2 = xStep2;
+    }
+    public double getYStep1() {
+        return yStep1;
+    }
+    public void setYStep1(double yStep1) {
+        this.yStep1 = yStep1;
+    }
+    public double getYStep2() {
+        return yStep2;
+    }
+    public void setYStep2(double yStep2) {
+        this.yStep2 = yStep2;
+    }
+    public int getSolveLinearStep() {
+        return solveLinearStep;
+    }
+    public void setSolveLinearStep(int solveLinearStep) {
+        this.solveLinearStep = solveLinearStep;
     }
 }

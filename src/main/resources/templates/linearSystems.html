@@ -17,22 +17,12 @@
         <form th:action="@{/linear-systems}" method="post">
             <input type="hidden" name="currentStep" th:value="${result.currentStep}">            
             <input type="hidden" name="inverseCurrentStep" th:value="${result.inverseCurrentStep}">
+            <input type="hidden" name="solveLinearStep" th:value="${result.solveLinearStep}">
             <div th:replace="~{fragments/linearSystemsHeader :: solveLinearSystemsHeader}"></div>
             <div th:if="${result.hasMatrixValues}" th:replace="~{fragments/linearSystemsSectionOne :: linearSystemsSectionOne}"></div>
             <div th:if="${result.currentStep >= 1}" th:replace="~{fragments/linearSystemsSectionTwo :: linearSystemsSectionTwo}"></div>
             <div th:if="${result.currentStep >= 3}" th:replace="~{fragments/linearSystemsSectionThree :: linearSystemsSectionThree}"></div>
-            
-                <section class="hero-card">
-                    <h1>Linear Systems Calculator</h1>
-                    <details class="math-details">
-                        <summary>What is Elimination?</summary>
-                        <p class="math-description">
-                            Linear systems can be solved by eliminating one variable,
-                            solving for the remaining variable, and then substituting
-                            the answer back into the original equation.
-                        </p>
-                    </details>            
-                </section>
+            <div th:if="${hasFinalLinearSystemWalkthrough}" th:replace="~{fragments/linearSystemsSectionFour :: linearSystemsSectionFour}"></div>                
             </form>
         </main>
     </div>

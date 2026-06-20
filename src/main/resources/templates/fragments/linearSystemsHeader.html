@@ -34,12 +34,12 @@
         <div class="linear-system-layout">        
             <div>
                 <h3>Coefficient Matrix (A)</h3>
-                <table class="matrix-input-table">
+                <table class="matrix-input-table matrix-cells-larger">
                     <tr th:each="row : ${#numbers.sequence(0,1)}">
                         <td th:each="col : ${#numbers.sequence(0,1)}">
                             <input type="number" 
                                 step="any"
-                                class="matrix-input"
+                                class="matrix-input matrix-cells-larger"
                                 th:name="'a_' + ${row} + '_' + ${col}"
                                 th:id="'a_' + ${row} + '_' + ${col}"
                                 th:value="${result.coefficientMatrix[row][col] != 0 ? result.coefficientMatrix[row][col] : ''}"
@@ -50,13 +50,13 @@
             </div>
             <div>
                 <h3>Constants (B)</h3>
-                <table class="matrix-input-table">
+                <table class="matrix-input-table matrix-cells-larger">
                     <tr th:each="row : ${#numbers.sequence(0,1)}">
                         <td>
                             <input
                                 type="number"
                                 step="any"
-                                class="matrix-input"
+                                class="matrix-input matrix-cells-larger"
                                 th:name="'b_' + ${row}"
                                 th:id="'b_' + ${row}"
                                 th:value="${result.constantsVector[row] != 0 ? result.constantsVector[row] : ''}"

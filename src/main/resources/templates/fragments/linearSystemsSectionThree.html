@@ -121,6 +121,12 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                    <div th:if="${result.currentStep >= 4}">
+                        <div class="button-group continue-button-group">
+                            <button th:if="${result.inverseCurrentStep >= 4}" type="submit" name="action" value="start-final-linear-system-walkthrough" class="btn-primary">
+                                Continue to Final Linear System Walkthrough
+                            </button>                                          
+                        </div>
+                    </div>
                 </section>
 </div>

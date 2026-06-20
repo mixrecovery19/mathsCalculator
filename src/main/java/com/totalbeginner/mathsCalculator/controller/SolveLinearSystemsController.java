@@ -49,6 +49,7 @@ import com.totalbeginner.mathsCalculator.service.MatrixTwoByTwoService;
 
             @RequestParam(defaultValue = "0") int currentStep,
             @RequestParam(defaultValue = "0") int inverseCurrentStep,
+            @RequestParam(defaultValue = "0") int solveLinearStep,
 
             Model model) {
             SolveLinearSystemsResult result =
@@ -94,14 +95,38 @@ import com.totalbeginner.mathsCalculator.service.MatrixTwoByTwoService;
                     inverseCurrentStep--;
                     hasInverseWalkthrough = true;
                 }
+                boolean hasFinalLinearSystemWalkthrough = false;
+                if ("start-final-linear-system-walkthrough".equals(action)) {
+                    newStep = 4;
+                    inverseCurrentStep = 4;
+                    solveLinearStep = 0;
+                    hasInverseWalkthrough = true;
+                    hasFinalLinearSystemWalkthrough = true;
+                }
+                if ("next-final-linear-system-step".equals(action)) {
+                    newStep = 4;
+                    inverseCurrentStep = 4;
+                    solveLinearStep++;
+                    hasInverseWalkthrough = true;
+                    hasFinalLinearSystemWalkthrough = true;
+                }
+                if ("previous-final-linear-system-step".equals(action)) {
+                    newStep = 4;
+                    inverseCurrentStep = 4;
+                    solveLinearStep--;
+                    hasInverseWalkthrough = true;
+                    hasFinalLinearSystemWalkthrough = true;
+                }
 
-inverseCurrentStep = Math.max(0, Math.min(inverseCurrentStep, 4));
+        inverseCurrentStep = Math.max(0, Math.min(inverseCurrentStep, 4));
+        solveLinearStep = Math.max(0, Math.min(solveLinearStep, 4));
 
         // Keep the walkthrough within its valid range
         newStep = Math.max(0, Math.min(newStep, 4));
 
         result.setCurrentStep(newStep);
         result.setInverseCurrentStep(inverseCurrentStep);
+        result.setSolveLinearStep(solveLinearStep);
 
         double[][] coefficientMatrix = result.getCoefficientMatrix();
 
@@ -139,6 +164,10 @@ inverseCurrentStep = Math.max(0, Math.min(inverseCurrentStep, 4));
                 inverseCurrentStep >= 4
                         ? finalInverseMatrix
                         : new double[2][2]
+        );
+        model.addAttribute(
+            "hasFinalLinearSystemWalkthrough",
+            hasFinalLinearSystemWalkthrough
         );
 
         model.addAttribute("result", result);

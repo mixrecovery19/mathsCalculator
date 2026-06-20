@@ -25,12 +25,12 @@
                 <!-- Coefficient Matrix -->
                 <div class="coefficient-panel">
                     <h3>Coefficient Matrix (A)</h3>
-                    <table class="matrix-input-table">
+                    <table class="matrix-input-table matrix-cells-larger">
                         <tr th:each="row : ${#numbers.sequence(0,1)}">
                             <td th:each="col : ${#numbers.sequence(0,1)}">
                                 <input
                                     type="text"
-                                    class="matrix-input"
+                                    class="matrix-input matrix-cells-larger"
                                     readonly
                                     title="Coefficient matrix value"
                                     th:value="${result.coefficientMatrix[row][col]}">
@@ -65,12 +65,12 @@
                 <!-- Constants -->
                 <div class="constants-panel">
                     <h3>Constants (B)</h3>
-                    <table class="matrix-input-table">
+                    <table class="matrix-input-table matrix-cells-larger">
                         <tr th:each="row : ${#numbers.sequence(0,1)}">
                             <td>
                                 <input
                                     type="text"
-                                    class="matrix-input"
+                                    class="matrix-input matrix-cells-larger"
                                     readonly
                                     title="Constant vector value"
                                     th:value="${result.constantsVector[row]}">

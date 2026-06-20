@@ -1,0 +1,156 @@
+<div th:fragment="linearSystemsSectionFour">
+<section class="hero-card">
+    <div class="matrix-fragment-card">
+        <h2>4. Solve the Linear System</h2>
+        <details class="math-details">
+            <summary>Multiply the Inverse Matrix by the Constants Vector</summary>
+            <p class="math-description">
+                The final stage is to multiply the inverse of the coefficient
+                matrix by the constants vector.
+                \[X=A^{-1}B\]
+                This multiplication produces the solution vector containing the
+                values of <strong>x</strong> and <strong>y</strong>.
+            </p>
+        </details>
+        <div class="linear-system-layout">
+            <!-- INVERSE MATRIX -->
+            <div class="coefficient-panel">
+                <h3>Inverse Matrix \(A^{-1}\)</h3>
+                <table class="matrix-input-table matrix-cells-larger">
+                    <tr th:each="row,rowStat : ${finalInverseMatrix}">
+                        <td th:each="value,colStat : ${row}">
+                            <input
+                                    type="text"
+                                    class="matrix-input matrix-readonly matrix-cells-larger"
+                                    th:id="'inverse-final-' + ${rowStat.index} + '-' + ${colStat.index}"
+                                    th:value="${#numbers.formatDecimal(value,1,3)}"
+                                    th:attr="title='Inverse matrix value', placeholder='Inverse matrix value'"
+                                    aria-label="Inverse matrix value"
+                                    readonly>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="matrix-symbol">
+                <h1>&times;</h1>
+            </div>
+            <div class="constants-panel">
+                <h3>Constants \(B\)</h3>
+                <table class="matrix-input-table">
+                    <tr th:each="row : ${#numbers.sequence(0,1)}">
+                        <td>
+                            <input
+                                    type="text"
+                                    class="matrix-input matrix-cells-larger"
+                                    th:value="${result.constantsVector[row]}"
+                                    th:attr="title='Constants vector value', placeholder='Constants vector value'"
+                                    aria-label="Constants vector value"
+                                    readonly>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>   
+
+            <div class="matrix-symbol">
+                <h1>=</h1>
+            </div>
+            <div class="constants-panel">
+                <h3>Solution Vector \(X\)</h3>
+                <table class="matrix-input-table matrix-cells-larger">
+                    <tr>
+                        <td>
+                            <input
+                                    id="solution-x"
+                                    class="matrix-input matrix-cells-larger"
+                                    title="Solution x"
+                                    placeholder="Solution x"
+                                    aria-label="Solution x"
+                                    readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input
+                                    id="solution-y"
+                                    class="matrix-input matrix-cells-larger"
+                                    title="Solution y"
+                                    placeholder="Solution y"
+                                    aria-label="Solution y"
+                                    readonly>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="two-by-two-answer-table">
+            <table class="matrix-input-table">
+                <tr>
+                    <td>
+                        <input
+                                id="xMultiplyOne"
+                                class="matrix-input two-by-two-answer-cell matrix-cells-larger"
+                                title="x multiplication term 1"
+                                placeholder="x multiplication term 1"
+                                aria-label="x multiplication term 1"
+                                readonly>
+                    </td>
+                    <td>
+                        <input
+                                id="xMultiplyTwo"
+                                class="matrix-input two-by-two-answer-cell matrix-cells-larger"
+                                title="x multiplication term 2"
+                                placeholder="x multiplication term 2"
+                                aria-label="x multiplication term 2"
+                                readonly>
+                    </td>
+                    <td>
+                        <input
+                                id="xAnswer"
+                                class="matrix-input two-by-two-answer-cell matrix-cells-larger"
+                                title="x answer"
+                                placeholder="x answer"
+                                aria-label="x answer"
+                                readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input
+                                id="yMultiplyOne"
+                                class="matrix-input two-by-two-answer-cell matrix-cells-larger"
+                                title="y multiplication term 1"
+                                placeholder="y multiplication term 1"
+                                aria-label="y multiplication term 1"
+                                readonly>
+                    </td>
+                    <td>
+                        <input
+                                id="yMultiplyTwo"
+                                class="matrix-input two-by-two-answer-cell matrix-cells-larger"
+                                title="y multiplication term 2"
+                                placeholder="y multiplication term 2"
+                                aria-label="y multiplication term 2"
+                                readonly>
+                    </td>
+                    <td>
+                        <input
+                                id="yAnswer"
+                                class="matrix-input two-by-two-answer-cell matrix-cells-larger"
+                                title="y answer"
+                                placeholder="y answer"
+                                aria-label="y answer"
+                                readonly>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="button-group">
+            <button type="submit" name="action" value="previous-final-linear-system-step" class="btn-secondary">
+                Previous Step
+            </button>
+            <button type="submit" name="action" value="next-final-linear-system-step" class="btn-primary">Next Step</button>
+        </div>
+    </div>
+</section>
+</div>

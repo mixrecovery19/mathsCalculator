@@ -29,18 +29,18 @@
                                     </p>
                             </details>      
                             <div class="two-by-two-layout">  
-                            <table class="matrix-input-table two-by-two-answer-table top">
+                            <table class="matrix-input-table two-by-two-answer-table top matrix-cells-larger">
                                 <tr>
                                     <td>
                                         <input type="text"
-                                            class="matrix-input two-by-two-answer-cell"                       
+                                            class="matrix-input two-by-two-answer-cell matrix-cells-larger"                       
                                             title="Empty answer cell"
                                             aria-label="Empty answer cell"
                                             readonly>
                                     </td>
                                     <td>
                                         <input type="text"
-                                            class="matrix-input two-by-two-answer-cell"                       
+                                            class="matrix-input two-by-two-answer-cell matrix-cells-larger"                       
                                             title="Empty answer cell"
                                             aria-label="Empty answer cell"
                                             readonly>
@@ -48,7 +48,7 @@
                                     <td>
                                         <input type="text"
                                                 id="negativeStep1"
-                                            class="matrix-input two-by-two-answer-cell"
+                                            class="matrix-input two-by-two-answer-cell matrix-cells-larger"
                                             th:value="${result.currentStep >= 3 ? result.negativeStep1 : ''}"                      
                                             title="Negative step 1"
                                             aria-label="Negative step 1"
@@ -60,7 +60,7 @@
                                 <tr th:each="row,rowStat : ${result.coefficientMatrix}">
                                     <td th:each="value,colStat : ${row}">
                                         <input type="number"
-                                        class="matrix-input matrix-readonly"
+                                        class="matrix-input matrix-cells-larger matrix-readonly"
                                         th:id="
                                         'cell-'
                                         + ${rowStat.index}
@@ -74,7 +74,7 @@
                                     <!-- NEW RESULT COLUMN -->
                                     <td th:if="${rowStat.index == 0}">
                                         <input type="text"                
-                                            class="matrix-input two-by-two-answer-cell"                
+                                            class="matrix-input two-by-two-answer-cell matrix-cells-larger"                
                                             title="Empty answer cell"
                                             aria-label="Empty answer cell"
                                             readonly>
@@ -82,7 +82,7 @@
                                     <td th:if="${rowStat.index == 1}">
                                         <input type="text"
                                             id="determinant"
-                                            class="matrix-input two-by-two-answer-cell determinant-cell"
+                                            class="matrix-input two-by-two-answer-cell determinant-cell matrix-cells-larger"
                                             th:value="${result.currentStep >= 4 ? result.determinant : ''}"
                                             title="Determinant"
                                             aria-label="Determinant"
@@ -96,14 +96,14 @@
                                 <tr>
                                     <td>
                                         <input type="text"
-                                            class="matrix-input two-by-two-answer-cell"                       
+                                            class="matrix-input two-by-two-answer-cell matrix-cells-larger"                       
                                             title="Empty answer cell"
                                             aria-label="Empty answer cell"
                                             readonly>
                                     </td>
                                     <td>
                                         <input type="text"
-                                            class="matrix-input two-by-two-answer-cell"                       
+                                            class="matrix-input two-by-two-answer-cell matrix-cells-larger"                       
                                             title="Empty answer cell"
                                             aria-label="Empty answer cell"
                                             readonly>
@@ -111,7 +111,7 @@
                                     <td>
                                         <input type="text"
                                                 id="positiveStep1"
-                                            class="matrix-input two-by-two-answer-cell"
+                                            class="matrix-input two-by-two-answer-cell matrix-cells-larger"
                                             th:value="${result.currentStep >= 2 ? result.positiveStep1 : ''}"                       
                                             title="Positive step 1"
                                             aria-label="Positive step 1"
