@@ -5,17 +5,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.totalbeginner.mathsCalculator.dto.SolveLinearSystemsResult;
 import com.totalbeginner.mathsCalculator.service.SolveLinearSystemsService;
+import com.totalbeginner.mathsCalculator.service.MatrixTwoByTwoService;
 
     @Controller
     public class SolveLinearSystemsController {
     private final SolveLinearSystemsService solveLinearSystemsService;
+    private final MatrixTwoByTwoService matrixTwoByTwoService;
 
     public SolveLinearSystemsController(
-            SolveLinearSystemsService solveLinearSystemsService) {
+            SolveLinearSystemsService solveLinearSystemsService, MatrixTwoByTwoService matrixTwoByTwoService) {
 
         this.solveLinearSystemsService = solveLinearSystemsService;
+        this.matrixTwoByTwoService = matrixTwoByTwoService;
     }
 
         @GetMapping("/linear-systems")
@@ -42,7 +46,9 @@ import com.totalbeginner.mathsCalculator.service.SolveLinearSystemsService;
             @RequestParam double b_1,
 
             @RequestParam(required = false) String action,
-            @Deprecated @RequestParam(defaultValue = "0") int currentStep,
+
+            @RequestParam(defaultValue = "0") int currentStep,
+            @RequestParam(defaultValue = "0") int inverseCurrentStep,
 
             Model model) {
             SolveLinearSystemsResult result =
@@ -57,23 +63,83 @@ import com.totalbeginner.mathsCalculator.service.SolveLinearSystemsService;
 
                     int newStep = currentStep;
 
-if ("create-linear-system".equals(action)) {
-    newStep = 0;
-}
-else if ("proceed-to-step-two".equals(action)) {
-    newStep = 1;
-}
-else if ("next-linear-system-step".equals(action)) {
-    newStep++;
-}
-else if ("previous-linear-system-step".equals(action)) {
-    newStep--;
-}
+                if ("create-linear-system".equals(action)) {
+                    newStep = 0;
+                }
+                else if ("proceed-to-step-two".equals(action)) {
+                    newStep = 1;
+                }
+                else if ("next-linear-system-step".equals(action)) {
+                    newStep++;
+                }
+                else if ("previous-linear-system-step".equals(action)) {
+                    newStep--;
+                }
+                boolean hasInverseWalkthrough = false;
 
-// Keep the walkthrough within its valid range
-newStep = Math.max(0, Math.min(newStep, 4));
+                if ("start-inverse-walkthrough".equals(action)) {
+                    newStep = 4;
+                    inverseCurrentStep = 0;
+                    hasInverseWalkthrough = true;
+                }
 
-result.setCurrentStep(newStep);
+                if ("next-linear-inverse-step".equals(action)) {
+                    newStep = 4;
+                    inverseCurrentStep++;
+                    hasInverseWalkthrough = true;
+                }
+
+                if ("previous-linear-inverse-step".equals(action)) {
+                    newStep = 4;
+                    inverseCurrentStep--;
+                    hasInverseWalkthrough = true;
+                }
+
+inverseCurrentStep = Math.max(0, Math.min(inverseCurrentStep, 4));
+
+        // Keep the walkthrough within its valid range
+        newStep = Math.max(0, Math.min(newStep, 4));
+
+        result.setCurrentStep(newStep);
+        result.setInverseCurrentStep(inverseCurrentStep);
+
+        double[][] coefficientMatrix = result.getCoefficientMatrix();
+
+        double[][] inverseWalkthroughMatrix =
+                matrixTwoByTwoService.buildInverseWalkthroughMatrix(
+                        coefficientMatrix,
+                        inverseCurrentStep
+                );
+
+        double[][] finalInverseMatrix =
+                matrixTwoByTwoService.calculateInverseTwoByTwo(
+                        coefficientMatrix
+                );
+
+        model.addAttribute("hasInverseWalkthrough", hasInverseWalkthrough);
+        model.addAttribute("inverseWalkthroughMatrix", inverseWalkthroughMatrix);
+
+        model.addAttribute(
+                "inverseStep1",
+                inverseCurrentStep >= 1 ? "Swap" : ""
+        );
+
+        model.addAttribute(
+                "inverseStep2",
+                inverseCurrentStep >= 2 ? "Negate" : ""
+        );
+
+        model.addAttribute(
+                "inverseDeterminant",
+                inverseCurrentStep >= 3 ? result.getDeterminant() : ""
+        );
+
+        model.addAttribute(
+                "finalInverseMatrix",
+                inverseCurrentStep >= 4
+                        ? finalInverseMatrix
+                        : new double[2][2]
+        );
 
         model.addAttribute("result", result);
 

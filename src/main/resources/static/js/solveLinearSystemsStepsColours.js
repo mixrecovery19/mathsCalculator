@@ -25,8 +25,7 @@ document.addEventListener(
     );
 
 function twoByTwoStepColours(currentStep, inverseCurrentStep) {
-    clearColours();
-  
+    clearColours();  
     if (currentStep >= 2) {
         colourCells(
             [
@@ -37,7 +36,6 @@ function twoByTwoStepColours(currentStep, inverseCurrentStep) {
             "#b8f2e6"
         );
     }
-
     // STEP 2
     if (currentStep >= 3) {
         colourCells(

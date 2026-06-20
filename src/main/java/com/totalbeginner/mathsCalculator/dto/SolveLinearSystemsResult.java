@@ -8,11 +8,11 @@ public class SolveLinearSystemsResult {
 
     private double positiveStep1;
     private double negativeStep1;
-    private double determinant;
-
-    
+    private double determinant;    
 
     private int currentStep;
+    private int determinantStep;
+    private int inverseCurrentStep;
 
     // Constructors
     public SolveLinearSystemsResult() {
@@ -75,5 +75,17 @@ public class SolveLinearSystemsResult {
     }
     public void setDeterminant(double determinant) {
         this.determinant = determinant;
+    }
+    public int getDeterminantStep() {
+        return determinantStep;
+    }
+    public void setDeterminantStep(int determinantStep) {
+        this.determinantStep = determinantStep;
+    }
+    public int getInverseCurrentStep() {
+        return inverseCurrentStep;
+    }
+    public void setInverseCurrentStep(int inverseCurrentStep) {
+        this.inverseCurrentStep = inverseCurrentStep;
     }
 }

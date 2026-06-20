@@ -145,10 +145,22 @@
                     </div>
                     <div th:if="${result.currentStep >= 4}">
                         <div class="button-group continue-button-group">
-                            <button type="submit" name="action" value="start-inverse-walkthrough" class="btn-primary">
-                                Continue to Next Stage of Linear Systems Walkthrough
+                            <button th:if="${result.determinant != 0}"
+                                    type="submit"
+                                    name="action"
+                                    value="start-inverse-walkthrough"
+                                    class="btn-primary">
+                                Continue to Calculate the Inverse of Matrix A
+                            </button>
+
+                            <button th:if="${result.determinant == 0}"
+                                    type="button"
+                                    class="btn-no-inverse"
+                                    disabled>
+                                Determinant = 0 • Matrix A Has No Inverse
                             </button>
                         </div>
+                        
                     </div>
                 </section>
 </div>

@@ -1,21 +1,40 @@
-<div th:fragment="linearSystemsSectionTwo">
+<div th:fragment="linearSystemsSectionThree">
     <section class="hero-card walkthrough-card" th:if="${hasInverseWalkthrough}">
                 <div class="two-by-two-stage-two">
-                <h2>Solve Linear Systems Inverse Of A</h2>
+                <h2>3. Calculate the Inverse of Matrix A</h2>
+                    <p class="math-introduction">
+                        The determinant has now been calculated, confirming that Matrix
+                        <strong>\(A\)</strong> has an inverse.<br>
+                        We can now construct \(A^{-1}\) by swapping the diagonal elements,
+                        negating the off-diagonal elements, and finally dividing every value by
+                        the determinant.
+                        Follow the walkthrough below below to calculate the invers of your coefficient as a next step in solving your linear system.
+                    </p>
                 <details class="math-details">
-                    <summary>Step Process To Calculate the Inverse of A</summary>
+                   <summary>Why do we calculate the inverse of Matrix A?</summary>
                         <p class="math-description">
-                            Now that the determinant has been calculated, we can continue to calculate the inverse of the
-                            \(2 \times 2\) matrix.<br><br>
-                            Given the matrix:\[A=\begin{bmatrix}a & b \\c & d\end{bmatrix}\]
-                            the inverse is calculated using:
-                            \[A^{-1}=\frac{1}{\det(A)}\begin{bmatrix}d & -b \\-c & a\end{bmatrix}\]
-                            This walkthrough first swaps the main diagonal values, then changes the signs of the
-                            off-diagonal values, then applies the determinant.
-                            This allows you to calculate the inverse as a next step for the linear systems wlakthrough, and see the process step by step.
+                            Now that you have calculated the determinant of the coefficient matrix,
+                            the next step is to calculate its inverse. The inverse of Matrix \(A\)
+                            allows us to solve the linear system by transforming the matrix equation
+                            \[AX=B\]
+                            into
+                            \[X=A^{-1}B\]
+                            where: \[A=\begin{bmatrix}a & b\\c & d\end{bmatrix}
+                            \quad X=\begin{bmatrix}x\\y\end{bmatrix}\qquad
+                            B=\begin{bmatrix}k_1\\k_2\end{bmatrix}\]
+                            Before we can multiply by the constants vector, we must first calculate
+                            the inverse of Matrix \(A\).
+                            For a \(2\times2\) matrix, the inverse is
+                            \[A^{-1} = \frac{1}{\det(A)}\begin{bmatrix}d & -b\\-c & a\end{bmatrix}\]
+                            This walkthrough demonstrates the process step by step:
+                            \[\text{Step 1: Swap the main diagonal values}\]
+                            \[\text{Step 2: Negate the off-diagonal values}\]
+                            \[\text{Step 3: Apply the determinant}\]
+                            Once the inverse has been calculated, you will be ready to multiply it by
+                            the constants vector to obtain the values of \(x\) and \(y\).
                         </p>
                 </details>
-            <input type="hidden" name="inverseCurrentStep" th:value="${inverseCurrentStep}">
+            <input type="hidden" name="inverseCurrentStep" th:value="${result.inverseCurrentStep}">
                 <div class="two-by-two-layout">
                     <table class="matrix-input-table">
                         <tr th:each="row,rowStat : ${inverseWalkthroughMatrix}">
@@ -29,11 +48,11 @@
                                     + ${colStat.index}"
                                     th:value="${value}"
                                     th:classappend="
-                                    ${(inverseCurrentStep >= 1
+                                    ${(result.inverseCurrentStep >= 1
                                     && rowStat.index == 0
                                     && colStat.index == 0)
                                     ||
-                                    (inverseCurrentStep >= 1
+                                    (result.inverseCurrentStep >= 1
                                     && rowStat.index == 1
                                     && colStat.index == 1)}
                                     ? ' diagonal-positive'
@@ -75,15 +94,16 @@
                 </table>
             </div>
             <div class="button-group">
-                <button type="submit" name="action" value="previous-inverse-step" class="btn-secondary">
+                <button type="submit" name="action" value="previous-linear-inverse-step" class="btn-secondary">
                     Previous Inverse Step
                 </button>
-                <button type="submit" name="action" value="next-inverse-step" class="btn-primary">
+                <button type="submit" name="action" value="next-linear-inverse-step" class="btn-primary">
                     Next Inverse Step
                 </button>
             </div>
-            <div class="determinant-result-container" th:if="${inverseCurrentStep >= 4}">
-                <h2>Final Inverse Matrix</h2>
+            <div class="determinant-result-container" th:if="${result.inverseCurrentStep >= 4}">
+                <h2>Inverse of Matrix A</h2>
+                    <label>The Inverse of Matrix A</label>
                     <div class="determinant-result-box">
                         <label>Inverse of your 2 × 2 Matrix</label>
                             <table class="matrix-input-table">
