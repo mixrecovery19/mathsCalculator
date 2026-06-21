@@ -1,7 +1,7 @@
 <div th:fragment="linearSystemsSectionTwo">
     <section class="hero-card walkthrough-card" th:if="${result.currentStep >= 1}">
                     <div class="two-by-two-stage-two">   
-                    <h2>Calculate The Determinant of Matrix A</h2>
+                    <h2>2.Calculate The Determinant of Matrix A</h2>
                             <details class="math-details">                               
                                     <summary>Why do we calculate the determinant of Matrix A?</summary>
                                     <p class="math-description">
@@ -145,14 +145,20 @@
                     </div>
                     <div th:if="${result.currentStep >= 4}">
                         <div class="button-group continue-button-group">
+                             <button
+                                type="submit"
+                                name="action"
+                                value="back-to-section-one"
+                                class="btn-secondary dashboard-btn">
+                                Close Section 2
+                            </button>
                             <button th:if="${result.determinant != 0}"
                                     type="submit"
                                     name="action"
                                     value="start-inverse-walkthrough"
                                     class="btn-primary">
-                                Continue to Calculate the Inverse of Matrix A
+                                Proceed To Next Step
                             </button>
-
                             <button th:if="${result.determinant == 0}"
                                     type="button"
                                     class="btn-no-inverse"

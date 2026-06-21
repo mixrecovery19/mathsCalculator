@@ -3,10 +3,6 @@ package com.totalbeginner.mathsCalculator.service;
 import org.springframework.stereotype.Service;
 
 import com.totalbeginner.mathsCalculator.dto.SolveLinearSystemsResult;
-import com.totalbeginner.mathsCalculator.service.MatrixTwoByTwoService;
-
-import java.util.Map;
-
 @Service
 public class SolveLinearSystemsService {
 
@@ -54,10 +50,30 @@ public class SolveLinearSystemsService {
                         positive,
                         negative);
 
-        result.setPositiveStep1(positive);
-        result.setNegativeStep1(negative);
-        result.setDeterminant(determinant);
+                result.setPositiveStep1(positive);
+                result.setNegativeStep1(negative);
+                result.setDeterminant(determinant);
 
-        return result;
-    }
+                return result;
+        }
+        public void calculateFinalSolutionSteps(
+                SolveLinearSystemsResult result,
+                double[][] inverseMatrix) {
+
+        double[] constants = result.getConstantsVector();
+
+        double xStep1 = inverseMatrix[0][0] * constants[0];
+        double xStep2 = inverseMatrix[0][1] * constants[1];
+
+        double yStep1 = inverseMatrix[1][0] * constants[0];
+        double yStep2 = inverseMatrix[1][1] * constants[1];
+
+        result.setXStep1(xStep1);
+        result.setXStep2(xStep2);
+        result.setYStep1(yStep1);
+        result.setYStep2(yStep2);
+
+        result.setXAnswer(xStep1 + xStep2);
+        result.setYAnswer(yStep1 + yStep2);
+        }
 }

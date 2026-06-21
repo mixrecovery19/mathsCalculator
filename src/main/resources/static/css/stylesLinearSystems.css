@@ -379,6 +379,23 @@ input[type=number] {
     border-left: 5px solid #5dade2;
     border-radius: 10px;
 }
+.solution-label-cell {
+    width: auto;
+    padding-right: 0.35rem;
+    vertical-align: middle;
+}
+
+.solution-label {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #2c3e50;
+    white-space: nowrap;
+}
+.math-centre-word {
+    text-align: center;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
 @keyframes determinantPop {
     0% {
         transform: scale(.85);

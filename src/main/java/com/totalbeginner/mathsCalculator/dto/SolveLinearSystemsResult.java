@@ -5,6 +5,11 @@ public class SolveLinearSystemsResult {
     private double[][] coefficientMatrix;
     private double[] constantsVector;
     private boolean hasMatrixValues;
+    private boolean hasInitialValues;
+    private boolean hasInverseWalkthrough;
+    private boolean hasFinalLinearSystemWalkthrough;
+
+    private String displayMode;
 
     private double positiveStep1;
     private double negativeStep1;
@@ -16,12 +21,14 @@ public class SolveLinearSystemsResult {
     private int solveLinearStep;
 
 
-   private double xStep1;
+    private double xStep1;
     private double xStep2;
 
     private double yStep1;
     private double yStep2;
 
+    private double xAnswer;
+    private double yAnswer;
     // Constructors
     public SolveLinearSystemsResult() {
     }
@@ -126,4 +133,41 @@ public class SolveLinearSystemsResult {
     public void setSolveLinearStep(int solveLinearStep) {
         this.solveLinearStep = solveLinearStep;
     }
+    public double getXAnswer() {
+        return xAnswer;
+    }
+    public void setXAnswer(double xAnswer) {
+        this.xAnswer = xAnswer;
+    }
+    public double getYAnswer() {
+        return yAnswer;
+    }
+    public void setYAnswer(double yAnswer) {
+        this.yAnswer = yAnswer;
+    }
+    public String getDisplayMode() {
+        return displayMode;
+    }
+    public void setDisplayMode(String displayMode) {
+        this.displayMode = displayMode;
+    }
+    public boolean hasInitialValues() {
+        return hasInitialValues;
+    }
+    public void setHasInitialValues(boolean hasInitialValues) {
+        this.hasInitialValues = hasInitialValues;
+    }
+    public boolean hasInverseWalkthrough() {
+        return hasInverseWalkthrough;
+    }
+    public void setHasInverseWalkthrough(boolean hasInverseWalkthrough) {
+        this.hasInverseWalkthrough = hasInverseWalkthrough;
+    }
+    public boolean hasFinalLinearSystemWalkthrough() {
+        return hasFinalLinearSystemWalkthrough;
+    }
+    public void setHasFinalLinearSystemWalkthrough(boolean hasFinalLinearSystemWalkthrough) {
+        this.hasFinalLinearSystemWalkthrough = hasFinalLinearSystemWalkthrough;
+    }
+
 }

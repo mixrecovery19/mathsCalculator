@@ -1,26 +1,27 @@
-<div th:fragment="linearSystemsSectionOne">
+<div th:fragment="linearSystemsSectionOne"
+    th:if="${result.hasMatrixValues && !result.hasInitialValues}">
     <section class="hero-card">
         <div class="matrix-fragment-card">
-            <h2>2. Construct the Matrix Equation</h2>
-            <details class="math-details">
-                <summary>Building the Matrix Representation</summary>
-                    <p class="math-description">
-                        Your two simultaneous equations can now be written as
-                        a matrix equation.
-                        <br><br>
-                        The left matrix contains the coefficients of
-                        <strong>x</strong> and <strong>y</strong>,
-                        while the column vector on the right contains the
-                        constants.
-                        <br><br>
-                        Together they form
-                        \[A X = B\]
-                        where
-                        \[A=\begin{bmatrix}a & b\\d & e\end{bmatrix}
-                        \quad X=\begin{bmatrix}x\\y\end{bmatrix}
-                        \quad B=\begin{bmatrix}c\\f\end{bmatrix}\]
-                    </p>
-            </details>
+            <h2>1. Construct the Matrix Equation</h2>
+                <details class="math-details">
+                    <summary>Building the Matrix Representation</summary>
+                        <p class="math-description">
+                            Your two simultaneous equations can now be written as
+                            a matrix equation.
+                            <br>
+                            The left matrix contains the coefficients of
+                            <strong>x</strong> and <strong>y</strong>,
+                            while the column vector on the right contains the
+                            constants.
+                            <br>
+                            <div class="math-centre-word">Together they form</div>
+                            \[A X = B\]
+                            <div class="math-centre-word">where</div>
+                            \[A=\begin{bmatrix}a & b\\d & e\end{bmatrix}
+                            \quad X=\begin{bmatrix}x\\y\end{bmatrix}
+                            \quad B=\begin{bmatrix}c\\f\end{bmatrix}\]
+                        </p>
+                </details>
             <div class="linear-system-layout">
                 <!-- Coefficient Matrix -->
                 <div class="coefficient-panel">
@@ -74,19 +75,19 @@
                                     readonly
                                     title="Constant vector value"
                                     th:value="${result.constantsVector[row]}">
-
                             </td>
                         </tr>
                     </table>
                 </div>                
             </div>
-            <button
-                type="submit"
-                name="action"
-                value="proceed-to-step-two"
-                class="btn-primary dashboard-btn">
-                Continue
-            </button>
+            <div class="button-group"> 
+                 <button type="submit" name="action" value="back-one-section" class="btn-secondary dashboard-btn">
+                    Close Section 1
+                </button>          
+                <button type="submit" name="action" value="proceed-to-step-two" class="btn-primary dashboard-btn">
+                    Proceed To Next Step
+                </button>               
+            </div>
         </div>
     </section>
 </div>

@@ -7,24 +7,17 @@ document.addEventListener(
                 return;
             }
 
-            const currentStep =
-                parseInt(
-                    page.dataset.currentStep || 0
-                );
+            const currentStep = parseInt(page.dataset.currentStep || 0);             
+            const inverseCurrentStep = parseInt(page.dataset.inverseCurrentStep || 0);                
+            const solveLinearStep = parseInt(page.dataset.solveLinearStep || 0);
 
-            const inverseCurrentStep =
-                parseInt(
-                    page.dataset.inverseCurrentStep || 0
-                );
-
-            twoByTwoStepColours(
-                currentStep,
-                inverseCurrentStep
-            );
+            twoByTwoStepColours(currentStep);
+            linearSystemsInverseStepColours(inverseCurrentStep);
+            solveLinearSystemsStepsColours(solveLinearStep);
         }
     );
 
-function twoByTwoStepColours(currentStep, inverseCurrentStep) {
+function twoByTwoStepColours(currentStep) {
     clearColours();  
     if (currentStep >= 2) {
         colourCells(
@@ -49,7 +42,6 @@ function twoByTwoStepColours(currentStep, inverseCurrentStep) {
     }
     // STEP 3
     if (currentStep >= 4) {
-
         colourCells(
             [
                 "determinant",
@@ -58,66 +50,114 @@ function twoByTwoStepColours(currentStep, inverseCurrentStep) {
             "#ffff99"
         );
     }
-
-    // INVERSE STEP 1
-    if (inverseCurrentStep >= 1) {
-
-        colourCells(
-            [
-                "inverse-cell-0-0",
-                "inverse-cell-1-1"
-            ],
-            "#fff4a8"
-        );
-    }
-
-    // INVERSE STEP 2
-    if (inverseCurrentStep >= 2) {
-
-        colourCells(
-            [
-                "inverse-cell-0-1",
-                "inverse-cell-1-0"
-            ],
-            "#f9d5d5"
-        );
-    }
-
-    // INVERSE STEP 3
-    if (inverseCurrentStep >= 3) {
-
-        colourCells(
-            [
-                "inverseDeterminant"
-            ],
-            "#cfe8ff"
-        );
-    }
-
-    // FINAL INVERSE
-    if (inverseCurrentStep >= 4) {
-
-        colourElementsByClass(
-            "final-inverse-cell",
-            "#d5f5d5"
-        );
-    }
+}
+    function linearSystemsInverseStepColours(inverseCurrentStep) {
+        if (inverseCurrentStep >= 1) {
+            colourCells(
+                [
+                    "inverse-cell-0-0",
+                    "inverse-cell-1-1"
+                ],
+                "#fff4a8"
+            );
+        }
+        // INVERSE STEP 2
+        if (inverseCurrentStep >= 2) {
+            colourCells(
+                [
+                    "inverse-cell-0-1",
+                    "inverse-cell-1-0"
+                ],
+                "#f9d5d5"
+            );
+        }
+        // INVERSE STEP 3
+        if (inverseCurrentStep >= 3) {
+            colourCells(
+                [
+                    "inverseDeterminant"
+                ],
+                "#cfe8ff"
+            );
+        }
+        // FINAL INVERSE
+        if (inverseCurrentStep >= 4) {
+            colourElementsByClass(
+                "final-inverse-cell",
+                "#d5f5d5"
+            );
+        }    
 }
 
-function colourCells(
-    cellIds,
-    colour
-) {
+// SOLVE LINEAR SYSTEM STEP 1
+    function solveLinearSystemsStepsColours(solveLinearStep) {
+        if (solveLinearStep >= 1) {
+            colourCells(
+                [
+                    "inverse-final-0-0",
+                    "constant-0",
+                    "xMultiplyOne"
+                ],
+                "#cfe8ff"
+            );
+        }
+        if (solveLinearStep >= 2) {
+            clearColours();
+            colourCells(
+                [
+                    "inverse-final-0-1",
+                    "constant-1",
+                    "xMultiplyTwo"
+                ],
+                "#b8f2e6"
+                );
+            }
+        if (solveLinearStep >= 3) {
+            clearColours();
+            colourCells(
+                ["xMultiplyOne", "xMultiplyTwo", "xAnswer", "solution-x"], "#ffff99");    
+        }
+        if (solveLinearStep >= 4) {
+        clearColours();
+            colourCells(
+                [
+                    "inverse-final-1-0",
+                    "constant-0",
+                    "yMultiplyOne"
+                ],
+                "#d5f5d5"
+            );
+        }
+        if (solveLinearStep >= 5) {
+            clearColours();
+                colourCells(
+                    [ "inverse-final-1-1", "constant-1", "yMultiplyTwo"],
+                    "#f9d5d5"
+                );
+            }
+        if (solveLinearStep >= 6) {
+            clearColours();
+                colourCells(
+                    ["yMultiplyOne", "yMultiplyTwo", "yAnswer", "solution-y"],            
+                    "#ffff99"
+                );
+            }
+            if (solveLinearStep >= 7) {
+                clearColours();
+                colourCells(
+                    ["solution-x", "solution-y"],                
+                    "#ffff99"
+                );
+            }
+        }
 
+function colourCells(cellIds, colour) {
     cellIds.forEach(id => {
 
-        const cell =
-            document.getElementById(id);
+        const cell = document.getElementById(id);
 
         if (cell) {
-
-            cell.style.backgroundColor =
-                colour;
+            cell.style.backgroundColor = colour;
         }
     });
 }
@@ -152,4 +192,8 @@ function clearColours() {
             cell.style.borderColor =
                 "";
         });
-}
+}   
+       
+    
+                
+               
