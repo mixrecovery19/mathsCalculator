@@ -10,8 +10,6 @@ import com.totalbeginner.mathsCalculator.dto.SolveLinearSystemsResult;
 import com.totalbeginner.mathsCalculator.service.SolveLinearSystemsService;
 import com.totalbeginner.mathsCalculator.service.MatrixTwoByTwoService;
 import com.totalbeginner.mathsCalculator.service.MathFormatterService;
-
-
     @Controller
     public class SolveLinearSystemsController {
     private final SolveLinearSystemsService solveLinearSystemsService;
@@ -33,6 +31,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
             result.setConstantsVector(new double[2]);
             result.setHasMatrixValues(false);
             result.setDisplayMode("decimal");
+            result.setCurrentSection(0);
 
             model.addAttribute("result", result);
 
@@ -40,6 +39,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
         }
     @PostMapping("/linear-systems")
     public String createLinearSystem(
+            @RequestParam(defaultValue = "0") int currentSection,
             @RequestParam(required = false) Double a_0_0,
             @RequestParam(required = false) Double a_0_1,
             @RequestParam(required = false) Double b_0,
@@ -49,9 +49,9 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
             @RequestParam(required = false) Double b_1,
 
             @RequestParam(required = false) String action,
-            @RequestParam(defaultValue = "decimal") String displayMode,
+            @RequestParam(defaultValue = "decimal") String displayMode,           
 
-            @RequestParam(defaultValue = "0") int currentStep,
+            @RequestParam(defaultValue = "0") int determinantStep,
             @RequestParam(defaultValue = "0") int inverseCurrentStep,
             @RequestParam(defaultValue = "0") int solveLinearStep,
 
@@ -64,144 +64,171 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                 result.setConstantsVector(new double[2]);
                 result.setHasMatrixValues(false);
                 result.setDisplayMode(displayMode);
+                result.setCurrentSection(currentSection);
 
                 model.addAttribute("result", result);
-                model.addAttribute("inputError", "Please enter all six values before continuing.");                
-
+                model.addAttribute("inputError", "Please enter all six values before continuing.");               
                 return "linearSystems";
         }
                 
-        SolveLinearSystemsResult result =            
-                    solveLinearSystemsService.solveByElimination(
-                            a_0_0,
-                            a_0_1,
-                            b_0,
+                SolveLinearSystemsResult result =
+                solveLinearSystemsService.solveByElimination(
+                        a_0_0,
+                        a_0_1,
+                        b_0,
+                        a_1_0,
+                        a_1_1,
+                        b_1
+                );
 
-                            a_1_0,
-                            a_1_1,
-                            b_1);
-
-
-            int newStep = currentStep;
+                int newDeterminantStep = determinantStep;
                 result.setDisplayMode(displayMode);
-                
-                if ("create-linear-system".equals(action)) {
-                    newStep = 0;
+            
+                if (action == null || action.isBlank()) {
+                    // User clicked Decimal or Fraction (or some other non-navigation button)
+                    result.setCurrentSection(currentSection);
+                    result.setDeterminantStep(determinantStep);
+                    result.setInverseCurrentStep(inverseCurrentStep);
+                    result.setSolveLinearStep(solveLinearStep);
+
+                    result.setHasInverseWalkthrough(determinantStep >= 4);
+                    result.setHasFinalLinearSystemWalkthrough(
+                        determinantStep >= 4 && inverseCurrentStep >= 4 && solveLinearStep >= 0
+                    );
+                }
+                else if ("create-linear-system".equals(action)) {
+                    newDeterminantStep = 0;
+                    result.setCurrentSection(1);
                 }
                 else if ("proceed-to-step-two".equals(action)) {
-                    newStep = 1;
+                    newDeterminantStep = 1;
+                    result.setCurrentSection(2);
                 }
                 else if ("next-linear-system-step".equals(action)) {
-                    newStep++;
+                    newDeterminantStep++;
+                    result.setCurrentSection(2);
                 }
                 else if ("previous-linear-system-step".equals(action)) {
-                    newStep--;
-                }
-
-            boolean hasInverseWalkthrough = false;
-
+                    newDeterminantStep--;
+                    result.setCurrentSection(2);
+                }     
+           
                 if ("start-inverse-walkthrough".equals(action)) {
-                    newStep = 4;
+                    newDeterminantStep = 4;
                     inverseCurrentStep = 0;
-                    hasInverseWalkthrough = true;
+                    result.setHasInverseWalkthrough(true);
+                    result.setCurrentSection(3);
                 }
 
                 if ("next-linear-inverse-step".equals(action)) {
-                    newStep = 4;
+                    newDeterminantStep = 4;
                     inverseCurrentStep++;
-                    hasInverseWalkthrough = true;
+                    result.setHasInverseWalkthrough(true);
+                    result.setCurrentSection(3);
                 }
 
                 if ("previous-linear-inverse-step".equals(action)) {
-                    newStep = 4;
+                    newDeterminantStep = 4;
                     inverseCurrentStep--;
-                    hasInverseWalkthrough = true;
-                }
-            boolean hasFinalLinearSystemWalkthrough = false;
+                    result.setHasInverseWalkthrough(true);
+                    result.setCurrentSection(3);
+                }           
 
                 if ("start-final-linear-system-walkthrough".equals(action)) {
-                    newStep = 4;
+                    newDeterminantStep = 4;
                     inverseCurrentStep = 4;
                     solveLinearStep = 0;
-                    hasInverseWalkthrough = true;
-                    hasFinalLinearSystemWalkthrough = true;
+                    result.setHasInverseWalkthrough(true);
+                    result.setHasFinalLinearSystemWalkthrough(true);
+                    result.setCurrentSection(4);
                 }
                 if ("next-final-linear-system-step".equals(action)) {
-                    newStep = 4;
+                    newDeterminantStep = 4;
                     inverseCurrentStep = 4;
                     solveLinearStep++;
-                    hasInverseWalkthrough = true;
-                    hasFinalLinearSystemWalkthrough = true;
+                    result.setHasInverseWalkthrough(true);
+                    result.setHasFinalLinearSystemWalkthrough(true);
+                    result.setCurrentSection(4);
                 }
                 if ("previous-final-linear-system-step".equals(action)) {
-                    newStep = 4;
+                    newDeterminantStep = 4;
                     inverseCurrentStep = 4;
                     solveLinearStep--;
-                    hasInverseWalkthrough = true;
-                    hasFinalLinearSystemWalkthrough = true;
+                    result.setHasInverseWalkthrough(true);
+                    result.setHasFinalLinearSystemWalkthrough(true);
+                    result.setCurrentSection(4);
                 }
-                if ("back-one-section".equals(action)) {
+                if ("back-to-start".equals(action)) {
                     result.setHasInitialValues(true);
                     result.setHasMatrixValues(false);
-                    currentStep = 0;
+                    newDeterminantStep = 0;
                     inverseCurrentStep = 0;
                     solveLinearStep = 0;
+                    result.setCurrentSection(0);
                 }
                 if ("back-to-section-one".equals(action)) {
+                    result.setHasInitialValues(true);
+                    result.setHasMatrixValues(false);
 
+                    newDeterminantStep = 0;
+                    inverseCurrentStep = 0;
+                    solveLinearStep = 0;
+
+                    result.setHasInverseWalkthrough(false);
+                    result.setHasFinalLinearSystemWalkthrough(false);
+                    result.setCurrentSection(1);
+                }
+                if ("back-to-section-two".equals(action)) {
                     result.setHasInitialValues(false);
                     result.setHasMatrixValues(true);
 
-                    newStep = 0;
+                    newDeterminantStep = 1;
                     inverseCurrentStep = 0;
                     solveLinearStep = 0;
 
-                    hasInverseWalkthrough = false;
-                    hasFinalLinearSystemWalkthrough = false;
-                }
-                if ("back-to-section-two".equals(action)) {
-                    result.setHasInitialValues(true);
-                    result.setHasMatrixValues(false);
-
-                    newStep = 4;
-                    inverseCurrentStep = 0;
-                    solveLinearStep = 0;
-
-                    hasInverseWalkthrough = false;
-                    hasFinalLinearSystemWalkthrough = false;
+                    result.setHasInverseWalkthrough(false);
+                    result.setHasFinalLinearSystemWalkthrough(false);
+                    result.setCurrentSection(2);
                 }
                 if ("back-to-section-three".equals(action)) {
-                    result.setHasInitialValues(true);
+                    result.setHasInitialValues(false);
                     result.setHasMatrixValues(true);
 
-                    newStep = 4;
-                    inverseCurrentStep = 4;
+                    newDeterminantStep = 4;
+                    inverseCurrentStep = 0;
                     solveLinearStep = 0;
+                    result.setCurrentSection(3);
 
-                    hasInverseWalkthrough = true;
-                    hasFinalLinearSystemWalkthrough = false;
+                    result.setHasInverseWalkthrough(true);
+                    result.setHasFinalLinearSystemWalkthrough(false);
                 }
                 if ("restart-linear-system-walkthrough".equals(action)) {
                     result.setHasInitialValues(false);
                     result.setHasMatrixValues(false);
 
-                    newStep = 0;
+                    newDeterminantStep = 0;
                     inverseCurrentStep = 0;
                     solveLinearStep = 0;
-                    hasInverseWalkthrough = false;
-                    hasFinalLinearSystemWalkthrough = false;
-                }
+                    result.setHasInverseWalkthrough(false);
+                    result.setHasFinalLinearSystemWalkthrough(false);
+                    result.setCurrentSection(0);
+                }                
                               
-            newStep = Math.max(0, Math.min(newStep, 4));
+            newDeterminantStep = Math.max(0, Math.min(newDeterminantStep, 4));            
             inverseCurrentStep = Math.max(0, Math.min(inverseCurrentStep, 4));
             solveLinearStep = Math.max(0, Math.min(solveLinearStep, 7));
 
             // Store the final values
-            result.setCurrentStep(newStep);
+            result.setDeterminantStep(newDeterminantStep);
             result.setInverseCurrentStep(inverseCurrentStep);
             result.setSolveLinearStep(solveLinearStep);
-
-        
+            result.setHasInverseWalkthrough(newDeterminantStep >= 4);
+            result.setHasFinalLinearSystemWalkthrough(
+                    newDeterminantStep >= 4                    
+                    && inverseCurrentStep >= 4
+                    && solveLinearStep >= 0
+            );
+  
         double[][] coefficientMatrix = result.getCoefficientMatrix();
 
         double[][] inverseWalkthroughMatrix =
@@ -214,8 +241,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
 
         solveLinearSystemsService.calculateFinalSolutionSteps(result, finalInverseMatrix);
         //solveLinearStep = Math.max(0, Math.min(solveLinearStep, 7));
-
-        model.addAttribute("hasInverseWalkthrough", hasInverseWalkthrough);
+        
         model.addAttribute("inverseWalkthroughMatrix", inverseWalkthroughMatrix);
 
         model.addAttribute(
@@ -238,13 +264,8 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                 inverseCurrentStep >= 4
                         ? finalInverseMatrix
                         : new double[2][2]
-        );
-        
-        model.addAttribute(
-            "hasFinalLinearSystemWalkthrough",
-            hasFinalLinearSystemWalkthrough
-        );
-
+        );       
+       
         model.addAttribute("result", result);
 
         return "linearSystems";

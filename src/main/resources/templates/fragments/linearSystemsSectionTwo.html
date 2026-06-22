@@ -1,5 +1,8 @@
-<div th:fragment="linearSystemsSectionTwo">
-    <section class="hero-card walkthrough-card" th:if="${result.currentStep >= 1}">
+<div th:fragment="linearSystemsSectionTwo"
+    th:if="${result.currentSection >= 2}">
+    <section class="hero-card walkthrough-card"
+         th:attr="data-active-section=${result.currentSection == 2 ? 'true' : null}">
+        <input type="hidden" name="determinantStep" th:value="${result.determinantStep}">
                     <div class="two-by-two-stage-two">   
                     <h2>2.Calculate The Determinant of Matrix A</h2>
                             <details class="math-details">                               
@@ -49,7 +52,7 @@
                                         <input type="text"
                                                 id="negativeStep1"
                                             class="matrix-input two-by-two-answer-cell matrix-cells-larger"
-                                            th:value="${result.currentStep >= 3 ? result.negativeStep1 : ''}"                      
+                                            th:value="${result.determinantStep >= 3 ? result.negativeStep1 : ''}"                      
                                             title="Negative step 1"
                                             aria-label="Negative step 1"
                                             readonly>
@@ -83,7 +86,7 @@
                                         <input type="text"
                                             id="determinant"
                                             class="matrix-input two-by-two-answer-cell determinant-cell matrix-cells-larger"
-                                            th:value="${result.currentStep >= 4 ? result.determinant : ''}"
+                                            th:value="${result.determinantStep >= 4 ? result.determinant : ''}"
                                             title="Determinant"
                                             aria-label="Determinant"
                                             readonly>
@@ -112,7 +115,7 @@
                                         <input type="text"
                                                 id="positiveStep1"
                                             class="matrix-input two-by-two-answer-cell matrix-cells-larger"
-                                            th:value="${result.currentStep >= 2 ? result.positiveStep1 : ''}"                       
+                                            th:value="${result.determinantStep >= 2 ? result.positiveStep1 : ''}"                       
                                             title="Positive step 1"
                                             aria-label="Positive step 1"
                                             readonly>
@@ -129,7 +132,7 @@
                                 Next Step
                             </button>
                         </div>
-                        <div class="determinant-result-container" th:if="${result.currentStep >= 4}">
+                        <div class="determinant-result-container" th:if="${result.determinantStep >= 4}">
                         <h2>Final Determinant</h2>
                             <div class="determinant-result-box">
                                 <label>Determinant of your 2 x 2 Matrix</label>
@@ -143,7 +146,7 @@
                             </div>
                         </div>
                     </div>
-                    <div th:if="${result.currentStep >= 4}">
+                    <div th:if="${result.determinantStep >= 4}">
                         <div class="button-group continue-button-group">
                              <button
                                 type="submit"
@@ -165,8 +168,7 @@
                                     disabled>
                                 Determinant = 0 • Matrix A Has No Inverse
                             </button>
-                        </div>
-                        
+                        </div>                        
                     </div>
                 </section>
 </div>

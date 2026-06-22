@@ -1,6 +1,7 @@
 <div th:fragment="linearSystemsSectionOne"
-    th:if="${result.hasMatrixValues && !result.hasInitialValues}">
-    <section class="hero-card">
+    th:if="${result.currentSection >= 1}">
+    <section class="hero-card"
+         th:attr="data-active-section=${result.currentSection == 1 ? 'true' : null}">
         <div class="matrix-fragment-card">
             <h2>1. Construct the Matrix Equation</h2>
                 <details class="math-details">
@@ -81,7 +82,7 @@
                 </div>                
             </div>
             <div class="button-group"> 
-                 <button type="submit" name="action" value="back-one-section" class="btn-secondary dashboard-btn">
+                 <button type="submit" name="action" value="back-to-start" class="btn-secondary dashboard-btn">
                     Close Section 1
                 </button>          
                 <button type="submit" name="action" value="proceed-to-step-two" class="btn-primary dashboard-btn">

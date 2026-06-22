@@ -11,18 +11,23 @@
     <script src="/js/solveLinearSystemsStepsColours.js"></script>
 </head>
 <body>
-<div id="linearSystemsPage" class="app-layout" th:data-current-step="${result.currentStep}" th:data-inverse-current-step="${result.inverseCurrentStep}" th:data-solve-linear-step="${result.solveLinearStep}">
+<div id="linearSystemsPage"
+     class="app-layout"
+     th:data-determinant-step="${result.determinantStep}"
+     th:data-inverse-current-step="${result.inverseCurrentStep}"
+     th:data-solve-linear-step="${result.solveLinearStep}">
     <div th:replace="~{sidebar :: sidebar}"></div>
         <main class="matrix-page">
             <form th:action="@{/linear-systems}" method="post">
-                <input type="hidden" name="currentStep" th:value="${result.currentStep}">            
+                <input type="hidden" name="currentSection" th:value="${result.currentSection}">
+                <input type="hidden" name="determinantStep" th:value="${result.determinantStep}">            
                 <input type="hidden" name="inverseCurrentStep" th:value="${result.inverseCurrentStep}">
                 <input type="hidden" name="solveLinearStep" th:value="${result.solveLinearStep}">                
                 <div th:replace="~{fragments/linearSystemsHeader :: solveLinearSystemsHeader}"></div>
                 <div th:if="${result.hasMatrixValues}" th:replace="~{fragments/linearSystemsSectionOne :: linearSystemsSectionOne}"></div>
-                <div th:if="${result.currentStep >= 1}" th:replace="~{fragments/linearSystemsSectionTwo :: linearSystemsSectionTwo}"></div>
-                <div th:if="${result.currentStep >= 3}" th:replace="~{fragments/linearSystemsSectionThree :: linearSystemsSectionThree}"></div>
-                <div th:if="${hasFinalLinearSystemWalkthrough}" th:replace="~{fragments/linearSystemsSectionFour :: linearSystemsSectionFour}"></div>                
+                <div th:if="${result.determinantStep >= 1}" th:replace="~{fragments/linearSystemsSectionTwo :: linearSystemsSectionTwo}"></div>
+                <div th:if="${result.determinantStep >= 3}" th:replace="~{fragments/linearSystemsSectionThree :: linearSystemsSectionThree}"></div>
+                <div th:if="${result.hasFinalLinearSystemWalkthrough}" th:replace="~{fragments/linearSystemsSectionFour :: linearSystemsSectionFour}"></div>                
             </form>
         </main>
     </div>

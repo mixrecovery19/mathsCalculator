@@ -396,6 +396,12 @@ input[type=number] {
     font-weight: bold;
     margin: 0.5rem 0;
 }
+.active-display-mode {
+    background: #ffff99;
+    border: 2px solid #d4b106;
+    font-weight: 700;
+    color: black;
+}
 @keyframes determinantPop {
     0% {
         transform: scale(.85);

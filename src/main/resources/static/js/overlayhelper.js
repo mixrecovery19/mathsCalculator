@@ -1,17 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-   
-    const savedPosition = sessionStorage.getItem("scrollPosition");        
 
-    if (savedPosition !== null) {
-        window.scrollTo({
-            top: parseInt(savedPosition), behavior: "instant"
+    const savedPosition = sessionStorage.getItem("scrollPosition");
+    const activeSection = document.querySelector("[data-active-section='true']");
 
+    if (activeSection) {
+        activeSection.scrollIntoView({
+            behavior: "instant",
+            block: "start"
         });
-    } 
+    } else if (savedPosition !== null) {
+        window.scrollTo({
+            top: parseInt(savedPosition),
+            behavior: "instant"
+        });
+    }
 
-    requestAnimationFrame(() => {document.body.classList.remove("loading");});      
-    document.querySelector("form").addEventListener("submit", () => {
-        sessionStorage.setItem("scrollPosition", window.scrollY);
-        document.body.classList.add("loading");       
+    requestAnimationFrame(() => {
+        document.body.classList.remove("loading");
     });
+
+    const form = document.querySelector("form");
+
+    if (form) {
+        form.addEventListener("submit", () => {
+            sessionStorage.setItem("scrollPosition", window.scrollY);
+            document.body.classList.add("loading");
+        });
+    }
 });

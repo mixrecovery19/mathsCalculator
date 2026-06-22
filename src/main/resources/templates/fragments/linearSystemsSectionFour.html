@@ -1,6 +1,7 @@
 <div th:fragment="linearSystemsSectionFour"
-     th:if="${hasFinalLinearSystemWalkthrough}">
-<section class="hero-card">
+     th:if="${result.currentSection >= 4}">
+<section class="hero-card"
+         th:attr="data-active-section=${result.currentSection == 4 ? 'true' : null}">
     <div class="matrix-fragment-card">
         <h2>4. Solve the Linear System</h2>
         <details class="math-details">
@@ -162,14 +163,22 @@
                 </button>
                 <button type="submit" name="action" value="next-final-linear-system-step" class="btn-primary">Next Step</button>
             </div>
+            <input type="hidden" name="currentSection" th:value="${result.currentSection}">
+            <input type="hidden" name="determinantStep" th:value="${result.determinantStep}">
+            <input type="hidden" name="inverseCurrentStep" th:value="${result.inverseCurrentStep}">
+            <input type="hidden" name="solveLinearStep" th:value="${result.solveLinearStep}">
             <div class="button-group">
-                <button type="submit" name="displayMode" value="decimal" class="btn-secondary">Decimal</button>
-                <button type="submit" name="displayMode" value="fraction" class="btn-secondary">Fraction</button>
+                <button type="submit" name="displayMode" value="decimal" class="btn-secondary" th:classappend="${result.displayMode == 'decimal'} ? ' active-display-mode' : ''">
+                    Decimal
+                </button>
+                <button type="submit" name="displayMode" value="fraction" class="btn-secondary" th:classappend="${result.displayMode == 'fraction'} ? ' active-display-mode' : ''">
+                    Fraction
+                </button>
             </div>
             <div class="button-group continue-button-group">    
                 <button type="submit" name="action" value="back-to-section-three" class="btn-secondary dashboard-btn">Close Section 4</button>
                 <button type="submit" name="action" value="restart-linear-system-walkthrough" class="btn-primary dashboard-btn">Restart Walkthrough</button>
-                </div>
+            </div>
         </div>
     </section>
 </div>

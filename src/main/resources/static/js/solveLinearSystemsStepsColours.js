@@ -7,19 +7,21 @@ document.addEventListener(
                 return;
             }
 
-            const currentStep = parseInt(page.dataset.currentStep || 0);             
+            const determinantStep = parseInt(page.dataset.determinantStep || 0);    
+            console.log("determinantStep =", determinantStep);         
             const inverseCurrentStep = parseInt(page.dataset.inverseCurrentStep || 0);                
             const solveLinearStep = parseInt(page.dataset.solveLinearStep || 0);
 
-            twoByTwoStepColours(currentStep);
+            twoByTwoStepColours(determinantStep);
             linearSystemsInverseStepColours(inverseCurrentStep);
             solveLinearSystemsStepsColours(solveLinearStep);
         }
     );
 
-function twoByTwoStepColours(currentStep) {
+function twoByTwoStepColours(determinantStep) {
+    console.log("determinantStep =", determinantStep);
     clearColours();  
-    if (currentStep >= 2) {
+    if (determinantStep >= 2) {
         colourCells(
             [
                 "cell-0-0",
@@ -30,7 +32,7 @@ function twoByTwoStepColours(currentStep) {
         );
     }
     // STEP 2
-    if (currentStep >= 3) {
+    if (determinantStep >= 3) {
         colourCells(
             [
                 "cell-0-1",
@@ -41,7 +43,7 @@ function twoByTwoStepColours(currentStep) {
         );
     }
     // STEP 3
-    if (currentStep >= 4) {
+    if (determinantStep >= 4) {
         colourCells(
             [
                 "determinant",

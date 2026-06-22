@@ -8,6 +8,8 @@ public class SolveLinearSystemsResult {
     private boolean hasInitialValues;
     private boolean hasInverseWalkthrough;
     private boolean hasFinalLinearSystemWalkthrough;
+    private int currentSection;
+    
 
     private String displayMode;
 
@@ -168,6 +170,12 @@ public class SolveLinearSystemsResult {
     }
     public void setHasFinalLinearSystemWalkthrough(boolean hasFinalLinearSystemWalkthrough) {
         this.hasFinalLinearSystemWalkthrough = hasFinalLinearSystemWalkthrough;
+    }
+    public int getCurrentSection() {
+        return currentSection;
+    }
+    public void setCurrentSection(int currentSection) {
+        this.currentSection = currentSection;   
     }
 
 }

@@ -1,5 +1,8 @@
-<div th:fragment="linearSystemsSectionThree">
-    <section class="hero-card walkthrough-card" th:if="${hasInverseWalkthrough}">
+<div th:fragment="linearSystemsSectionThree"
+    th:if="${result.currentSection >= 3}">
+    <section class="hero-card walkthrough-card"
+         th:if="${result.hasInverseWalkthrough}"
+         th:attr="data-active-section=${result.currentSection == 3 ? 'true' : null}">
                 <div class="two-by-two-stage-two">
                 <h2>3. Calculate the Inverse of Matrix A</h2>
                     <p class="math-introduction">
@@ -102,17 +105,15 @@
                 </button>
             </div>
             <div class="determinant-result-container" th:if="${result.inverseCurrentStep >= 4}">
-                <h2>Inverse of Matrix A</h2>
-                    <label>The Inverse of Matrix A</label>
-                    <div class="determinant-result-box">
-                        <label>Inverse of your 2 × 2 Matrix</label>
+                <h2>Inverse of Matrix A</h2>                    
+                    <div class="determinant-result-box">                       
                             <table class="matrix-input-table">
                                 <tr th:each="row,rowStat : ${finalInverseMatrix}">
                                     <td th:each="value,colStat : ${row}">
                                         <input type="text"
                                             class="matrix-input final-inverse-cell matrix-cells-larger"
                                             th:id="'final-inverse-cell-' + ${rowStat.index} + '-' + ${colStat.index}"
-                                            th:value="${#numbers.formatDecimal(value, 1, 3)}"
+                                            th:value="${@mathFormatterService.format(value, result.displayMode)}"
                                             title="Final inverse matrix value"
                                             aria-label="Final inverse matrix value"
                                             readonly>
@@ -121,12 +122,19 @@
                             </table>
                         </div>
                     </div>
-                    <div th:if="${result.currentStep >= 4}">
+                    <div th:if="${result.inverseCurrentStep >= 4}">
+                        <div class="button-group">
+                            <button type="submit" name="displayMode" value="decimal" class="btn-secondary" th:classappend="${result.displayMode == 'decimal'} ? ' active-display-mode' : ''">
+                                Decimal
+                            </button>
+                            <button type="submit" name="displayMode" value="fraction" class="btn-secondary" th:classappend="${result.displayMode == 'fraction'} ? ' active-display-mode' : ''">
+                                Fraction
+                            </button>
+                        </div>
                         <div class="button-group continue-button-group">                             
                             <button type="submit" name="action" value="back-to-section-two" class="btn-secondary dashboard-btn">
                                 Close Section 3
-                            </button>      
-               
+                            </button>     
                             <button th:if="${result.inverseCurrentStep >= 4}" type="submit" name="action" value="start-final-linear-system-walkthrough" class="btn-primary">
                                 Proceed To Next Step
                             </button>                                          

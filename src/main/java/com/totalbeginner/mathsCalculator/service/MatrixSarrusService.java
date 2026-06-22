@@ -129,9 +129,7 @@ public class MatrixSarrusService {
                         matrix[2][0];
         }
 
-        public double calculateNegativeStep2(
-                double[][] matrix
-        ) {
+        public double calculateNegativeStep2(double[][] matrix) {       
 
                 return
                         matrix[0][3]
