@@ -8,7 +8,6 @@ function colourCells(cellIds,colour) {
 }
 
 function colourElementsByClass(className, colour) {
-
     document.querySelectorAll("." + className)        
         .forEach(element => {element.style.backgroundColor = colour;});
 }

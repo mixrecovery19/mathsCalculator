@@ -2,7 +2,6 @@ package com.totalbeginner.mathsCalculator.service;
 
 import org.springframework.stereotype.Service;
 import java.util.Map;
-
 @Service
 public class MatrixRequestParser {
     public double[][] buildMatrix(int size, Map<String, String> params, String prefix ) {

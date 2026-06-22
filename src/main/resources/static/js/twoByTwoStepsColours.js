@@ -28,16 +28,10 @@ document.addEventListener(
     }
 );
 
-function twoByTwoStepColours(
-    currentStep,
-    inverseCurrentStep
-) {
-
+function twoByTwoStepColours(currentStep, inverseCurrentStep) {
     clearColours();
-
     // STEP 1
     if (currentStep >= 1) {
-
         colourCells(
             [
                 "cell-0-0",
@@ -47,10 +41,8 @@ function twoByTwoStepColours(
             "#fff4a8"
         );
     }
-
     // STEP 2
     if (currentStep >= 2) {
-
         colourCells(
             [
                 "cell-0-1",
@@ -63,7 +55,6 @@ function twoByTwoStepColours(
 
     // STEP 3
     if (currentStep >= 3) {
-
         colourCells(
             [
                 "determinant",
@@ -75,7 +66,6 @@ function twoByTwoStepColours(
 
     // INVERSE STEP 1
     if (inverseCurrentStep >= 1) {
-
         colourCells(
             [
                 "inverse-cell-0-0",
@@ -87,7 +77,6 @@ function twoByTwoStepColours(
 
     // INVERSE STEP 2
     if (inverseCurrentStep >= 2) {
-
         colourCells(
             [
                 "inverse-cell-0-1",
@@ -110,7 +99,6 @@ function twoByTwoStepColours(
 
     // FINAL INVERSE
     if (inverseCurrentStep >= 4) {
-
         colourElementsByClass(
             "final-inverse-cell",
             "#d5f5d5"
@@ -118,52 +106,27 @@ function twoByTwoStepColours(
     }
 }
 
-function colourCells(
-    cellIds,
-    colour
-) {
-
+function colourCells(cellIds, colour) {
     cellIds.forEach(id => {
-
-        const cell =
-            document.getElementById(id);
-
+        const cell = document.getElementById(id);
         if (cell) {
-
-            cell.style.backgroundColor =
-                colour;
+            cell.style.backgroundColor = colour;
         }
     });
 }
 
-function colourElementsByClass(
-    className,
-    colour
-) {
-
-    document
-        .querySelectorAll(
-            "." + className
-        )
+function colourElementsByClass(className, colour) {
+    document.querySelectorAll("." + className)
         .forEach(element => {
-
-            element.style.backgroundColor =
-                colour;
+            element.style.backgroundColor = colour;
         });
 }
 
 function clearColours() {
-
     document
-        .querySelectorAll(
-            ".matrix-input"
-        )
+        .querySelectorAll(".matrix-input")
         .forEach(cell => {
-
-            cell.style.backgroundColor =
-                "";
-
-            cell.style.borderColor =
-                "";
-        });
+            cell.style.backgroundColor = "";
+            cell.style.borderColor = "";
+    });
 }
