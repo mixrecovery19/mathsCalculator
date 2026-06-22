@@ -22,7 +22,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
         this.matrixTwoByTwoService = matrixTwoByTwoService;        
     }
 
-        @GetMapping("/linear-systems")
+        @GetMapping("/inverse-matrix-method")
         public String showLinearSystemsPage(Model model) {
 
             SolveLinearSystemsResult result = new SolveLinearSystemsResult();
@@ -35,9 +35,9 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
 
             model.addAttribute("result", result);
 
-            return "linearSystems";
+            return "inverseMatrixMethod";
         }
-    @PostMapping("/linear-systems")
+    @PostMapping("/inverse-matrix-method")
     public String createLinearSystem(
             @RequestParam(defaultValue = "0") int currentSection,
             @RequestParam(required = false) Double a_0_0,
@@ -68,7 +68,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
 
                 model.addAttribute("result", result);
                 model.addAttribute("inputError", "Please enter all six values before continuing.");               
-                return "linearSystems";
+                return "inverseMatrixMethod";
         }
                 
                 SolveLinearSystemsResult result =
@@ -268,6 +268,6 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
        
         model.addAttribute("result", result);
 
-        return "linearSystems";
+        return "inverseMatrixMethod";
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Linear Systems</title>
+    <title>Solve 2x2 Linear Systems Using The Inverse MatrixMethod</title>
     <link rel="stylesheet" href="/css/stylesSideBar.css">
     <link rel="stylesheet" href="/css/stylesLinearSystems.css">
     <script src="/js/overlayhelper.js"></script>
@@ -18,16 +18,16 @@
      th:data-solve-linear-step="${result.solveLinearStep}">
     <div th:replace="~{sidebar :: sidebar}"></div>
         <main class="matrix-page">
-            <form th:action="@{/linear-systems}" method="post">
+            <form th:action="@{/inverse-matrix-method}" method="post">
                 <input type="hidden" name="currentSection" th:value="${result.currentSection}">
                 <input type="hidden" name="determinantStep" th:value="${result.determinantStep}">            
                 <input type="hidden" name="inverseCurrentStep" th:value="${result.inverseCurrentStep}">
                 <input type="hidden" name="solveLinearStep" th:value="${result.solveLinearStep}">                
-                <div th:replace="~{fragments/linearSystemsHeader :: solveLinearSystemsHeader}"></div>
-                <div th:if="${result.hasMatrixValues}" th:replace="~{fragments/linearSystemsSectionOne :: linearSystemsSectionOne}"></div>
-                <div th:if="${result.determinantStep >= 1}" th:replace="~{fragments/linearSystemsSectionTwo :: linearSystemsSectionTwo}"></div>
-                <div th:if="${result.determinantStep >= 3}" th:replace="~{fragments/linearSystemsSectionThree :: linearSystemsSectionThree}"></div>
-                <div th:if="${result.hasFinalLinearSystemWalkthrough}" th:replace="~{fragments/linearSystemsSectionFour :: linearSystemsSectionFour}"></div>                
+                <div th:replace="~{fragments/inverseMatrixMethodHeader :: inverseMatrixMethodHeader}"></div>
+                <div th:if="${result.hasMatrixValues}" th:replace="~{fragments/inverseMatrixMethodSectionOne :: inverseMatrixMethodSectionOne}"></div>
+                <div th:if="${result.determinantStep >= 1}" th:replace="~{fragments/inverseMatrixMethodSectionTwo :: inverseMatrixMethodSectionTwo}"></div>
+                <div th:if="${result.determinantStep >= 3}" th:replace="~{fragments/inverseMatrixMethodSectionThree :: inverseMatrixMethodSectionThree}"></div>
+                <div th:if="${result.hasFinalLinearSystemWalkthrough}" th:replace="~{fragments/inverseMatrixMethodSectionFour :: inverseMatrixMethodSectionFour}"></div>                
             </form>
         </main>
     </div>
