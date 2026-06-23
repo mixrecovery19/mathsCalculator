@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solve 2×2 Linear Systems Using Gaussian Elimination</title>
+    <link rel="stylesheet" href="/css/stylesSideBar.css">
+    <link rel="stylesheet" href="/css/stylesLinearSystems.css">
+    <script src="/js/overlayhelper.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="/js/gaussianEliminationStepsColours.js"></script>
+</head>
+<body>
+    <div id="gaussianEliminationPage"
+        class="app-layout"
+        th:data-current-step="${result.currentGaussianStep}">
+    <div th:replace="~{sidebar :: sidebar}"></div>
+        <main class="matrix-page">
+            <form th:action="@{/gaussian-elimination}" method="post">
+                <h1>Gaussian Elimination</h1>
+                <div th:replace="~{fragments/linearSystems/gaussianEliminationMethodHeader :: gaussianEliminationMethodHeader}"></div>
+                <div th:if="${result.hasAugmentedMatrix}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionOne :: gaussianEliminationMethodSectionOne}"></div>
+                <div th:if="${result.currentGaussianSection == 2}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionTwo :: gaussianEliminationMethodSectionTwo}"></div>  
+            </form>
+        </main>
+    </div>
+</body>
+</html>

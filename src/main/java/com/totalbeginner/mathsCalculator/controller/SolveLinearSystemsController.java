@@ -182,7 +182,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                     result.setHasInitialValues(false);
                     result.setHasMatrixValues(true);
 
-                    newDeterminantStep = 1;
+                    newDeterminantStep = 4;
                     inverseCurrentStep = 0;
                     solveLinearStep = 0;
 
@@ -195,7 +195,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                     result.setHasMatrixValues(true);
 
                     newDeterminantStep = 4;
-                    inverseCurrentStep = 0;
+                    inverseCurrentStep = 4;
                     solveLinearStep = 0;
                     result.setCurrentSection(3);
 

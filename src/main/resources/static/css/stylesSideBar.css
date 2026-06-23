@@ -78,3 +78,22 @@ body {
     font-size: 0.85rem;
     letter-spacing: 1px;
 }
+.sidebar-nav details {
+    margin: 8px 0;
+}
+
+.sidebar-nav summary {
+    cursor: pointer;
+    padding: 10px;
+    font-weight: bold;
+    list-style: none;
+}
+
+.sidebar-nav summary::-webkit-details-marker {
+    display: none;
+}
+
+.sidebar-nav details a {
+    display: block;
+    padding: 8px 0 8px 20px;
+}

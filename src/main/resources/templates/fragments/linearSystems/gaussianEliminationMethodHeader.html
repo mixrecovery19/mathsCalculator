@@ -1,0 +1,72 @@
+<script src="/js/overlayhelper.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<div th:fragment="gaussianEliminationMethodHeader" class="matrix-inputs-dashboard">
+    <div class="matrix-controls matrix-fragment-card">
+        <div class="matrix-control-row">
+            <h1>Solve 2x2 Linear Systems Using The Gaussian Elimination Method</h1>
+        </div>
+        <h2>Enter the Coefficients for Your Two Equations</h2>
+
+        <details class="math-details">
+            <summary>Solving Simultaneous Linear Equations Using Gaussian Elimination</summary>
+            <p class="math-description">
+                A pair of simultaneous linear equations can be written as an augmented matrix.<br>
+                For example, \[\begin{aligned}ax+by&=c\\dx+ey&=f\end{aligned}\]
+                becomes \[\left[\begin{array}{cc|c}a & b & c\\d & e & f\end{array}\right]\]
+                Gaussian Elimination solves the system by applying
+                <strong>elementary row operations</strong> until the solution
+                can be read directly.
+                <br>
+                Throughout this walkthrough you will:
+                <br>
+                • Enter the coefficients for your equations.<br>
+                • Construct the augmented matrix.<br>
+                • Apply elementary row operations.<br>
+                • Eliminate one variable.<br>
+                • Use back substitution to solve the remaining variable.<br>
+                • Calculate the values of \(x\) and \(y\).
+
+            </p>
+        </details>
+        <input type="hidden" name="size" value="2">
+        <div class="linear-system-layout">        
+            <div>
+                <h3>Coefficient Matrix (A)</h3>
+                <table class="matrix-input-table matrix-cells-larger">
+                    <tr th:each="row : ${#numbers.sequence(0,1)}">
+                        <td th:each="col : ${#numbers.sequence(0,1)}">
+                            <input type="number" 
+                                step="any"
+                                class="matrix-input matrix-cells-larger"
+                                th:name="'a_' + ${row} + '_' + ${col}"
+                                th:id="'a_' + ${row} + '_' + ${col}"
+                                th:value="${result.augmentedMatrix[row][col] != 0 ? result.augmentedMatrix[row][col] : ''}"
+                                placeholder="0">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <h3>Constants (B)</h3>
+                <table class="matrix-input-table matrix-cells-larger">
+                    <tr th:each="row : ${#numbers.sequence(0,1)}">
+                        <td>
+                            <input
+                                type="number"
+                                step="any"
+                                class="matrix-input matrix-cells-larger"
+                                th:name="'b_' + ${row}"
+                                th:id="'b_' + ${row}"
+                                th:value="${result.augmentedMatrix[row][2] != 0 ? result.augmentedMatrix[row][2] : ''}"
+                                placeholder="0">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <button type="submit" name="action" value="create-augmented-matrix" class="btn-primary dashboard-btn">
+            Construct Augmented Matrix
+        </button>
+    </div>
+</div>
