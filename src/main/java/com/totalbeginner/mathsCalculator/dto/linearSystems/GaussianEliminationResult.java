@@ -8,7 +8,7 @@ public class GaussianEliminationResult {
     // Walkthrough state
     private boolean hasAugmentedMatrix;
     private int currentGaussianSection;
-    private int currentGaussianStep;
+    private int currentGaussianSectionTwoStep;
 
     // Display
     private String displayMode;
@@ -16,6 +16,17 @@ public class GaussianEliminationResult {
     // Final solution
     private double xAnswer;
     private double yAnswer;
+
+    //Section Two Walkthrough state
+    private double eliminationFactor;
+
+    private double scaledA;
+    private double scaledB;
+    private double scaledConstant;
+
+    private double newRowA;
+    private double newRowB;
+    private double newRowConstant;
 
     // Constructors
     public GaussianEliminationResult() {
@@ -44,11 +55,11 @@ public class GaussianEliminationResult {
     public void setCurrentGaussianSection(int currentGaussianSection) {
         this.currentGaussianSection = currentGaussianSection;
     }
-    public int getCurrentGaussianStep() {
-        return currentGaussianStep;
+    public int getCurrentGaussianSectionTwoStep() {
+        return currentGaussianSectionTwoStep;
     }
-    public void setCurrentGaussianStep(int currentGaussianStep) {
-        this.currentGaussianStep = currentGaussianStep;
+    public void setCurrentGaussianSectionTwoStep(int currentGaussianSectionTwoStep) {
+        this.currentGaussianSectionTwoStep = currentGaussianSectionTwoStep;
     }
     public String getDisplayMode() {
         return displayMode;
@@ -67,5 +78,47 @@ public class GaussianEliminationResult {
     }
     public void setYAnswer(double yAnswer) {
         this.yAnswer = yAnswer;
+    }
+    public double getEliminationFactor() {
+        return eliminationFactor;
+    }
+    public void setEliminationFactor(double eliminationFactor) {
+        this.eliminationFactor = eliminationFactor;
+    }
+    public double getScaledA() {
+        return scaledA;
+    }
+    public void setScaledA(double scaledA) {
+        this.scaledA = scaledA;
+    }
+    public double getScaledB() {
+        return scaledB;
+    }
+    public void setScaledB(double scaledB) {
+        this.scaledB = scaledB;
+    }
+    public double getScaledConstant() {
+        return scaledConstant;
+    }
+    public void setScaledConstant(double scaledConstant) {
+        this.scaledConstant = scaledConstant;
+    }
+    public double getNewRowA() {
+        return newRowA;
+    }
+    public void setNewRowA(double newRowA) {
+        this.newRowA = newRowA;
+    }
+    public double getNewRowB() {
+        return newRowB;
+    }
+    public void setNewRowB(double newRowB) {
+        this.newRowB = newRowB;
+    }
+    public double getNewRowConstant() {
+        return newRowConstant;
+    }
+    public void setNewRowConstant(double newRowConstant) {
+        this.newRowConstant = newRowConstant;
     }
 }

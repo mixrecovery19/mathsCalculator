@@ -1,0 +1,447 @@
+:root {
+    --matrix-width: 62px;
+    --matrix-height: 52px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: -apple-system,
+                 BlinkMacSystemFont,
+                 "Segoe UI",
+                 Roboto,
+                 Arial,
+                 sans-serif;
+
+    background:
+        linear-gradient(rgba(244,248,251,.88), rgba(244,248,251,.88)),
+        url("/images/mathsimage2.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #2c3e50;
+}
+
+.matrix-page {
+    margin-left: 360px;
+    width: calc(100% - 360px);
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.matrix-page form {
+    width: 100%;
+}
+
+/* ---------- Cards ---------- */
+
+.hero-card,
+.matrix-inputs-dashboard {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #e8edf3;
+    box-shadow: 0 6px 20px rgba(0,0,0,.08);
+}
+
+.matrix-fragment-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.matrix-control-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.matrix-control-row h1 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.math-details {
+    width: 100%;
+    max-width: 900px;
+    background: #f5f8fc;
+    border-left: 5px solid #3498db;
+    border-radius: 10px;
+    padding: 1rem;
+}
+.math-details summary {
+    cursor: pointer;
+    font-weight: 700;
+}
+.math-details summary:hover {
+    color: #2980b9;
+}
+
+.math-description {
+    margin-top: 1rem;
+    line-height: 1.7;
+}
+
+.linear-system-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.coefficient-panel,
+.constants-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.coefficient-panel h3,
+.constants-panel h3 {
+    text-align: center;
+}
+.matrix-input-table {
+    border-collapse: separate;
+    border-spacing: .5rem;
+}
+.matrix-input-table td {
+    padding: 0;
+}
+.matrix-input {
+    width: var(--matrix-width);
+    height: var(--matrix-height);
+    border-radius: 12px;
+    border: 2px solid #d9dde3;
+    background: white;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.matrix-input:focus {
+    outline: none;
+    border-color: #05e16c;
+    box-shadow: 0 0 0 3px rgba(5,225,108,.18);
+}
+
+.matrix-input::placeholder {
+    color: #b4b4b4;
+}
+.matrix-cells-larger {
+    width: 90px;
+    height: 52px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.dashboard-btn,
+.btn-primary,
+.btn-secondary {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: .95rem;
+    font-weight: 700;
+
+    transition: .2s;
+}
+
+.dashboard-btn:hover,
+.btn-primary:hover,
+.btn-secondary:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: rgb(70,236,70);
+    color: black;
+}
+.btn-primary:hover {
+    background: #05e16c;
+}
+.btn-secondary {
+    background: #95a5a6;
+    color: white;
+}
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+.equation-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.solution-panel {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.solution-box {
+    min-width: 320px;
+    padding: 2rem;
+    background: linear-gradient(135deg,#fff9c4,#ffe082);
+    border: 3px solid #f1c40f;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+.solution-box h2 {
+    margin-bottom: 1rem;
+}
+
+.solution-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #2c3e50;
+    margin: .75rem 0;
+}
+
+.step-panel {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: 16px;
+    background: #f8fafc;
+    border-left: 5px solid #3498db;
+}
+
+.step-panel h3 {
+
+    margin-bottom: 1rem;
+}
+
+.step-panel p {
+    line-height: 1.7;
+}
+.walkthrough-card {
+    margin-top: 1.5rem;
+}
+.two-by-two-layout {
+    width: fit-content;
+    margin: 0 auto;
+}
+.two-by-two-layout .matrix-input-table {
+    margin: 0;
+}
+.two-by-two-answer-table {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.two-by-two-answer-table td {
+    width: 62px;
+    height: 52px;
+    padding: 0;
+}
+
+.two-by-two-answer-table td:empty {
+    border: none;
+}
+
+.two-by-two-answer-table.bottom {
+    margin-left: 0;
+}
+.two-by-two-answer-cell {
+    background: #f4f4f4;
+    color: #2c3e50;
+}
+.two-by-two-stage-two {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.two-by-two-stage-two h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.two-by-two-stage-two .math-details {
+    width: 100%;
+    max-width: 850px;
+    margin-bottom: 1.5rem;
+}
+.diagonal-positive {
+    background: #fff4a8;
+    border-color: #f1c40f;
+}
+
+.diagonal-positive-1 {
+    background: #fff4a8;
+    border-color: #f1c40f;
+}
+
+.diagonal-positive-2 {
+    background: #cfe8ff;
+    border-color: #5dade2;
+}
+.diagonal-positive-3 {
+    background: #d5f5d5;
+    border-color: #58d68d;
+}
+.diagonal-negative-1 {
+    background: #ffd6d6;
+    border-color: #e57373;
+}
+.diagonal-negative-2 {
+    background: #f3d9ff;
+    border-color: #bb6bd9;
+}
+.diagonal-negative-3 {
+    background: #ffe5c2;
+    border-color: #f39c12;
+}
+.determinant-result-container {
+    margin-top: 2rem;
+    text-align: center;
+}
+.determinant-result-box {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(
+        135deg,
+        #fff9c4,
+        #ffe082
+    );
+    border: 3px solid #f1c40f;
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    animation: determinantPop 0.45s ease;
+}
+.determinant-result-box label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #555;
+}
+.final-determinant-input {
+    width: 180px;
+    height: 90px;
+    border-radius: 18px;
+    border: 3px solid #f1c40f;
+    background: white;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #2c3e50;
+    box-shadow:
+        inset 0 2px 6px rgba(0,0,0,.08);
+}
+.continue-button-group {
+    margin-top: 2.5rem;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+.math-introduction {
+    max-width: 850px;
+    margin: 0 auto 1.75rem auto;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    line-height: 1.7;
+    font-size: 1.02rem;
+    color: #455a64;
+    background: #f8fafc;
+    border-left: 5px solid #5dade2;
+    border-radius: 10px;
+}
+.solution-label-cell {
+    width: auto;
+    padding-right: 0.35rem;
+    vertical-align: middle;
+}
+
+.solution-label {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #2c3e50;
+    white-space: nowrap;
+}
+.math-centre-word {
+    text-align: center;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+.active-display-mode {
+    background: #ffff99;
+    border: 2px solid #d4b106;
+    font-weight: 700;
+    color: black;
+}
+@keyframes determinantPop {
+    0% {
+        transform: scale(.85);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+.walkthrough-step-box {
+    width: 100%;
+    height: 110px;                    /* ← Fixed height (adjust as needed) */
+    padding: 16px 20px;
+    margin: 20px 0;
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+    background: #f8f9fa;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;          /* Centers content vertically */
+}
+
+.walkthrough-step-header {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+.walkthrough-step-body {
+    flex: 1;
+    display: flex;
+    align-items: center;              /* Keeps text vertically centered */
+}
+
+.walkthrough-step-text {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    width: 100%;
+}

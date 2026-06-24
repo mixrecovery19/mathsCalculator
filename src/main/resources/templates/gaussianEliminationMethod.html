@@ -13,7 +13,7 @@
 <body>
     <div id="gaussianEliminationPage"
         class="app-layout"
-        th:data-current-step="${result.currentGaussianStep}">
+        th:classappend="${result.currentGaussianSection == 0} ? ' gaussian-section-0' : ''">
     <div th:replace="~{sidebar :: sidebar}"></div>
         <main class="matrix-page">
             <form th:action="@{/gaussian-elimination}" method="post">

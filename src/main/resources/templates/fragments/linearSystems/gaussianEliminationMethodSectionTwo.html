@@ -21,49 +21,176 @@
         This removes the coefficient beneath the pivot.
         </p>
     </details>
-        <div class="linear-system-layout">
-            <div class="coefficient-panel">
-                <h3>Augmented Matrix</h3>
-                    <table class="matrix-input-table matrix-cells-larger">
-                        <tr th:each="row : ${#numbers.sequence(0,1)}">
-                            <td th:each="col : ${#numbers.sequence(0,1)}">
+
+    <div class="walkthrough-step-box">
+        <div class="walkthrough-step-header">
+            Current Step
+        </div>
+        <div class="walkthrough-step-body">
+            <div class="walkthrough-step-text"
+                th:text="${result.currentGaussianSectionTwoStep == 1}
+                    ? 'Identify the pivot (a) and the value beneath it (d).'
+                    : 'Press Next Step to begin.'">
+            </div>
+        </div>
+    </div>
+    <div class="linear-system-layout">   
+    <div class="coefficient-panel">
+        <h3>Elimination Factor</h3>
+        <table class="matrix-input-table two-by-two-answer-table">
+            <tr>
+                <td>
+                    <input
+                            id="gaussianFactor"
+                            type="text"
+                            class="matrix-input matrix-cells-larger"
+                            aria-label="Elimination factor"
+                            th:value="${result.currentGaussianSectionTwoStep >= 1 ? result.eliminationFactor : ''}"
+                            readonly>
+                </td>
+            </tr>
+        </table>
+        <h3>Scaled First Row</h3>
+        <table class="matrix-input-table two-by-two-answer-table">
+            <tr>
+                <td>
+                    <input
+                            id="scaledA"
+                            type="text"
+                            class="matrix-input matrix-cells-larger"
+                            aria-label="Scaled first row first value"
+                            th:value="${result.currentGaussianSectionTwoStep >= 2 ? result.scaledA : ''}"
+                            readonly>
+                </td>
+                <td>
+                    <input
+                            id="scaledB"
+                            type="text"
+                            class="matrix-input matrix-cells-larger"
+                            aria-label="Scaled first row second value"
+                            th:value="${result.currentGaussianSectionTwoStep >= 2 ? result.scaledB : ''}"
+                            readonly>
+                </td>
+
+                <td>
+                    <input
+                            id="scaledC"
+                            type="text"
+                            class="matrix-input matrix-cells-larger"
+                            aria-label="Scaled first row constant"
+                            th:value="${result.currentGaussianSectionTwoStep >= 2 ? result.scaledConstant : ''}"
+                            readonly>
+                </td>
+            </tr>
+        </table>
+    </div>
+   
+        <div class="coefficient-panel">
+            <h3>Original Augmented Matrix</h3>
+                <table class="matrix-input-table matrix-cells-larger">
+                    <tr th:each="row : ${#numbers.sequence(0,1)}">
+                        <td th:each="col : ${#numbers.sequence(0,1)}">
+                            <input
+                                type="text"
+                                class="matrix-input matrix-cells-larger"
+                                aria-label="Original matrix coefficient"
+                                th:value="${result.augmentedMatrix[row][col]}"
+                                readonly>
+                            </td>
+                            <td class="matrix-divider">|</td>
+                            <td>
                                 <input
+                                    type="text"
+                                    class="matrix-input matrix-cells-larger"
+                                    aria-label="Original matrix constant"
+                                    th:value="${result.augmentedMatrix[row][2]}"
+                                    readonly>
+                            </td>
+                        </tr>
+                    </table>
+                </div>    
+
+                <div class="coefficient-panel">
+                    <h3>New Second Row</h3>
+                    <table class="matrix-input-table two-by-two-answer-table">
+                        <tr>
+                            <td>
+                                <input
+                                        id="newRowA"
                                         type="text"
                                         class="matrix-input matrix-cells-larger"
-                                        readonly
-                                        th:value="${result.augmentedMatrix[row][col]}"
-                                        title="Augmented matrix value">
+                                    aria-label="New second row first value"
+                                        th:value="${result.currentGaussianSectionTwoStep >= 3 ? result.newRowA : ''}"
+                                        readonly>
 
-                            </td>
-                            <td class="matrix-divider">
-                                |
                             </td>
                             <td>
                                 <input
+                                    id="newRowB"
+                                    type="text"
+                                    class="matrix-input matrix-cells-larger"
+                                    aria-label="New second row second value"
+                                    th:value="${result.currentGaussianSectionTwoStep >= 4 ? result.newRowB : ''}"
+                                    readonly>
+                            </td>
+
+                            <td>
+                                <input
+                                        id="newRowC"
                                         type="text"
                                         class="matrix-input matrix-cells-larger"
-                                        readonly
-                                        th:value="${result.augmentedMatrix[row][2]}"
-                                        title="Constant vector value">
+                                    aria-label="New second row constant"
+                                        th:value="${result.currentGaussianSectionTwoStep >= 5 ? result.newRowConstant : ''}"
+                                        readonly>
                             </td>
                         </tr>
                     </table>
                 </div>
             </div>
+            <div class="determinant-result-container"
+                th:if="${result.currentGaussianSectionTwoStep >= 5}">
+                <h2>Matrix After First Row Operation</h2>
+                <table class="matrix-input-table matrix-cells-larger">
+                    <tr>
+                        <td><input type="text" readonly aria-label="Result matrix first row first value" th:value="${result.augmentedMatrix[0][0]}"></td>
+                        <td><input type="text" readonly aria-label="Result matrix first row second value" th:value="${result.augmentedMatrix[0][1]}"></td>
+                        <td class="matrix-divider">|</td>
+                        <td><input type="text" readonly aria-label="Result matrix first row constant" th:value="${result.augmentedMatrix[0][2]}"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" readonly aria-label="Result matrix second row first value" value="0"></td>
+                        <td>
+                            <input
+                                    type="text"
+                                    readonly
+                                    aria-label="Result matrix second row second value"
+                                    th:value="${result.newRowB}">
+                        </td>
+                        <td class="matrix-divider">|</td>
+                        <td>
+                            <input
+                                    type="text"
+                                    readonly
+                                    aria-label="Result matrix second row constant"
+                                    th:value="${result.newRowConstant}">
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div class="button-group">
-                <button type="submit" name="action" value="previous-linear-system-step" class="btn-secondary">
+                <button type="submit" name="action" value="previous-gaussian-section-two-system-step" class="btn-secondary">
                     Previous Step
                 </button>
-                <button type="submit" name="action" value="next-linear-system-step" class="btn-primary">
+                <button type="submit" name="action" value="next-gaussian-section-two-system-step" class="btn-primary">
                     Next Step
                 </button>
             </div>
             <div class="button-group">
-                <button type="submit" name="action" value="back-to-section-one" class="btn-secondary dashboard-btn">
+                <button type="submit" name="action" value="back-to-gaussian-section-one" class="btn-secondary dashboard-btn">
                     Close Section 2
                 </button>
-                <button type="submit" name="action" value="proceed-to-step-two" class="btn-primary dashboard-btn">
-                    Proceed To Next Step
+                <button type="submit" name="action" value="proceed-to-gaussian-section-three" class="btn-primary dashboard-btn">
+                    Proceed To Next 
                 </button>
             </div>
         </div>
