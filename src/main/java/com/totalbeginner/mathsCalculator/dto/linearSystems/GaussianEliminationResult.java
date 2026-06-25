@@ -9,6 +9,7 @@ public class GaussianEliminationResult {
     private boolean hasAugmentedMatrix;
     private int currentGaussianSection;
     private int currentGaussianSectionTwoStep;
+    private int currentGaussianSectionThreeStep;
 
     // Display
     private String displayMode;
@@ -27,6 +28,14 @@ public class GaussianEliminationResult {
     private double newRowA;
     private double newRowB;
     private double newRowConstant;
+
+    private double yNumerator;
+private double yDenominator;
+private double solvedY;
+
+    
+
+    
 
     // Constructors
     public GaussianEliminationResult() {
@@ -120,5 +129,29 @@ public class GaussianEliminationResult {
     }
     public void setNewRowConstant(double newRowConstant) {
         this.newRowConstant = newRowConstant;
+    }
+    public int getCurrentGaussianSectionThreeStep() {
+        return currentGaussianSectionThreeStep;
+    }
+    public void setCurrentGaussianSectionThreeStep(int currentGaussianSectionThreeStep) {
+        this.currentGaussianSectionThreeStep = currentGaussianSectionThreeStep;
+    }
+    public double getYNumerator() {
+        return yNumerator;
+    }
+    public void setYNumerator(double yNumerator) {
+        this.yNumerator = yNumerator;
+    }
+    public double getYDenominator() {
+        return yDenominator;
+    }
+    public void setYDenominator(double yDenominator) {
+        this.yDenominator = yDenominator;
+    }
+    public double getSolvedY() {
+        return solvedY;
+    }
+    public void setSolvedY(double solvedY) {
+        this.solvedY = solvedY;
     }
 }

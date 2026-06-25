@@ -38,7 +38,6 @@ body {
     width: 100%;
 }
 
-/* ---------- Cards ---------- */
 
 .hero-card,
 .matrix-inputs-dashboard {
@@ -49,14 +48,12 @@ body {
     border: 1px solid #e8edf3;
     box-shadow: 0 6px 20px rgba(0,0,0,.08);
 }
-
 .matrix-fragment-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.2rem;
 }
-
 .matrix-control-row {
     display: flex;
     justify-content: center;
@@ -83,12 +80,10 @@ body {
 .math-details summary:hover {
     color: #2980b9;
 }
-
 .math-description {
     margin-top: 1rem;
     line-height: 1.7;
 }
-
 .linear-system-layout {
     display: flex;
     justify-content: center;
@@ -317,11 +312,12 @@ body {
     background: #ffe5c2;
     border-color: #f39c12;
 }
-.determinant-result-container {
+.result-card-container {
     margin-top: 2rem;
     text-align: center;
 }
-.determinant-result-box {
+
+.result-card {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -335,14 +331,16 @@ body {
     border-radius: 20px;
     padding: 1.5rem 2rem;
     box-shadow: 0 8px 24px rgba(0,0,0,.12);
-    animation: determinantPop 0.45s ease;
+    animation: resultCardPop 0.45s ease;
 }
-.determinant-result-box label {
+
+.result-card label {
     font-size: 1rem;
     font-weight: 700;
     color: #555;
 }
-.final-determinant-input {
+
+.result-card-large-input {
     width: 180px;
     height: 90px;
     border-radius: 18px;
@@ -354,6 +352,17 @@ body {
     color: #2c3e50;
     box-shadow:
         inset 0 2px 6px rgba(0,0,0,.08);
+}
+
+@keyframes resultCardPop {
+    0% {
+        transform: scale(.85);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 .continue-button-group {
     margin-top: 2.5rem;
@@ -402,16 +411,7 @@ input[type=number] {
     font-weight: 700;
     color: black;
 }
-@keyframes determinantPop {
-    0% {
-        transform: scale(.85);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
+
 .walkthrough-step-box {
     width: 100%;
     height: 110px;                    /* ← Fixed height (adjust as needed) */
@@ -431,14 +431,19 @@ input[type=number] {
     font-size: 0.95rem;
     color: #555;
     margin-bottom: 6px;
+    font-weight: bold;
 }
-
+.walkthrough-step-box {
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+}
 .walkthrough-step-body {
     flex: 1;
     display: flex;
-    align-items: center;              /* Keeps text vertically centered */
+    align-items: flex-start;   /* Top aligned */
+    padding-top: 4px;
 }
-
 .walkthrough-step-text {
     margin: 0;
     font-size: 1.05rem;

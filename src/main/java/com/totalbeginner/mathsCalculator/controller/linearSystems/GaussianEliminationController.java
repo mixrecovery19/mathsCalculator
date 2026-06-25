@@ -42,6 +42,10 @@ public class GaussianEliminationController {
             @RequestParam(required = false) Double a_1_0,
             @RequestParam(required = false) Double a_1_1,
             @RequestParam(required = false) Double b_1,
+            @RequestParam(defaultValue = "0")  
+            int currentGaussianSectionTwoStep,    
+            @RequestParam(defaultValue = "0")
+            int currentGaussianSectionThreeStep,         
 
             @RequestParam(required = false) String action,
 
@@ -49,6 +53,8 @@ public class GaussianEliminationController {
 
         GaussianEliminationResult result = new GaussianEliminationResult();
 
+        result.setCurrentGaussianSectionTwoStep(currentGaussianSectionTwoStep);
+        result.setCurrentGaussianSectionThreeStep(currentGaussianSectionThreeStep);
         // User hasn't entered all six values
         if (a_0_0 == null || a_0_1 == null || b_0 == null
                 || a_1_0 == null || a_1_1 == null || b_1 == null) {
@@ -70,59 +76,7 @@ public class GaussianEliminationController {
             a_1_0, a_1_1, b_1
         );
 
-        result.setAugmentedMatrix(augmentedMatrix);
-
-    double eliminationFactor =
-            gaussianEliminationService
-                    .calculateSectionTwoEliminationFactor(
-                            augmentedMatrix);
-
-    double scaledA =
-            gaussianEliminationService
-                    .calculateSectionTwoScaledA(
-                            augmentedMatrix,
-                            eliminationFactor);
-
-    double scaledB =
-            gaussianEliminationService
-                    .calculateSectionTwoScaledB(
-                            augmentedMatrix,
-                            eliminationFactor);
-
-    double scaledConstant =
-            gaussianEliminationService
-                    .calculateSectionTwoScaledConstant(
-                            augmentedMatrix,
-                            eliminationFactor);
-
-    double newRowA =
-            gaussianEliminationService
-                    .calculateSectionTwoNewRowA(
-                            augmentedMatrix,
-                            scaledA);
-
-    double newRowB =
-            gaussianEliminationService
-                    .calculateSectionTwoNewRowB(
-                            augmentedMatrix,
-                            scaledB);
-
-    double newRowConstant =
-            gaussianEliminationService
-                    .calculateSectionTwoNewRowConstant(
-                            augmentedMatrix,
-                            scaledConstant);
-
-                        result.setEliminationFactor(eliminationFactor);
-
-        result.setScaledA(scaledA);
-        result.setScaledB(scaledB);
-        result.setScaledConstant(scaledConstant);
-
-        result.setNewRowA(newRowA);
-        result.setNewRowB(newRowB);
-        result.setNewRowConstant(newRowConstant);
-
+        result.setAugmentedMatrix(augmentedMatrix); 
         result.setDisplayMode("decimal");
 
     if ("create-augmented-matrix".equals(action)) {
@@ -152,23 +106,129 @@ public class GaussianEliminationController {
         );
     }
     if ("back-to-gaussian-section-one".equals(action)) {
-
         result.setHasAugmentedMatrix(true);
-        result.setCurrentGaussianSection(1);
-
+        result.setCurrentGaussianSection(0);
         result.setCurrentGaussianSectionTwoStep(0);
     }
+    
+    if ("next-gaussian-section-three-system-step".equals(action)) {
+    result.setHasAugmentedMatrix(true);
+    result.setCurrentGaussianSection(3);
+    result.setCurrentGaussianSectionThreeStep(
+            result.getCurrentGaussianSectionThreeStep() + 1);
+}
 
-    if ("back-to-gaussian-section-one".equals(action)) {
+if ("previous-gaussian-section-three-system-step".equals(action)) {
+    result.setHasAugmentedMatrix(true);
+    result.setCurrentGaussianSection(3);
+    result.setCurrentGaussianSectionThreeStep(
+            result.getCurrentGaussianSectionThreeStep() - 1);
+}
 
+if ("back-to-gaussian-section-two".equals(action)) {
+    result.setHasAugmentedMatrix(true);
+    result.setCurrentGaussianSection(2);
+    result.setCurrentGaussianSectionThreeStep(0);
+}
+ if ("proceed-to-gaussian-section-three".equals(action)) {
         result.setHasAugmentedMatrix(true);
-        result.setCurrentGaussianSection(1);
-
-        result.setCurrentGaussianSectionTwoStep(0);
+        result.setCurrentGaussianSection(3);
+        result.setCurrentGaussianSectionThreeStep(0);
     }
+
     result.setCurrentGaussianSectionTwoStep(
-            Math.max(0, Math.min(result.getCurrentGaussianSectionTwoStep(), 4))
-    );
+        Math.max(0, Math.min(result.getCurrentGaussianSectionTwoStep(), 8))
+);
+
+result.setCurrentGaussianSectionThreeStep(
+        Math.max(0, Math.min(result.getCurrentGaussianSectionThreeStep(), 1))
+);
+     
+        if (result.getCurrentGaussianSectionTwoStep() >= 1) {
+
+        double eliminationFactor =
+                gaussianEliminationService
+                        .calculateSectionTwoEliminationFactor(
+                                augmentedMatrix);
+
+        result.setEliminationFactor(eliminationFactor);
+        }
+        System.out.println("Section Two Step = " + result.getCurrentGaussianSectionTwoStep());
+        
+
+        if (result.getCurrentGaussianSectionTwoStep() >= 2) {
+
+        double scaledA =
+                gaussianEliminationService
+                        .calculateSectionTwoScaledA(
+                                augmentedMatrix,
+                                result.getEliminationFactor());
+
+        result.setScaledA(scaledA);
+        }
+        if (result.getCurrentGaussianSectionTwoStep() >= 3) {
+                double scaledB =
+                gaussianEliminationService
+                        .calculateSectionTwoScaledB(
+                                augmentedMatrix,
+                                result.getEliminationFactor());
+
+        result.setScaledB(scaledB);
+        }
+        if (result.getCurrentGaussianSectionTwoStep() >= 4) {
+                double scaledConstant =
+                gaussianEliminationService
+                        .calculateSectionTwoScaledConstant(
+                                augmentedMatrix,
+                                result.getEliminationFactor());
+
+        result.setScaledConstant(scaledConstant);
+        }
+        if (result.getCurrentGaussianSectionTwoStep() >= 5) {
+
+        double newRowA =
+                gaussianEliminationService
+                        .calculateSectionTwoNewRowA(
+                                augmentedMatrix,
+                                result.getScaledA());
+
+        result.setNewRowA(newRowA);
+        }
+        if (result.getCurrentGaussianSectionTwoStep() >= 6) {
+
+        double newRowB =
+                gaussianEliminationService
+                        .calculateSectionTwoNewRowB(
+                                augmentedMatrix,
+                                result.getScaledB());
+
+        result.setNewRowB(newRowB);
+        }
+
+        if (result.getCurrentGaussianSectionTwoStep() >= 7) {
+
+        double newRowConstant =
+                gaussianEliminationService
+                        .calculateSectionTwoNewRowConstant(
+                                augmentedMatrix,
+                                result.getScaledConstant());
+
+        result.setNewRowConstant(newRowConstant);
+        }
+       
+    
+    if (result.getCurrentGaussianSectionThreeStep() >= 1) {
+
+        double yAnswer =
+                gaussianEliminationService
+                        .calculateSectionThreeY(
+                                result.getNewRowB(),
+                                result.getNewRowConstant());
+
+        result.setYAnswer(yAnswer);
+        }
+
+                                
         model.addAttribute("result", result);
 
         return "gaussianEliminationMethod";

@@ -18,8 +18,15 @@ public class MathFormatterService {
     }
 
     public String formatDecimal(double value) {
-        return String.format("%.3f", value);
+
+    if (value == Math.rint(value)) {
+        return String.format("%.1f", value);
     }
+
+    return String.format("%.3f", value)
+            .replaceAll("0+$", "")
+            .replaceAll("\\.$", "");
+}
 
     public String formatFraction(double value) {
         return convertToFraction(value);

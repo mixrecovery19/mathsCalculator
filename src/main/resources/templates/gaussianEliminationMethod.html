@@ -8,19 +8,24 @@
     <link rel="stylesheet" href="/css/stylesLinearSystems.css">
     <script src="/js/overlayhelper.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/js/gaussianEliminationStepsColours.js"></script>
+    <script src="/js/linearSystems/gaussianEliminationStepsColours.js"></script>
 </head>
 <body>
-    <div id="gaussianEliminationPage"
-        class="app-layout"
-        th:classappend="${result.currentGaussianSection == 0} ? ' gaussian-section-0' : ''">
+    <div
+    id="gaussianEliminationPage"
+    class="app-layout"
+    th:data-gaussian-elimination-section-two-step="${result.currentGaussianSectionTwoStep}"
+    th:classappend="${result.currentGaussianSection == 0} ? ' gaussian-section-0' : ''">
     <div th:replace="~{sidebar :: sidebar}"></div>
         <main class="matrix-page">
             <form th:action="@{/gaussian-elimination}" method="post">
+                <input type="hidden" name="currentGaussianSectionTwoStep" th:value="${result.currentGaussianSectionTwoStep}">
+                <input type="hidden" name="currentGaussianSectionThreeStep" th:value="${result.currentGaussianSectionThreeStep}">
                 <h1>Gaussian Elimination</h1>
                 <div th:replace="~{fragments/linearSystems/gaussianEliminationMethodHeader :: gaussianEliminationMethodHeader}"></div>
                 <div th:if="${result.hasAugmentedMatrix}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionOne :: gaussianEliminationMethodSectionOne}"></div>
-                <div th:if="${result.currentGaussianSection == 2}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionTwo :: gaussianEliminationMethodSectionTwo}"></div>  
+                <div th:if="${result.currentGaussianSection == 2}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionTwo :: gaussianEliminationMethodSectionTwo}"></div>
+                <div th:if="${result.currentGaussianSection >= 3}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionThree :: gaussianEliminationMethodSectionThree}"></div> 
             </form>
         </main>
     </div>
