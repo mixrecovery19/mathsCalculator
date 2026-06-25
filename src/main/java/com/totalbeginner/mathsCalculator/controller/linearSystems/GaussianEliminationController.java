@@ -45,16 +45,18 @@ public class GaussianEliminationController {
             @RequestParam(defaultValue = "0")  
             int currentGaussianSectionTwoStep,    
             @RequestParam(defaultValue = "0")
-            int currentGaussianSectionThreeStep,         
+            int currentGaussianSectionThreeStep, 
+            @RequestParam(defaultValue = "0")
+            int currentGaussianSectionFourStep,        
 
             @RequestParam(required = false) String action,
 
-            Model model) {
-
+        Model model) {
         GaussianEliminationResult result = new GaussianEliminationResult();
 
         result.setCurrentGaussianSectionTwoStep(currentGaussianSectionTwoStep);
         result.setCurrentGaussianSectionThreeStep(currentGaussianSectionThreeStep);
+        result.setCurrentGaussianSectionFourStep(currentGaussianSectionFourStep);
         // User hasn't entered all six values
         if (a_0_0 == null || a_0_1 == null || b_0 == null
                 || a_1_0 == null || a_1_1 == null || b_1 == null) {
@@ -71,79 +73,101 @@ public class GaussianEliminationController {
             return "gaussianEliminationMethod";
         }        
 
-    double[][] augmentedMatrix = gaussianEliminationService.buildAugmentedMatrix(
-            a_0_0, a_0_1, b_0,
-            a_1_0, a_1_1, b_1
+        double[][] augmentedMatrix = gaussianEliminationService.buildAugmentedMatrix(
+                a_0_0, a_0_1, b_0,
+                a_1_0, a_1_1, b_1
         );
 
         result.setAugmentedMatrix(augmentedMatrix); 
         result.setDisplayMode("decimal");
 
-    if ("create-augmented-matrix".equals(action)) {
-        result.setHasAugmentedMatrix(true);
-        result.setCurrentGaussianSection(1);
+        if ("create-augmented-matrix".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(1);
+                }
+
+        if ("proceed-to-gaussian-section-two".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(2);
+                result.setCurrentGaussianSectionTwoStep(0);
         }
 
-    if ("proceed-to-gaussian-section-two".equals(action)) {
-        result.setHasAugmentedMatrix(true);
-        result.setCurrentGaussianSection(2);
-        result.setCurrentGaussianSectionTwoStep(0);
-    }
+        if ("next-gaussian-section-two-system-step".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(2);
+                result.setCurrentGaussianSectionTwoStep(
+                        result.getCurrentGaussianSectionTwoStep() + 1
+                );
+        }
 
-    if ("next-gaussian-section-two-system-step".equals(action)) {
-        result.setHasAugmentedMatrix(true);
-        result.setCurrentGaussianSection(2);
-        result.setCurrentGaussianSectionTwoStep(
-                result.getCurrentGaussianSectionTwoStep() + 1
-        );
-    }
-
-    if ("previous-gaussian-section-two-system-step".equals(action)) {
-        result.setHasAugmentedMatrix(true);
-        result.setCurrentGaussianSection(2);
-        result.setCurrentGaussianSectionTwoStep(
-                result.getCurrentGaussianSectionTwoStep() - 1
-        );
-    }
-    if ("back-to-gaussian-section-one".equals(action)) {
-        result.setHasAugmentedMatrix(true);
-        result.setCurrentGaussianSection(0);
-        result.setCurrentGaussianSectionTwoStep(0);
-    }
+        if ("previous-gaussian-section-two-system-step".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(2);
+                result.setCurrentGaussianSectionTwoStep(
+                        result.getCurrentGaussianSectionTwoStep() - 1
+                );
+        }      
     
-    if ("next-gaussian-section-three-system-step".equals(action)) {
-    result.setHasAugmentedMatrix(true);
-    result.setCurrentGaussianSection(3);
-    result.setCurrentGaussianSectionThreeStep(
-            result.getCurrentGaussianSectionThreeStep() + 1);
-}
+        if ("next-gaussian-section-three-system-step".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(3);
+                result.setCurrentGaussianSectionThreeStep(
+                        result.getCurrentGaussianSectionThreeStep() + 1);
+        }
 
-if ("previous-gaussian-section-three-system-step".equals(action)) {
-    result.setHasAugmentedMatrix(true);
-    result.setCurrentGaussianSection(3);
-    result.setCurrentGaussianSectionThreeStep(
-            result.getCurrentGaussianSectionThreeStep() - 1);
-}
+        if ("previous-gaussian-section-three-system-step".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(3);
+                result.setCurrentGaussianSectionThreeStep(
+                        result.getCurrentGaussianSectionThreeStep() - 1);
+        }
+        if ("next-gaussian-section-four-system-step".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(4);
+                result.setCurrentGaussianSectionFourStep(
+                        result.getCurrentGaussianSectionFourStep() + 1);
+        }
+        if ("previous-gaussian-section-four-system-step".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(4);
+                result.setCurrentGaussianSectionFourStep(
+                        result.getCurrentGaussianSectionFourStep() - 1);
+        }  
+        if ("back-to-gaussian-start".equals(action)) {
+                result.setHasAugmentedMatrix(false);
+                result.setCurrentGaussianSection(0);
+        }
+        if ("back-to-gaussian-section-one".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(1);
+                result.setCurrentGaussianSectionTwoStep(0);
+        }     
 
-if ("back-to-gaussian-section-two".equals(action)) {
-    result.setHasAugmentedMatrix(true);
-    result.setCurrentGaussianSection(2);
-    result.setCurrentGaussianSectionThreeStep(0);
-}
- if ("proceed-to-gaussian-section-three".equals(action)) {
-        result.setHasAugmentedMatrix(true);
-        result.setCurrentGaussianSection(3);
-        result.setCurrentGaussianSectionThreeStep(0);
-    }
+        if ("back-to-gaussian-section-two".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(2);
+                result.setCurrentGaussianSectionThreeStep(0);
+        }
+        if ("back-to-gaussian-section-three".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(3);
+                result.setCurrentGaussianSectionFourStep(0);
+        }
+        if ("proceed-to-gaussian-section-three".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(3);
+                result.setCurrentGaussianSectionThreeStep(0);
+        }
+        if ("proceed-to-gaussian-section-four".equals(action)) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(4);
+                result.setCurrentGaussianSectionFourStep(0);
+        }
 
-    result.setCurrentGaussianSectionTwoStep(
-        Math.max(0, Math.min(result.getCurrentGaussianSectionTwoStep(), 8))
-);
+        result.setCurrentGaussianSectionTwoStep(Math.max(0, Math.min(result.getCurrentGaussianSectionTwoStep(), 8)));
+        result.setCurrentGaussianSectionThreeStep(Math.max(0, Math.min(result.getCurrentGaussianSectionThreeStep(), 1)));
+        result.setCurrentGaussianSectionFourStep(Math.max(0, Math.min(result.getCurrentGaussianSectionFourStep(), 8)));
 
-result.setCurrentGaussianSectionThreeStep(
-        Math.max(0, Math.min(result.getCurrentGaussianSectionThreeStep(), 1))
-);
-     
         if (result.getCurrentGaussianSectionTwoStep() >= 1) {
 
         double eliminationFactor =
@@ -152,10 +176,8 @@ result.setCurrentGaussianSectionThreeStep(
                                 augmentedMatrix);
 
         result.setEliminationFactor(eliminationFactor);
-        }
-        System.out.println("Section Two Step = " + result.getCurrentGaussianSectionTwoStep());
+        }        
         
-
         if (result.getCurrentGaussianSectionTwoStep() >= 2) {
 
         double scaledA =
@@ -182,7 +204,7 @@ result.setCurrentGaussianSectionThreeStep(
                                 augmentedMatrix,
                                 result.getEliminationFactor());
 
-        result.setScaledConstant(scaledConstant);
+                result.setScaledConstant(scaledConstant);
         }
         if (result.getCurrentGaussianSectionTwoStep() >= 5) {
 
@@ -192,7 +214,7 @@ result.setCurrentGaussianSectionThreeStep(
                                 augmentedMatrix,
                                 result.getScaledA());
 
-        result.setNewRowA(newRowA);
+                result.setNewRowA(newRowA);
         }
         if (result.getCurrentGaussianSectionTwoStep() >= 6) {
 
@@ -202,7 +224,7 @@ result.setCurrentGaussianSectionThreeStep(
                                 augmentedMatrix,
                                 result.getScaledB());
 
-        result.setNewRowB(newRowB);
+                result.setNewRowB(newRowB);
         }
 
         if (result.getCurrentGaussianSectionTwoStep() >= 7) {
@@ -213,7 +235,7 @@ result.setCurrentGaussianSectionThreeStep(
                                 augmentedMatrix,
                                 result.getScaledConstant());
 
-        result.setNewRowConstant(newRowConstant);
+                result.setNewRowConstant(newRowConstant);
         }
        
     
@@ -225,9 +247,77 @@ result.setCurrentGaussianSectionThreeStep(
                                 result.getNewRowB(),
                                 result.getNewRowConstant());
 
-        result.setYAnswer(yAnswer);
+                result.setYAnswer(yAnswer);
         }
 
+        if (result.getCurrentGaussianSectionFourStep() >= 1) {
+
+        double substitutedYProduct =
+                gaussianEliminationService
+                        .calculateSectionFourSubstitutedYProduct(
+                                result.getAugmentedMatrix()[0][1],
+                                result.getYAnswer());
+
+        result.setSubstitutedYProduct(substitutedYProduct);
+        }
+
+
+        if (result.getCurrentGaussianSectionFourStep() >= 2) {
+                double substitutedYProduct =
+                        gaussianEliminationService
+                                .calculateSectionFourSubstitutedYProduct(
+                                        result.getAugmentedMatrix()[0][1],
+                                        result.getYAnswer());
+                result.setSubstitutedYProduct(substitutedYProduct);
+
+        }
+
+        if (result.getCurrentGaussianSectionFourStep() >= 3) {
+
+                result.setUpdatedFirstRowA(
+                        result.getAugmentedMatrix()[0][0]);
+                result.setUpdatedFirstRowBY(
+                        result.getSubstitutedYProduct());
+                result.setUpdatedFirstRowConstant(
+                        result.getAugmentedMatrix()[0][2]);
+        }
+
+        if (result.getCurrentGaussianSectionFourStep() >= 4) {
+                result.setSectionFourOperator(
+                        gaussianEliminationService.getSectionFourOperator(
+
+                                result.getSubstitutedYProduct()));
+
+                result.setDisplayYProduct(
+                        gaussianEliminationService.getSectionFourDisplayYProduct(
+                                result.getSubstitutedYProduct()));
+
+                result.setXNumerator(
+                        gaussianEliminationService.calculateSectionFourXNumerator(
+                                result.getAugmentedMatrix()[0][2],
+                                result.getSubstitutedYProduct()));
+        }
+        if (result.getCurrentGaussianSectionFourStep() >= 5) {
+
+        double xNumerator =
+                gaussianEliminationService
+                        .calculateSectionFourSimplifiedNumerator(
+                                result.getAugmentedMatrix()[0][2],
+                                result.getSubstitutedYProduct());
+
+        result.setXNumerator(xNumerator);
+        }
+        if (result.getCurrentGaussianSectionFourStep() >= 6) {
+
+        
+        }
+        if (result.getCurrentGaussianSectionFourStep() >= 7) {
+
+        result.setSolvedX(
+                gaussianEliminationService.calculateSectionFourSolvedX(
+                        result.getXNumerator(),
+                        result.getAugmentedMatrix()[0][0]));
+        }
                                 
         model.addAttribute("result", result);
 

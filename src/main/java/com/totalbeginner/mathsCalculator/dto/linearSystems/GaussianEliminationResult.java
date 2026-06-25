@@ -10,6 +10,7 @@ public class GaussianEliminationResult {
     private int currentGaussianSection;
     private int currentGaussianSectionTwoStep;
     private int currentGaussianSectionThreeStep;
+    private int currentGaussianSectionFourStep;
 
     // Display
     private String displayMode;
@@ -30,13 +31,20 @@ public class GaussianEliminationResult {
     private double newRowConstant;
 
     private double yNumerator;
-private double yDenominator;
-private double solvedY;
+    private double yDenominator;
+    private double solvedY;
 
+    private double substitutedYProduct;
+    private double xNumerator;
+    private double solvedX;
+   
+    private String sectionFourOperator;
+    private double displayYProduct;
+
+    private double updatedFirstRowA;
+    private double updatedFirstRowBY;
+    private double updatedFirstRowConstant;
     
-
-    
-
     // Constructors
     public GaussianEliminationResult() {
     }
@@ -136,6 +144,12 @@ private double solvedY;
     public void setCurrentGaussianSectionThreeStep(int currentGaussianSectionThreeStep) {
         this.currentGaussianSectionThreeStep = currentGaussianSectionThreeStep;
     }
+    public int getCurrentGaussianSectionFourStep() {
+        return currentGaussianSectionFourStep;
+    }
+    public void setCurrentGaussianSectionFourStep(int currentGaussianSectionFourStep) {
+        this.currentGaussianSectionFourStep = currentGaussianSectionFourStep;
+    }
     public double getYNumerator() {
         return yNumerator;
     }
@@ -153,5 +167,53 @@ private double solvedY;
     }
     public void setSolvedY(double solvedY) {
         this.solvedY = solvedY;
+    }
+    public double getSubstitutedYProduct() {
+        return substitutedYProduct;
+    }
+    public void setSubstitutedYProduct(double substitutedYProduct) {
+        this.substitutedYProduct = substitutedYProduct;
+    }
+    public double getXNumerator() {
+        return xNumerator;
+    }
+    public void setXNumerator(double xNumerator) {
+        this.xNumerator = xNumerator;
+    }
+    public double getSolvedX() {
+        return solvedX;
+    }
+    public void setSolvedX(double solvedX) {
+        this.solvedX = solvedX;
+    }
+    public String getSectionFourOperator() {
+        return sectionFourOperator;
+    }
+    public void setSectionFourOperator(String sectionFourOperator) {
+        this.sectionFourOperator = sectionFourOperator;
+    }
+    public double getDisplayYProduct() {
+        return displayYProduct;
+    }
+    public void setDisplayYProduct(double displayYProduct) {
+        this.displayYProduct = displayYProduct;
+    }
+    public double getUpdatedFirstRowA() {
+        return updatedFirstRowA;
+    }
+    public void setUpdatedFirstRowA(double updatedFirstRowA) {
+        this.updatedFirstRowA = updatedFirstRowA;
+    }
+    public double getUpdatedFirstRowBY() {
+        return updatedFirstRowBY;
+    }
+    public void setUpdatedFirstRowBY(double updatedFirstRowBY) {
+        this.updatedFirstRowBY = updatedFirstRowBY;
+    }
+    public double getUpdatedFirstRowConstant() {
+        return updatedFirstRowConstant;
+    }
+    public void setUpdatedFirstRowConstant(double updatedFirstRowConstant) {
+        this.updatedFirstRowConstant = updatedFirstRowConstant;
     }
 }

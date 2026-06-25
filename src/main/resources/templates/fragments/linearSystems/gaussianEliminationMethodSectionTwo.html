@@ -2,12 +2,12 @@
      th:if="${result.currentGaussianSection >= 2}">
 <section class="hero-card walkthrough-card"
          th:attr="data-active-section=${result.currentGaussianSection == 2 ? 'true' : null}">
-<div class="two-by-two-stage-two">
-<h2>2. Perform the First Row Operation</h2>
-    <p class="math-introduction">
-        The augmented matrix has now been constructed. Our next goal is to eliminate the coefficient beneath the first pivot by performing an elementary row operation.
-        Follow the walkthrough below to perform the first elimination step.
-    </p>
+    <div class="two-by-two-stage-two">
+        <h2>2. Perform the First Row Operation</h2>
+        <p class="math-introduction">
+            The augmented matrix has now been constructed. Our next goal is to eliminate the coefficient beneath the first pivot by performing an elementary row operation.
+            Follow the walkthrough below to perform the first elimination step.
+        </p>
     <details class="math-details">
     <summary>Why do we perform row operations?</summary>
         <p class="math-description">
@@ -22,100 +22,101 @@
         </p>
     </details>
     <div class="walkthrough-step-header" font-weight="bold">
-            Current Step
+            Current Step: <span th:text="${result.currentGaussianSectionTwoStep}"></span> of 8
     </div>
-    <div class="walkthrough-step-box">       
-        <div class="walkthrough-step-body">
-            <div class="walkthrough-step-text"
-                th:text="${result.currentGaussianSectionTwoStep == 1}
-                    ? 'Identify the pivot (a) and the value beneath it (d).'
-                    : 'Press Next Step to begin.'">
-            </div>
+        <div class="walkthrough-step-box"
+            th:switch="${result.currentGaussianSectionTwoStep}">
+            <span th:case="0">Press Next Step to begin.</span>
+            <span th:case="1">Identify the pivot (\(a\)) and the value beneath it (\(d\)). Calculate the elimination factor \(k=\frac{d}{a}\).</span>
+            <span th:case="2">Multiply the first value of Row 1 by the elimination factor to calculate \(ka\).</span>
+            <span th:case="3">Multiply the second value of Row 1 by the elimination factor to calculate \(kb\).</span>
+            <span th:case="4">Multiply the constant in Row 1 by the elimination factor to calculate \(kc\).</span>
+            <span th:case="5">Subtract \(ka\) from the first value of Row 2 to produce the new first value.</span>
+            <span th:case="6">Subtract \(kb\) from the second value of Row 2 to produce the new second value.</span>
+            <span th:case="7">Subtract \(kc\) from the Row 2 constant to produce the new constant.</span>
+            <span th:case="8">The first row operation is complete. The new augmented matrix is now in row-echelon form and ready to solve for \(y\).</span>
         </div>
     </div>
     <div class="linear-system-layout">   
-    <div class="coefficient-panel">
-        <h3>Elimination Factor</h3>
-        <h3>\(k=\dfrac{d}{a}\)</h3>
-        <table class="matrix-input-table">
-            <tr>
-                <td>
-                    <input
-    id="gaussianFactorD"
-    class="matrix-input matrix-cells-larger"
-    title="Elimination factor numerator"
-    placeholder="Elimination factor numerator"
-    th:value="${result.currentGaussianSectionTwoStep >= 1
-        ? @mathFormatterService.format(result.augmentedMatrix[1][0], result.displayMode)
-        : ''}"
-    readonly>
-                </td>
-                <td rowspan="2" class="fraction-equals">=</td>
-                <td rowspan="2">
-                    <input
-                        id="gaussianEliminationFactor"
-                        class="matrix-input matrix-cells-larger"
-                        title="Elimination factor"
-                        placeholder="Elimination factor"
-                        th:value="${result.currentGaussianSectionTwoStep >= 1 ? @mathFormatterService.format(result.eliminationFactor, result.displayMode) : ''}"
-                        readonly>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input
-                        id="gaussianFactorA"
-                        class="matrix-input matrix-cells-larger"
-                        title="Elimination factor denominator"
-                        placeholder="Elimination factor denominator"
-                        th:value="${result.currentGaussianSectionTwoStep >= 1 ? result.augmentedMatrix[0][0] : ''}"
-                        readonly>
-                </td>
-            </tr>
-        </table>
-        <h3>Scaled First Row</h3>
-        <p th:text="${result.currentGaussianSectionTwoStep}"></p>
-        <h3>\(kR_1=\left[ka,\;kb\mid kc\right]\)</h3>
-        <table class="matrix-input-table two-by-two-answer-table">
-            <tr>
-                <td>
-                    <input
-                            id="scaledA"
-                            type="text"
+            <div class="coefficient-panel">
+                <h3>Elimination Factor</h3>
+                <h3>\(k=\dfrac{d}{a}\)</h3>
+                <table class="matrix-input-table">
+                    <tr>
+                        <td>
+                            <input
+                            id="gaussianFactorD"
                             class="matrix-input matrix-cells-larger"
-                            aria-label="Scaled first row first value"
-                            title="Scaled first row first value"
-                            placeholder="Scaled first row first value"
-                            th:value="${result.currentGaussianSectionTwoStep >= 2 ? @mathFormatterService.format(result.scaledA, result.displayMode) : ''}"
+                            title="Elimination factor numerator"
+                            placeholder="Elimination factor numerator"
+                            th:value="${result.currentGaussianSectionTwoStep >= 1
+                                ? @mathFormatterService.format(result.augmentedMatrix[1][0], result.displayMode)
+                                : ''}"
                             readonly>
-                </td>
-                <td>
-                    <input
-                            id="scaledB"
-                            type="text"
-                            class="matrix-input matrix-cells-larger"
-                            aria-label="Scaled first row second value"
-                            title="Scaled first row second value"
-                            placeholder="Scaled first row second value"
-                            th:value="${result.currentGaussianSectionTwoStep >= 3 ? @mathFormatterService.format(result.scaledB, result.displayMode) : ''}"
-                            readonly>
-                </td>
-
-                <td>
-                    <input
-                            id="scaledConstant"
-                            type="text"
-                            class="matrix-input matrix-cells-larger"
-                            aria-label="Scaled first row constant"
-                            title="Scaled first row constant"
-                            placeholder="Scaled first row constant"
-                            th:value="${result.currentGaussianSectionTwoStep >= 4 ? @mathFormatterService.format(result.scaledConstant, result.displayMode) : ''}"
-                            readonly>
-                </td>
-            </tr>
-        </table>
-    </div>
-   
+                        </td>
+                        <td rowspan="2" class="fraction-equals">=</td>
+                        <td rowspan="2">
+                            <input
+                                id="gaussianEliminationFactor"
+                                class="matrix-input matrix-cells-larger"
+                                title="Elimination factor"
+                                placeholder="Elimination factor"
+                                th:value="${result.currentGaussianSectionTwoStep >= 1 ? @mathFormatterService.format(result.eliminationFactor, result.displayMode) : ''}"
+                                readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input
+                                id="gaussianFactorA"
+                                class="matrix-input matrix-cells-larger"
+                                title="Elimination factor denominator"
+                                placeholder="Elimination factor denominator"
+                                th:value="${result.currentGaussianSectionTwoStep >= 1 ? result.augmentedMatrix[0][0] : ''}"
+                                readonly>
+                        </td>
+                    </tr>
+                </table>
+                <h3>Scaled First Row</h3>        
+                <h3>\(kR_1=\left[ka,\;kb\mid kc\right]\)</h3>
+                <table class="matrix-input-table two-by-two-answer-table">
+                    <tr>
+                        <td>
+                            <input
+                                    id="scaledA"
+                                    type="text"
+                                    class="matrix-input matrix-cells-larger"
+                                    aria-label="Scaled first row first value"
+                                    title="Scaled first row first value"
+                                    placeholder="Scaled first row first value"
+                                    th:value="${result.currentGaussianSectionTwoStep >= 2 ? @mathFormatterService.format(result.scaledA, result.displayMode) : ''}"
+                                    readonly>
+                        </td>
+                        <td>
+                            <input
+                                    id="scaledB"
+                                    type="text"
+                                    class="matrix-input matrix-cells-larger"
+                                    aria-label="Scaled first row second value"
+                                    title="Scaled first row second value"
+                                    placeholder="Scaled first row second value"
+                                    th:value="${result.currentGaussianSectionTwoStep >= 3 ? @mathFormatterService.format(result.scaledB, result.displayMode) : ''}"
+                                    readonly>
+                        </td>
+                        <td>
+                            <input
+                                    id="scaledConstant"
+                                    type="text"
+                                    class="matrix-input matrix-cells-larger"
+                                    aria-label="Scaled first row constant"
+                                    title="Scaled first row constant"
+                                    placeholder="Scaled first row constant"
+                                    th:value="${result.currentGaussianSectionTwoStep >= 4 ? @mathFormatterService.format(result.scaledConstant, result.displayMode) : ''}"
+                                    readonly>
+                        </td>
+                    </tr>
+                </table>
+            </div>   
         <div class="coefficient-panel">
             <h3>Original Augmented Matrix</h3>
                 <table class="matrix-input-table matrix-cells-larger">
@@ -131,9 +132,7 @@
                                     th:value="${result.augmentedMatrix[row][col]}"
                                     readonly>
                             </td>
-
                             <td class="matrix-divider">|</td>
-
                             <td>
                                 <input
                                     th:id="'originalMatrixConstant_' + ${row}"
@@ -148,8 +147,7 @@
 
                         </tr>
                     </table>
-                </div>    
-
+                </div>  
                 <div class="coefficient-panel">
                     <h3>New Second Row</h3>
                     <h3>\(R_2-kR_1=\left[d-ka,\;e-kb\mid f-kc\right]\)</h3>
@@ -157,14 +155,14 @@
                         <tr>
                             <td>
                                 <input
-                                        id="newRowA"
-                                        type="text"
-                                        class="matrix-input matrix-cells-larger"
+                                    id="newRowA"
+                                    type="text"
+                                    class="matrix-input matrix-cells-larger"
                                     aria-label="New second row first value"
-                                        title="New second row first value"
-                                        placeholder="New second row first value"
-                                        th:value="${result.currentGaussianSectionTwoStep >= 5 ? @mathFormatterService.format(result.newRowA, result.displayMode) : ''}"
-                                        readonly>
+                                    title="New second row first value"
+                                    placeholder="New second row first value"
+                                    th:value="${result.currentGaussianSectionTwoStep >= 5 ? @mathFormatterService.format(result.newRowA, result.displayMode) : ''}"
+                                    readonly>
 
                             </td>
                             <td>
@@ -178,89 +176,88 @@
                                     th:value="${result.currentGaussianSectionTwoStep >= 6 ? @mathFormatterService.format(result.newRowB, result.displayMode) : ''}"
                                     readonly>
                             </td>
-
                             <td>
                                 <input
-                                        id="newRowC"
-                                        type="text"
-                                        class="matrix-input matrix-cells-larger"
+                                    id="newRowC"
+                                    type="text"
+                                    class="matrix-input matrix-cells-larger"
                                     aria-label="New second row constant"
-                                        title="New second row constant"
-                                        placeholder="New second row constant"
-                                        th:value="${result.currentGaussianSectionTwoStep >= 7 ? @mathFormatterService.format(result.newRowConstant, result.displayMode) : ''}"
-                                        readonly>
+                                    title="New second row constant"
+                                    placeholder="New second row constant"
+                                    th:value="${result.currentGaussianSectionTwoStep >= 7 ? @mathFormatterService.format(result.newRowConstant, result.displayMode) : ''}"
+                                    readonly>
                             </td>
                         </tr>
                     </table>
                 </div>
             </div>
             <div class="result-card-container" th:if="${result.currentGaussianSectionTwoStep >= 8}">
-    <h2>Augmented Matrix After the First Row Operation</h2>
-    <div class="result-card">
-        <table class="matrix-input-table matrix-cells-larger">
-            <tr>
-                <td>
-                    <input
-                        id="resultMatrix00"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix first row first value"
-                        placeholder="Augmented matrix first row first value"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}">
-                </td>
-                <td>
-                    <input
-                        id="resultMatrix01"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix first row second value"
-                        placeholder="Augmented matrix first row second value"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][1], result.displayMode)}">
-                </td>
-                <td class="matrix-divider">|</td>
-                <td>
-                    <input
-                        id="resultMatrix02"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix first row constant"
-                        placeholder="Augmented matrix first row constant"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][2], result.displayMode)}">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input
-                        id="resultMatrix10"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix second row first value"
-                        placeholder="Augmented matrix second row first value"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.newRowA,result.displayMode)}">
-                </td>
-                <td>
-                    <input
-                        id="resultMatrix11"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix second row second value"
-                        placeholder="Augmented matrix second row second value"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.newRowB,result.displayMode)}">
-                </td>
-                <td class="matrix-divider">|</td>
-                <td>
-                    <input
-                        id="resultMatrix12"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix second row constant"
-                        placeholder="Augmented matrix second row constant"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.newRowConstant,result.displayMode)}">
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
+                <h2>Augmented Matrix After the First Row Operation</h2>
+                    <div class="result-card">
+                        <table class="matrix-input-table matrix-cells-larger">
+                            <tr>
+                                <td>
+                                    <input
+                                        id="resultMatrix00"
+                                        class="matrix-input matrix-cells-larger"
+                                        title="Augmented matrix first row first value"
+                                        placeholder="Augmented matrix first row first value"
+                                        readonly
+                                        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}">
+                                </td>
+                                <td>
+                                    <input
+                                        id="resultMatrix01"
+                                        class="matrix-input matrix-cells-larger"
+                                        title="Augmented matrix first row second value"
+                                        placeholder="Augmented matrix first row second value"
+                                        readonly
+                                        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][1], result.displayMode)}">
+                                </td>
+                                <td class="matrix-divider">|</td>
+                                <td>
+                                    <input
+                                        id="resultMatrix02"
+                                        class="matrix-input matrix-cells-larger"
+                                        title="Augmented matrix first row constant"
+                                        placeholder="Augmented matrix first row constant"
+                                        readonly
+                                        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][2], result.displayMode)}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input
+                                        id="resultMatrix10"
+                                        class="matrix-input matrix-cells-larger"
+                                        title="Augmented matrix second row first value"
+                                        placeholder="Augmented matrix second row first value"
+                                        readonly
+                                        th:value="${@mathFormatterService.format(result.newRowA,result.displayMode)}">
+                                </td>
+                                <td>
+                                    <input
+                                        id="resultMatrix11"
+                                        class="matrix-input matrix-cells-larger"
+                                        title="Augmented matrix second row second value"
+                                        placeholder="Augmented matrix second row second value"
+                                        readonly
+                                        th:value="${@mathFormatterService.format(result.newRowB,result.displayMode)}">
+                                </td>
+                                <td class="matrix-divider">|</td>
+                                <td>
+                                    <input
+                                        id="resultMatrix12"
+                                        class="matrix-input matrix-cells-larger"
+                                        title="Augmented matrix second row constant"
+                                        placeholder="Augmented matrix second row constant"
+                                        readonly
+                                        th:value="${@mathFormatterService.format(result.newRowConstant,result.displayMode)}">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             <div class="button-group">
                 <button type="submit" name="action" value="previous-gaussian-section-two-system-step" class="btn-secondary">
                     Previous Step

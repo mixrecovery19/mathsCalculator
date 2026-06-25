@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Solve 2×2 Linear Systems Using Gaussian Elimination</title>
     <link rel="stylesheet" href="/css/stylesSideBar.css">
-    <link rel="stylesheet" href="/css/stylesLinearSystems.css">
+    <link rel="stylesheet" href="/css/stylesGaussianElimination.css">
     <script src="/js/overlayhelper.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="/js/linearSystems/gaussianEliminationStepsColours.js"></script>
@@ -21,11 +21,13 @@
             <form th:action="@{/gaussian-elimination}" method="post">
                 <input type="hidden" name="currentGaussianSectionTwoStep" th:value="${result.currentGaussianSectionTwoStep}">
                 <input type="hidden" name="currentGaussianSectionThreeStep" th:value="${result.currentGaussianSectionThreeStep}">
+                <input type="hidden" name="currentGaussianSectionFourStep" th:value="${result.currentGaussianSectionFourStep}">
                 <h1>Gaussian Elimination</h1>
                 <div th:replace="~{fragments/linearSystems/gaussianEliminationMethodHeader :: gaussianEliminationMethodHeader}"></div>
                 <div th:if="${result.hasAugmentedMatrix}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionOne :: gaussianEliminationMethodSectionOne}"></div>
                 <div th:if="${result.currentGaussianSection == 2}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionTwo :: gaussianEliminationMethodSectionTwo}"></div>
-                <div th:if="${result.currentGaussianSection >= 3}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionThree :: gaussianEliminationMethodSectionThree}"></div> 
+                <div th:if="${result.currentGaussianSection >= 3}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionThree :: gaussianEliminationMethodSectionThree}"></div>
+                <div th:if="${result.currentGaussianSection == 4}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionFour :: gaussianEliminationMethodSectionFour}"></div> 
             </form>
         </main>
     </div>

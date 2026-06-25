@@ -62,10 +62,55 @@ public double calculateSectionTwoNewRowConstant(
     return matrix[1][2] - scaledConstant;
 }
 
-public double calculateSectionThreeY(double newRowB, double newRowConstant) {
+    public double calculateSectionThreeY(double newRowB, double newRowConstant) {
+        // y = f - kb / e - kb
+        return newRowConstant / newRowB;
+    }
+    public double calculateSectionFourSubstitutedYProduct(
+        double bCoefficient,
+        double solvedY) {
 
-    // y = f - kb / e - kb
-    return newRowConstant / newRowB;
+        // b × y
+        return bCoefficient * solvedY;
+    }
+
+    public double displaySectionFourSubstitutedYProduct(
+            double substitutedYProduct) {
+
+        return substitutedYProduct;
+    }
+    public double calculateSectionFourXNumerator(
+        double constant,
+        double substitutedYProduct) {
+
+    return constant - substitutedYProduct;
 }
 
+public String getSectionFourOperator(
+        double substitutedYProduct) {
+
+    if (substitutedYProduct >= 0) {
+        return "-";
+    }
+
+    return "+";
+}
+
+public double getSectionFourDisplayYProduct(
+        double substitutedYProduct) {
+
+    return Math.abs(substitutedYProduct);
+}
+public double calculateSectionFourSimplifiedNumerator(
+        double constant,
+        double substitutedYProduct) {
+
+    return constant - substitutedYProduct;
+        }
+public double calculateSectionFourSolvedX(
+        double xNumerator,
+        double aCoefficient) {
+
+    return xNumerator / aCoefficient;
+}
 }
