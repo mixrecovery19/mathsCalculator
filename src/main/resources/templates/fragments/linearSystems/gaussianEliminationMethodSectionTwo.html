@@ -3,14 +3,12 @@
 <section class="hero-card walkthrough-card"
          th:attr="data-active-section=${result.currentGaussianSection == 2 ? 'true' : null}">
     <div class="two-by-two-stage-two">
-        <h2>2. Perform the First Row Operation</h2>
-        <p class="math-introduction">
-            The augmented matrix has now been constructed. Our next goal is to eliminate the coefficient beneath the first pivot by performing an elementary row operation.
-            Follow the walkthrough below to perform the first elimination step.
-        </p>
+        <h2>2. Perform the First Row Operation</h2>        
     <details class="math-details">
     <summary>Why do we perform row operations?</summary>
         <p class="math-description">
+        The augmented matrix has now been constructed. Our next goal is to eliminate the coefficient beneath the first pivot by performing an elementary row operation.
+        Follow the walkthrough below to perform the first elimination step.
         Gaussian Elimination transforms the augmented matrix into row-echelon form.
         For a \(2\times2\) system, our first objective is to make the lower-left entry equal to zero.
         Suppose the augmented matrix is \[\left[\begin{array}{cc|c} a&b&c\\d&e&f\end{array}\right]\]
@@ -22,7 +20,7 @@
         </p>
     </details>
     <div class="walkthrough-step-header" font-weight="bold">
-            Current Step: <span th:text="${result.currentGaussianSectionTwoStep}"></span> of 8
+            Current Section Two Step: <span th:text="${result.currentGaussianSectionTwoStep}"></span> of 8
     </div>
         <div class="walkthrough-step-box"
             th:switch="${result.currentGaussianSectionTwoStep}">
@@ -258,6 +256,7 @@
                         </table>
                     </div>
                 </div>
+            <div id="sectionTwoControls" data-scroll-anchor>
             <div class="button-group">
                 <button type="submit" name="action" value="previous-gaussian-section-two-system-step" class="btn-secondary">
                     Previous Step
@@ -273,6 +272,15 @@
                 <button type="submit" name="action" value="proceed-to-gaussian-section-three" class="btn-primary dashboard-btn">
                     Proceed To Next 
                 </button>
+            </div>
+            <div class="button-group">
+                <button type="submit" name="action" value="display-decimal" class="btn-secondary" th:classappend="${result.displayMode == 'decimal'} ? ' active-display-mode' : ''">
+                    Decimal
+                </button>
+                <button type="submit" name="action" value="display-fraction" class="btn-secondary" th:classappend="${result.displayMode == 'fraction'} ? ' active-display-mode' : ''">
+                    Fraction
+                </button>
+            </div>
             </div>
         </div>
     </section>

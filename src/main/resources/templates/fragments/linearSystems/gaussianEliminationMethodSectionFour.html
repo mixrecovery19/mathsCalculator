@@ -3,18 +3,13 @@
 <section class="hero-card walkthrough-card"
          th:if="${result.currentGaussianSection >= 4}"
          th:attr="data-active-section=${result.currentGaussianSection == 4 ? 'true' : null}">
-
     <div class="two-by-two-stage-four">
-
-        <h2>4. Now We Have Y We Substitue That Back Into Your Original Augmented Matrixes Top Row</h2>
-
-        <p class="math-introduction">
-            Now we have found \(y\) we can substitute it back into the original equation. You can technically use either of the rows<br>
-            usually though we simply use substitute the value of \(y\) into the first row, which is what you will do here.
-        </p>
+        <h2>4. Now We Have Y We Substitue That Back Into Your Original Augmented Matrixes Top Row</h2>        
         <details class="math-details">
             <summary>Substitute \(y\) into the first row</summary>
             <p class="math-description">
+                Now we have found \(y\) we can substitute it back into the original equation. You can technically use either of the rows<br>
+                usually though we simply use substitute the value of \(y\) into the first row, which is what you will do here.<br>
                 The orginal augmented matrix gets updated with the value of \(y\) substitued in place of the origianl \(b\) coefficient.<br>
                 \[\left[\begin{array}{cc|c}
                 a&b&c\\
@@ -34,41 +29,48 @@
                 \[ax=c-by\]
                 \[x=\frac{c-by}{a}\]    
                 Leaving us with the final solution of \(x\) and \(y\) for the system of equations.
-
             </p>
         </details>
-
+        <div class="walkthrough-step-header" font-weight="bold">
+            Current Section Four Step: <span th:text="${result.currentGaussianSectionFourStep}"></span> of 8
+            </div>
         <input type="hidden"
                name="currentGaussianSectionFourStep"
                th:value="${result.currentGaussianSectionFourStep}">
-               <div class="walkthrough-step-box">
-    <div class="walkthrough-step-body">
-        <div class="walkthrough-step-text"
-             th:switch="${result.currentGaussianSectionFourStep}">
-            <span th:case="0">
-                Press Next Step to substitute the value of \(y\) you just found<br>
-                as a first step of the final steps to solve for \(x\).
-            </span>
-            <span th:case="1">
-               Now multiply \(b \times y\) and then substitute that value back into the equation to isolate \(x\).
-            </span>
-            <span th:case="2">
-               which gives us \(ax = c - by\) and we can now solve for \(x\) by isolating it on one side of the equation.
-            </span>
-            <span th:case="3">
-               Then you can substitute the value of \(by\) back into the equation to isolate \(x\) and solve for it.
-            </span>
-            <span th:case="4">
-                Now we can simplify the equation to isolate \(x\) and solve for it.
-            </span>
-            <span th:case="5">
-                We can now divide both sides of the equation by \(a\) to isolate \(x\) and solve for it.
-            </span>
-            <span th:case="6">
-               Which should successfully give you the final solution for \(x\) and \(y\) for the system of equations.
-            </span>
-        </div>
-    </div>    
+    <div class="walkthrough-step-box">
+        <div class="walkthrough-step-body">
+            <div class="walkthrough-step-text"
+                th:switch="${result.currentGaussianSectionFourStep}">
+                <span th:case="0">
+                    Press Next Step to substitute the value of \(y\) you just found<br>
+                    as a first step of the final steps to solve for \(x\).
+                </span>
+                <span th:case="1">
+                Now multiply \(b \times y\) and then substitute that value back into the equation to isolate \(x\).
+                </span>
+                <span th:case="2">
+                    Which is a simple multiplication of the coefficient \(b\) and the value of \(y\) you just found.
+                </span>
+                <span th:case="3">
+                Which now gives you ax + by = c, and you can now isolate \(x\) to solve for it.
+                </span>
+                <span th:case="4">
+                Simply move the \(by\) term to the other side of the equation to isolate \(x\) and solve for it.
+                </span>
+                <span th:case="5">
+                    Now we can simplify the equation to isolate \(x\) and solve for it.
+                </span>
+                <span th:case="6">
+                    We can now divide both sides of the equation by \(a\) to isolate \(x\) and solve for it.
+                </span>
+                <span th:case="7">
+                Which should successfully give you the final solution for \(x\) and \(y\) for the system of equations.
+                </span>
+                <span th:case="8">
+                    You have now successfully solved the system of equations for both \(x\) and \(y\).
+                </span>
+            </div>
+        </div>    
 </div>
 
     <div class="result-card-container" th:if="${result.currentGaussianSectionFourStep >= 0}">
@@ -152,143 +154,148 @@
             </div>
         </div>
 
-  <div class="coefficient-panel"
-     th:if="${result.currentGaussianSectionFourStep >= 3}">
+    <div class="coefficient-panel"
+        th:if="${result.currentGaussianSectionFourStep >= 3}">
+        <div class="calculation-card">
+            <div class="calculation-title">
+                Step 3 – Substitute the value of \(by\) into the first equation
+            </div>
+            <div class="equation-row">
+                <input
+                    id="gaussianSectionFourAValue"
+                    class="matrix-input matrix-cells-larger"
+                    th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
+                    aria-label="Coefficient a"
+                    title="Coefficient a"
+                    readonly>
+                <span class="equation-symbol">x +</span>
+                <input
+                    id="gaussianSectionFourBYValue"
+                    class="matrix-input matrix-cells-larger highlighted-cell"
+                    th:value="${@mathFormatterService.format(result.substitutedYProduct, result.displayMode)}"
+                    aria-label="Value of by"
+                    title="Value of by"
+                    readonly>
+                <span class="equation-symbol">=</span>
+                <input
+                    id="gaussianSectionFourConstant"
+                    class="matrix-input matrix-cells-larger"
+                    th:value="${@mathFormatterService.format(result.augmentedMatrix[0][2], result.displayMode)}"
+                    aria-label="Constant"
+                    title="Constant"
+                    readonly>
+            </div>
+    </div>
+</div>
+    <div class="coefficient-panel" th:if="${result.currentGaussianSectionFourStep >= 4}">
+        <div class="calculation-card">
+            <div class="calculation-title">
+                Step 4 – Move the \(by\) term to the other side of the equation
+            </div>
+            <div class="equation-row">
+                <input
+                    id="gaussianSectionFourStep4A"
+                    class="matrix-input matrix-cells-larger"
+                    th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
+                    title="Coefficient a"
+                    readonly>
 
-    <div class="calculation-card">
-
-        <div class="calculation-title">
-            Step 3 – Substitute the value of \(by\) into the first equation
+                <span class="equation-symbol">x =</span>
+                <input
+                    id="gaussianSectionFourStep4Constant"
+                    class="matrix-input matrix-cells-larger"
+                    th:value="${@mathFormatterService.format(result.augmentedMatrix[0][2], result.displayMode)}"
+                    title="Constant value"
+                    readonly>
+                <span
+                    class="equation-symbol"
+                    th:text="${result.sectionFourOperator}">
+                </span>
+                <input
+                    id="gaussianSectionFourStep4BY"
+                    class="matrix-input matrix-cells-larger highlighted-cell"
+                    th:value="${@mathFormatterService.format(result.displayYProduct, result.displayMode)}"
+                    title="Product by coefficient"
+                    readonly>
+            </div>
         </div>
-
-        <div class="equation-row">
-
+    </div>
+    <div class="coefficient-panel" th:if="${result.currentGaussianSectionFourStep >= 5}">
+        <div class="calculation-card">
+            <div class="calculation-title">
+                Step 5 – Simplify the right-hand side
+            </div>
+            <div class="equation-row">
             <input
-                id="gaussianSectionFourAValue"
+                id="gaussianSectionFourStep5A"
                 class="matrix-input matrix-cells-larger"
-                th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
-                aria-label="Coefficient a"
                 title="Coefficient a"
+                th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
                 readonly>
-
-            <span class="equation-symbol">x +</span>
-
+            <span class="equation-symbol">x =</span>
             <input
-                id="gaussianSectionFourBYValue"
+                id="gaussianSectionFourStep5Numerator"
                 class="matrix-input matrix-cells-larger highlighted-cell"
-                th:value="${@mathFormatterService.format(result.substitutedYProduct, result.displayMode)}"
-                aria-label="Value of by"
-                title="Value of by"
+                title="Simplified numerator"
+                th:value="${@mathFormatterService.format(result.xNumerator, result.displayMode)}"
                 readonly>
-
-            <span class="equation-symbol">=</span>
-
-            <input
-                id="gaussianSectionFourConstant"
-                class="matrix-input matrix-cells-larger"
-                th:value="${@mathFormatterService.format(result.augmentedMatrix[0][2], result.displayMode)}"
-                aria-label="Constant"
-                title="Constant"
-                readonly>
-
         </div>
-
     </div>
-
 </div>
-<div class="equation-row"
-     th:if="${result.currentGaussianSectionFourStep >= 4}">
-    <!-- a coefficient -->
-    <input
-        class="matrix-input matrix-cells-larger"
-        title="Coefficient a"
-        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
-        readonly>
-
-    <span class="equation-symbol">x =</span>
-    <!-- original constant -->
-    <input
-        class="matrix-input matrix-cells-larger"
-        title="Original constant"
-        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][2], result.displayMode)}"
-        readonly>
-    <!-- + or - -->
-    <span class="equation-symbol"
-          th:text="${result.sectionFourOperator}"></span>
-    <!-- absolute value of by -->
-    <input
-        class="matrix-input matrix-cells-larger highlighted-cell"
-        title="Absolute value of by"
-        th:value="${@mathFormatterService.format(result.displayYProduct, result.displayMode)}"
-        readonly>
-</div>
-    <div class="equation-row"
-        th:if="${result.currentGaussianSectionFourStep >= 5}">
-        <!-- a coefficient -->
-        <input
-            class="matrix-input matrix-cells-larger"
-            title="Coefficient a"
-            th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
-            readonly>
-
-        <span class="equation-symbol">x =</span>
-        <!-- simplified numerator -->
-        <input
-            class="matrix-input matrix-cells-larger highlighted-cell"
-            title="Simplified numerator"
-            th:value="${@mathFormatterService.format(result.xNumerator, result.displayMode)}"
-            readonly>
-    </div>
-        <div class="coefficient-panel"
-            th:if="${result.currentGaussianSectionFourStep >= 6}">
-            <h3>Divide Both Sides by \(a\)</h3>
-            <table class="matrix-input-table">
-                <tr>            <!-- numerator -->
-                    <td>
-                        <input
-                            class="matrix-input matrix-cells-larger"
-                            title="Numerator value"
-                            aria-label="Numerator value"
-                            th:value="${@mathFormatterService.format(result.xNumerator, result.displayMode)}"
-                            readonly>
-                    </td>
-                    <td rowspan="2" class="fraction-equals">=</td>
-                    <td rowspan="2">
-                        <input
-                            class="matrix-input matrix-cells-larger"
-                            title="Solution value"
-                            aria-label="Solution value"
-                            th:value="${@mathFormatterService.format(result.solvedX, result.displayMode)}"
-                            readonly>
-                    </td>
-                </tr>
-                <tr>            <!-- denominator -->
-                    <td>
-                        <input
-                            class="matrix-input matrix-cells-larger"
-                            th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
-                            aria-label="Denominator value"
-                            title="Denominator value"
-                            readonly>
-                    </td>
-                </tr>
-            </table>
+    <div class="coefficient-panel" th:if="${result.currentGaussianSectionFourStep >= 6}">
+    <div class="calculation-card">
+        <div class="calculation-title">
+            Step 6 & 7 – Divide both sides by \(a\)
         </div>
-        <div class="determinant-result-container"
-            th:if="${result.currentGaussianSectionFourStep >= 8}">
-
+        <table class="matrix-input-table">
+            <tr>                
+                <td>
+                    <input
+                        id="gaussianSectionFourStep6Numerator"
+                        class="matrix-input matrix-cells-larger"
+                        title="Numerator value"
+                        aria-label="Numerator value"
+                        th:value="${@mathFormatterService.format(result.xNumerator, result.displayMode)}"
+                        readonly>
+                </td>
+                <td rowspan="2" class="fraction-equals">=</td>
+                <td rowspan="2">
+                    <input
+                        id="gaussianSectionFourStep6Answer"
+                        class="matrix-input matrix-cells-larger highlighted-cell"
+                        title="Solution value"
+                        aria-label="Solution value"
+                        th:value="${@mathFormatterService.format(result.solvedX, result.displayMode)}"
+                        readonly>
+                </td>
+            </tr>
+            <tr>                
+                <td>
+                    <input
+                        id="gaussianSectionFourStep6Denominator"
+                        class="matrix-input matrix-cells-larger"
+                        title="Denominator value"
+                        aria-label="Denominator value"
+                        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
+                        readonly>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+        <div class="final-result-container" th:if="${result.currentGaussianSectionFourStep >= 8}">
             <h2>Final Solution</h2>
-            <div class="determinant-result-box">
+            <div class="final-result-box">
                 <label>Values of \(x\) and \(y\)</label>
                         <div class="equation-row">
                             <input
-                                class="final-determinant-input"
+                                class="final-section-output"
                                 th:value="'x = ' + ${@mathFormatterService.format(result.solvedX, result.displayMode)}"
                                 aria-label="Final solution for x"
                                 title="Final solution for x"
                                 readonly>
                             <input
-                                class="final-determinant-input"
+                                class="final-section-output"
                                 th:value="'y = ' + ${@mathFormatterService.format(result.yAnswer, result.displayMode)}"
                                 aria-label="Final solution for y"
                                 title="Final solution for y"
@@ -297,22 +304,30 @@
                     </div>
                 </div>
             </div>
-    </div>
-       <div class="button-group">
+        </div>
+        <div id="sectionFourControls" data-scroll-anchor>
+            <div class="button-group">
                 <button type="submit" name="action" value="previous-gaussian-section-four-system-step" class="btn-secondary">
                     Previous Step
                 </button>
                 <button type="submit" name="action" value="next-gaussian-section-four-system-step" class="btn-primary">
                     Next Step
                 </button>
-            </div>
+            </div>            
             <div class="button-group">
                 <button type="submit" name="action" value="back-to-gaussian-section-three" class="btn-secondary dashboard-btn">
                     Close Section 4
                 </button>
-                <button type="submit" name="action" value="proceed-to-gaussian-section-five" class="btn-primary dashboard-btn">
-                    Proceed To Next 
+                 <button type="submit" name="action" value="back-to-gaussian-start" class="btn-primary dashboard-btn">Restart Walkthrough</button>
+            </div>
+            <div class="button-group">
+                <button type="submit" name="action" value="display-decimal" class="btn-secondary" th:classappend="${result.displayMode == 'decimal'} ? ' active-display-mode' : ''">
+                    Decimal
                 </button>
+                <button type="submit" name="action" value="display-fraction" class="btn-secondary" th:classappend="${result.displayMode == 'fraction'} ? ' active-display-mode' : ''">
+                    Fraction
+                </button>
+            </div>
             </div>
         </div>  
     </section>

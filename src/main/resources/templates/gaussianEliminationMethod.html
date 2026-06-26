@@ -18,6 +18,7 @@
     th:data-gaussian-elimination-section-three-step="${result.currentGaussianSectionThreeStep}"
     th:data-gaussian-elimination-section-four-step="${result.currentGaussianSectionFourStep}"
     th:data-current-gaussian-section="${result.currentGaussianSection}"
+    
     th:classappend="${result.currentGaussianSection == 0} ? ' gaussian-section-0' : ''">
     <div th:replace="~{sidebar :: sidebar}"></div>
         <main class="matrix-page">
@@ -25,6 +26,8 @@
                 <input type="hidden" name="currentGaussianSectionTwoStep" th:value="${result.currentGaussianSectionTwoStep}">
                 <input type="hidden" name="currentGaussianSectionThreeStep" th:value="${result.currentGaussianSectionThreeStep}">
                 <input type="hidden" name="currentGaussianSectionFourStep" th:value="${result.currentGaussianSectionFourStep}">
+                <input type="hidden" name="currentGaussianSection" th:value="${result.currentGaussianSection}">
+                <input type="hidden" name="displayMode" th:value="${result.displayMode}">
                 <h1>Gaussian Elimination</h1>
                 <div th:replace="~{fragments/linearSystems/gaussianEliminationMethodHeader :: gaussianEliminationMethodHeader}"></div>
                 <div th:if="${result.hasAugmentedMatrix}" th:replace="~{fragments/linearSystems/gaussianEliminationMethodSectionOne :: gaussianEliminationMethodSectionOne}"></div>

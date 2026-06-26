@@ -2,6 +2,7 @@ package com.totalbeginner.mathsCalculator.controller.linearSystems;
 
 import com.totalbeginner.mathsCalculator.dto.linearSystems.GaussianEliminationResult;
 import com.totalbeginner.mathsCalculator.service.linearSystems.GaussianEliminationService;
+import com.totalbeginner.mathsCalculator.service.MathFormatterService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class GaussianEliminationController {
     private final GaussianEliminationService gaussianEliminationService;
+    private final MathFormatterService mathFormatterService;
 
-    public GaussianEliminationController(GaussianEliminationService gaussianEliminationService) {
+    public GaussianEliminationController(GaussianEliminationService gaussianEliminationService, MathFormatterService mathFormatterService) {
         this.gaussianEliminationService = gaussianEliminationService;
+        this.mathFormatterService = mathFormatterService;
     }
 
         @GetMapping("/gaussian-elimination")
@@ -45,7 +48,10 @@ public class GaussianEliminationController {
                 @RequestParam(defaultValue = "0")
                 int currentGaussianSectionThreeStep, 
                 @RequestParam(defaultValue = "0")
-                int currentGaussianSectionFourStep,        
+                int currentGaussianSectionFourStep,
+                @RequestParam(defaultValue = "decimal") String displayMode, 
+                @RequestParam(defaultValue = "0")
+                int currentGaussianSection,      
 
                 @RequestParam(required = false) String action,
 
@@ -55,13 +61,14 @@ public class GaussianEliminationController {
         result.setCurrentGaussianSectionTwoStep(currentGaussianSectionTwoStep);
         result.setCurrentGaussianSectionThreeStep(currentGaussianSectionThreeStep);
         result.setCurrentGaussianSectionFourStep(currentGaussianSectionFourStep);
+        result.setCurrentGaussianSection(currentGaussianSection);
         // User hasn't entered all six values
         if (a_0_0 == null || a_0_1 == null || b_0 == null
                 || a_1_0 == null || a_1_1 == null || b_1 == null) {
 
             result.setAugmentedMatrix(new double[2][3]);
             result.setHasAugmentedMatrix(false);
-            result.setDisplayMode("decimal");
+            result.setDisplayMode(displayMode);
             result.setCurrentGaussianSection(0);
 
             model.addAttribute("result", result);
@@ -77,7 +84,19 @@ public class GaussianEliminationController {
         );
 
         result.setAugmentedMatrix(augmentedMatrix); 
-        result.setDisplayMode("decimal");
+        result.setDisplayMode(displayMode);
+
+        if (action == null) {
+                result.setHasAugmentedMatrix(true);
+                result.setCurrentGaussianSection(currentGaussianSection);
+        }
+        if ("display-decimal".equals(action)) {
+    result.setDisplayMode("decimal");
+}
+
+if ("display-fraction".equals(action)) {
+    result.setDisplayMode("fraction");
+}
 
         if ("create-augmented-matrix".equals(action)) {
                 result.setHasAugmentedMatrix(true);

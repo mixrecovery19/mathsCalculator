@@ -454,11 +454,11 @@ input[type=number] {
     margin-top: 1rem;
 }
 
-.determinant-result-container {
+.final-result-container {
     margin-top: 2rem;
     text-align: center;
 }
-.determinant-result-box {
+.final-result-box {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -474,23 +474,30 @@ input[type=number] {
     box-shadow: 0 8px 24px rgba(0,0,0,.12);
     animation: determinantPop 0.45s ease;
 }
-.determinant-result-box label {
+.final-result-box label {
     font-size: 1rem;
     font-weight: 700;
     color: #555;
 }
-.final-determinant-input {
-    width: 180px;
+.final-section-output {
+    min-width: 180px;
+    width: auto;
+
+    padding: 0 18px;
+
     height: 90px;
+
     border-radius: 18px;
     border: 3px solid #f1c40f;
+
     background: white;
-    text-align: center;
+
     font-size: 2rem;
     font-weight: 800;
-    color: #2c3e50;
-    box-shadow:
-        inset 0 2px 6px rgba(0,0,0,.08);
+
+    text-align: center;
+
+    box-sizing: border-box;
 }
 
 .active-display-mode {

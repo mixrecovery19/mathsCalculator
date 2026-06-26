@@ -159,6 +159,60 @@ document.addEventListener(
                     "#d8f3dc"
                 );
             }    
+            if (step >= 3) {
+                clearColours();                    // ← Keep only this one
+                colourCells(
+                    [  "gaussianBYProduct",
+                        "gaussianSectionFourBYValue"
+                    ],
+                    "#ffe8a3"
+                );
+            }
+            if (step >= 4) {
+                clearColours();                    // ← Keep only this one
+                colourCells(
+                    [  "gaussianSectionFourStep4Constant",
+                        "gaussianSectionFourStep4BY",
+                    ],
+                    "#d8f3dc"
+                );
+            }
+            if (step >= 5) {
+                clearColours();                    // ← Keep only this one
+                colourCells(
+                    [  "gaussianSectionFourStep5A",
+                        "gaussianSectionFourStep5Numerator"
+                    ],
+                    "#ffe8a3"
+                );
+            }
+            if (step >= 6) {
+                clearColours();                    // ← Keep only this one
+                colourCells(
+                    [  "gaussianSectionFourStep6Numerator",
+                        "gaussianSectionFourStep6Denominator",                       
+                    ],
+                    "#d8f3dc"
+                );
+            }
+            if (step >= 7) {
+                clearColours();                    // ← Keep only this one
+                colourCells(
+                    [  "gaussianSectionFourStep6Numerator",
+                        "gaussianSectionFourStep6Denominator",
+                        "gaussianSectionFourStep6Answer"
+                    ],
+                    "#ffe8a3"
+                );
+            }
+            if (step >= 8) {
+                clearColours();                    // ← Keep only this one
+                colourCells(
+                    [  
+                    ],
+                    "#ffe8a3"
+                );
+            }
         }
         
 function colourCells(cellIds, colour) {

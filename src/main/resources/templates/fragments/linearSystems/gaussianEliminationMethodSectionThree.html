@@ -5,11 +5,7 @@
             th:attr="data-active-section=${result.currentGaussianSection == 3 ? 'true' : null}">
         <div class="two-by-two-stage-three">
             <h2>3. Now Find \(y\)</h2>
-            <p class="math-introduction">
-                The first row operation has now transformed the augmented matrix into
-                row-echelon form. The second equation now contains only one unknown,
-                allowing us to solve directly for \(y\).
-            </p>
+            
             <details class="math-details">
                 <summary>Why can we now solve for \(y\)?</summary>
                 <p class="math-description">
@@ -27,6 +23,14 @@
                     \[y=\frac{f'}{e'}\]
                 </p>
             </details>
+            <div class="walkthrough-step-header" font-weight="bold">
+            Current Section Three Step: <span th:text="${result.currentGaussianSectionThreeStep}"></span> of 3
+            </div>
+            <p class="math-introduction">
+                The first row operation has now transformed the augmented matrix into
+                row-echelon form. The second equation now contains only one unknown,
+                allowing us to solve directly for \(y\).
+            </p>
             <input type="hidden"
                 name="currentGaussianSectionThreeStep"
                 th:value="${result.currentGaussianSectionThreeStep}">
@@ -155,6 +159,7 @@
                 readonly>
         </div>
         </div>
+        <div id="sectionThreeControls" data-scroll-anchor>
             <div class="button-group">
                 <button type="submit" name="action" value="previous-gaussian-section-three-system-step" class="btn-secondary">
                     Previous Step
@@ -171,6 +176,15 @@
                     Proceed To Next 
                 </button>
             </div>
+            <div class="button-group">
+                <button type="submit" name="action" value="display-decimal" class="btn-secondary" th:classappend="${result.displayMode == 'decimal'} ? ' active-display-mode' : ''">
+                    Decimal
+                </button>
+                <button type="submit" name="action" value="display-fraction" class="btn-secondary" th:classappend="${result.displayMode == 'fraction'} ? ' active-display-mode' : ''">
+                    Fraction
+                </button>
+            </div>
+        </div>
         </div>   
     </section>
 </div>
