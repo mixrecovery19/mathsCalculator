@@ -8,9 +8,11 @@ document.addEventListener(
             }
 
             const gaussianEliminationSectionTwoStep = parseInt(page.dataset.gaussianEliminationSectionTwoStep || 0);    
-            console.log("gaussianEliminationSectionTwoStep =", gaussianEliminationSectionTwoStep);                   
+            const gaussianEliminationSectionThreeStep = parseInt(page.dataset.gaussianEliminationSectionThreeStep || 0);                  
             
             gaussianEliminationSectionTwoStepsColours(gaussianEliminationSectionTwoStep);
+            gaussianEliminationSectionThreeStepsColours(gaussianEliminationSectionThreeStep);
+
         }
     );
 
@@ -113,6 +115,31 @@ document.addEventListener(
         );
     }
 }
+function gaussianEliminationSectionThreeStepsColours(step) {
+        clearColours();
+        if (step >= 1) {
+           colourCells(
+                    [
+                        "sectionThreeResultMatrix11",      // e'
+                        "sectionThreeResultMatrix12",      // f'
+                        "gaussianYDenominator",
+                        "gaussianYNumerator"
+                    ], "#cfe8ff");
+        }
+        if (step >= 2) {
+            clearColours();
+                colourCells(
+                    [ "gaussianYDenominator",
+                        "gaussianYNumerator",
+                        "gaussianYAnswer" ],
+                    "#d8f3dc"
+                );
+            }
+            if (step >= 3) {
+            clearColours();
+                
+            }
+    }
         
 function colourCells(cellIds, colour) {
     cellIds.forEach(id => {

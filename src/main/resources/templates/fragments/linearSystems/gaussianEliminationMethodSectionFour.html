@@ -4,7 +4,7 @@
          th:if="${result.currentGaussianSection >= 4}"
          th:attr="data-active-section=${result.currentGaussianSection == 4 ? 'true' : null}">
 
-    <div class="two-by-two-stage-three">
+    <div class="two-by-two-stage-four">
 
         <h2>4. Now We Have Y We Substitue That Back Into Your Original Augmented Matrixes Top Row</h2>
 
@@ -212,92 +212,83 @@
         th:value="${@mathFormatterService.format(result.displayYProduct, result.displayMode)}"
         readonly>
 </div>
-<div class="equation-row"
-     th:if="${result.currentGaussianSectionFourStep >= 5}">
+    <div class="equation-row"
+        th:if="${result.currentGaussianSectionFourStep >= 5}">
 
-    <!-- a coefficient -->
-    <input
-        class="matrix-input matrix-cells-larger"
-        title="Coefficient a"
-        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
-        readonly>
+        <!-- a coefficient -->
+        <input
+            class="matrix-input matrix-cells-larger"
+            title="Coefficient a"
+            th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
+            readonly>
 
-    <span class="equation-symbol">x =</span>
-    <!-- simplified numerator -->
-    <input
-        class="matrix-input matrix-cells-larger highlighted-cell"
-        title="Simplified numerator"
-        th:value="${@mathFormatterService.format(result.xNumerator, result.displayMode)}"
-        readonly>
-</div>
-<div class="coefficient-panel"
-     th:if="${result.currentGaussianSectionFourStep >= 6}">
-    <h3>Divide Both Sides by \(a\)</h3>
-    <table class="matrix-input-table">
-        <tr>            <!-- numerator -->
-            <td>
-                <input
-                    class="matrix-input matrix-cells-larger"
-                    title="Numerator value"
-                    aria-label="Numerator value"
-                    th:value="${@mathFormatterService.format(result.xNumerator, result.displayMode)}"
-                    readonly>
-            </td>
-            <td rowspan="2" class="fraction-equals">=</td>
-            <td rowspan="2">
-                <input
-                    class="matrix-input matrix-cells-larger"
-                    title="Solution value"
-                    aria-label="Solution value"
-                    th:value="${@mathFormatterService.format(result.solvedX, result.displayMode)}"
-                    readonly>
-            </td>
-        </tr>
-        <tr>            <!-- denominator -->
-            <td>
-                <input
-                    class="matrix-input matrix-cells-larger"
-                    th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
-                    aria-label="Denominator value"
-                    title="Denominator value"
-                    readonly>
-            </td>
-        </tr>
-    </table>
-</div>
-<div class="determinant-result-container"
-     th:if="${result.currentGaussianSectionFourStep >= 8}">
-
-    <h2>Final Solution</h2>
-
-    <div class="determinant-result-box">
-
-        <label>Values of \(x\) and \(y\)</label>
-
-        <div class="equation-row">
-
-            <input
-                class="final-determinant-input"
-                th:value="'x = ' + ${@mathFormatterService.format(result.solvedX, result.displayMode)}"
-                aria-label="Final solution for x"
-                title="Final solution for x"
-                readonly>
-
-            <input
-                class="final-determinant-input"
-                th:value="'y = ' + ${@mathFormatterService.format(result.yAnswer, result.displayMode)}"
-                aria-label="Final solution for y"
-                title="Final solution for y"
-                readonly>
-
-        </div>
-
+        <span class="equation-symbol">x =</span>
+        <!-- simplified numerator -->
+        <input
+            class="matrix-input matrix-cells-larger highlighted-cell"
+            title="Simplified numerator"
+            th:value="${@mathFormatterService.format(result.xNumerator, result.displayMode)}"
+            readonly>
     </div>
-
-</div>
-
-</div>
+        <div class="coefficient-panel"
+            th:if="${result.currentGaussianSectionFourStep >= 6}">
+            <h3>Divide Both Sides by \(a\)</h3>
+            <table class="matrix-input-table">
+                <tr>            <!-- numerator -->
+                    <td>
+                        <input
+                            class="matrix-input matrix-cells-larger"
+                            title="Numerator value"
+                            aria-label="Numerator value"
+                            th:value="${@mathFormatterService.format(result.xNumerator, result.displayMode)}"
+                            readonly>
+                    </td>
+                    <td rowspan="2" class="fraction-equals">=</td>
+                    <td rowspan="2">
+                        <input
+                            class="matrix-input matrix-cells-larger"
+                            title="Solution value"
+                            aria-label="Solution value"
+                            th:value="${@mathFormatterService.format(result.solvedX, result.displayMode)}"
+                            readonly>
+                    </td>
+                </tr>
+                <tr>            <!-- denominator -->
+                    <td>
+                        <input
+                            class="matrix-input matrix-cells-larger"
+                            th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}"
+                            aria-label="Denominator value"
+                            title="Denominator value"
+                            readonly>
+                    </td>
+                </tr>
+            </table>
         </div>
+        <div class="determinant-result-container"
+            th:if="${result.currentGaussianSectionFourStep >= 8}">
+
+            <h2>Final Solution</h2>
+            <div class="determinant-result-box">
+                <label>Values of \(x\) and \(y\)</label>
+                        <div class="equation-row">
+                            <input
+                                class="final-determinant-input"
+                                th:value="'x = ' + ${@mathFormatterService.format(result.solvedX, result.displayMode)}"
+                                aria-label="Final solution for x"
+                                title="Final solution for x"
+                                readonly>
+                            <input
+                                class="final-determinant-input"
+                                th:value="'y = ' + ${@mathFormatterService.format(result.yAnswer, result.displayMode)}"
+                                aria-label="Final solution for y"
+                                title="Final solution for y"
+                                readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
        <div class="button-group">
                 <button type="submit" name="action" value="previous-gaussian-section-four-system-step" class="btn-secondary">
                     Previous Step
@@ -308,13 +299,12 @@
             </div>
             <div class="button-group">
                 <button type="submit" name="action" value="back-to-gaussian-section-three" class="btn-secondary dashboard-btn">
-                    Close Section 3
+                    Close Section 4
                 </button>
                 <button type="submit" name="action" value="proceed-to-gaussian-section-five" class="btn-primary dashboard-btn">
                     Proceed To Next 
                 </button>
             </div>
-        </div>   
-
-</section>
+        </div>  
+    </section>
 </div>

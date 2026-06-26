@@ -1,159 +1,159 @@
 <div th:fragment="gaussianEliminationMethodSectionThree"
      th:if="${result.currentGaussianSection >= 3}">
-<section class="hero-card walkthrough-card"
-         th:if="${result.currentGaussianSection >= 3}"
-         th:attr="data-active-section=${result.currentGaussianSection == 3 ? 'true' : null}">
-
-    <div class="two-by-two-stage-three">
-
-        <h2>3. Now Find \(y\)</h2>
-
-        <p class="math-introduction">
-            The first row operation has now transformed the augmented matrix into
-            row-echelon form. The second equation now contains only one unknown,
-            allowing us to solve directly for \(y\).
-        </p>
-
-        <details class="math-details">
-            <summary>Why can we now solve for \(y\)?</summary>
-            <p class="math-description">
-                The updated augmented matrix is
-                \[\left[\begin{array}{cc|c}
-                a&b&c\\
-                0&e'&f'
-                \end{array}
-                \right]
-                \]
-                Since the coefficient of \(x\) is now zero, the second row
-                represents
-                \[e'y=f'\]
-                Dividing both sides by \(e'\) gives
-                \[y=\frac{f'}{e'}\]
+    <section class="hero-card walkthrough-card"
+            th:if="${result.currentGaussianSection >= 3}"
+            th:attr="data-active-section=${result.currentGaussianSection == 3 ? 'true' : null}">
+        <div class="two-by-two-stage-three">
+            <h2>3. Now Find \(y\)</h2>
+            <p class="math-introduction">
+                The first row operation has now transformed the augmented matrix into
+                row-echelon form. The second equation now contains only one unknown,
+                allowing us to solve directly for \(y\).
             </p>
-        </details>
-
-        <input type="hidden"
-               name="currentGaussianSectionThreeStep"
-               th:value="${result.currentGaussianSectionThreeStep}">
-
+            <details class="math-details">
+                <summary>Why can we now solve for \(y\)?</summary>
+                <p class="math-description">
+                    The updated augmented matrix is
+                    \[\left[\begin{array}{cc|c}
+                    a&b&c\\
+                    0&e'&f'
+                    \end{array}
+                    \right]
+                    \]
+                    Since the coefficient of \(x\) is now zero, the second row
+                    represents
+                    \[e'y=f'\]
+                    Dividing both sides by \(e'\) gives
+                    \[y=\frac{f'}{e'}\]
+                </p>
+            </details>
+            <input type="hidden"
+                name="currentGaussianSectionThreeStep"
+                th:value="${result.currentGaussianSectionThreeStep}">
         <div class="result-card-container" th:if="${result.currentGaussianSectionThreeStep >= 0}">
-    <h2>Augmented Matrix Worked Out in Step Two</h2>
-    <div class="result-card">
-        <table class="matrix-input-table matrix-cells-larger">
-            <tr>
-                <td>
-                    <input
-                        id="resultMatrix00"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix first row first value"
-                        placeholder="Augmented matrix first row first value"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}">
-                </td>
-                <td>
-                    <input
-                        id="resultMatrix01"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix first row second value"
-                        placeholder="Augmented matrix first row second value"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][1], result.displayMode)}">
-                </td>
-                <td class="matrix-divider">|</td>
-                <td>
-                    <input
-                        id="resultMatrix02"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix first row constant"
-                        placeholder="Augmented matrix first row constant"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.augmentedMatrix[0][2], result.displayMode)}">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input
-                        id="resultMatrix10"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix second row first value"
-                        placeholder="Augmented matrix second row first value"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.newRowA,result.displayMode)}">
-                </td>
-                <td>
-                    <input
-                        id="resultMatrix11"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix second row second value"
-                        placeholder="Augmented matrix second row second value"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.newRowB,result.displayMode)}">
-                </td>
-                <td class="matrix-divider">|</td>
-                <td>
-                    <input
-                        id="resultMatrix12"
-                        class="matrix-input matrix-cells-larger"
-                        title="Augmented matrix second row constant"
-                        placeholder="Augmented matrix second row constant"
-                        readonly
-                        th:value="${@mathFormatterService.format(result.newRowConstant,result.displayMode)}">
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="linear-system-layout">
-
-    <div class="coefficient-panel">
-
-        <h3>Find \(y\)</h3>
-        <h3>\(y=\dfrac{f'}{e'}\)</h3>
-
-        <table class="matrix-input-table">
-            <tr>
-                <td>
-                    <input
-                        id="gaussianYNumerator"
-                        class="matrix-input matrix-cells-larger"
-                        title="New second row constant f prime"
-                        placeholder="f'"
-                        th:value="${result.currentGaussianSectionThreeStep >= 1
-                            ? @mathFormatterService.format(result.newRowConstant, result.displayMode)
-                            : ''}"
-                        readonly>
-                </td>
-
-                <td rowspan="2" class="fraction-equals">=</td>
-
-                <td rowspan="2">
-                    <input
-                        id="gaussianYAnswer"
-                        class="matrix-input matrix-cells-larger"
-                        title="Y value"
-                        placeholder="y"
-                        th:value="${result.currentGaussianSectionThreeStep >= 1
-                            ? @mathFormatterService.format(result.yAnswer, result.displayMode)
-                            : ''}"
-                        readonly>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <input
-                        id="gaussianYDenominator"
-                        class="matrix-input matrix-cells-larger"
-                        title="New second row y coefficient e prime"
-                        placeholder="e'"
-                        th:value="${result.currentGaussianSectionThreeStep >= 1
-                            ? @mathFormatterService.format(result.newRowB, result.displayMode)
-                            : ''}"
-                        readonly>
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
+            <h2>Augmented Matrix Worked Out in Step Two</h2>
+                <div class="linear-system-layout">
+                <table class="matrix-input-table matrix-cells-larger">
+                    <tr>
+                        <td>
+                            <input
+                                id="sectionThreeResultMatrix00"
+                                class="matrix-input matrix-cells-larger"
+                                title="Augmented matrix first row first value"
+                                placeholder="Augmented matrix first row first value"
+                                readonly
+                                th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}">
+                        </td>
+                        <td>
+                            <input
+                                id="sectionThreeResultMatrix01"
+                                class="matrix-input matrix-cells-larger"
+                                title="Augmented matrix first row second value"
+                                placeholder="Augmented matrix first row second value"
+                                readonly
+                                th:value="${@mathFormatterService.format(result.augmentedMatrix[0][1], result.displayMode)}">
+                        </td>
+                        <td class="matrix-divider">|</td>
+                        <td>
+                            <input
+                                id="sectionThreeResultMatrix02"
+                                class="matrix-input matrix-cells-larger"
+                                title="Augmented matrix first row constant"
+                                placeholder="Augmented matrix first row constant"
+                                readonly
+                                th:value="${@mathFormatterService.format(result.augmentedMatrix[0][2], result.displayMode)}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input
+                                id="sectionThreeResultMatrix10"
+                                class="matrix-input matrix-cells-larger"
+                                title="Augmented matrix second row first value"
+                                placeholder="Augmented matrix second row first value"
+                                readonly
+                                th:value="${@mathFormatterService.format(result.newRowA,result.displayMode)}">
+                        </td>
+                        <td>
+                            <input
+                                id="sectionThreeResultMatrix11"
+                                class="matrix-input matrix-cells-larger"
+                                title="Augmented matrix second row second value"
+                                placeholder="Augmented matrix second row second value"
+                                readonly
+                                th:value="${@mathFormatterService.format(result.newRowB,result.displayMode)}">
+                        </td>
+                        <td class="matrix-divider">|</td>
+                        <td>
+                            <input
+                                id="sectionThreeResultMatrix12"
+                                class="matrix-input matrix-cells-larger"
+                                title="Augmented matrix second row constant"
+                                placeholder="Augmented matrix second row constant"
+                                readonly
+                                th:value="${@mathFormatterService.format(result.newRowConstant,result.displayMode)}">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="linear-system-layout">
+            <div class="coefficient-panel">
+                <h3>Find \(y\)</h3>
+                <h3>\(y=\dfrac{f'}{e'}\)</h3>
+                <table class="matrix-input-table">
+                    <tr>
+                        <td>
+                            <input
+                                id="gaussianYNumerator"
+                                class="matrix-input matrix-cells-larger"
+                                title="New second row constant f prime"
+                                placeholder="f'"
+                                th:value="${result.currentGaussianSectionThreeStep >= 1
+                                    ? @mathFormatterService.format(result.newRowConstant, result.displayMode)
+                                    : ''}"
+                                readonly>
+                        </td>
+                        <td rowspan="2" class="fraction-equals">=</td>
+                        <td rowspan="2">
+                            <input
+                                id="gaussianYAnswer"
+                                class="matrix-input matrix-cells-larger"
+                                title="Y value"
+                                placeholder="y"
+                                th:value="${result.currentGaussianSectionThreeStep >= 1
+                                    ? @mathFormatterService.format(result.yAnswer, result.displayMode)
+                                    : ''}"
+                                readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input
+                                id="gaussianYDenominator"
+                                class="matrix-input matrix-cells-larger"
+                                title="New second row y coefficient e prime"
+                                placeholder="e'"
+                                th:value="${result.currentGaussianSectionThreeStep >= 1
+                                    ? @mathFormatterService.format(result.newRowB, result.displayMode)
+                                    : ''}"
+                                readonly>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="result-card-container" th:if="${result.currentGaussianSectionThreeStep >= 3}">
+        <h2>Solution for \(y\)</h2>
+        <div class="result-card">
+            <label for="gaussianYFinal">\(y=\)</label>
+            <input
+                id="gaussianYFinal"
+                class="result-card-large-input"
+                title="Y solution"
+                placeholder="y"
+                th:value="${@mathFormatterService.format(result.yAnswer, result.displayMode)}"
+                readonly>
+        </div>
         </div>
             <div class="button-group">
                 <button type="submit" name="action" value="previous-gaussian-section-three-system-step" class="btn-secondary">
@@ -171,8 +171,6 @@
                     Proceed To Next 
                 </button>
             </div>
-        </div>
-    
-
-</section>
+        </div>   
+    </section>
 </div>

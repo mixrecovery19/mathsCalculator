@@ -11,45 +11,43 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GaussianEliminationController {
-
     private final GaussianEliminationService gaussianEliminationService;
 
     public GaussianEliminationController(GaussianEliminationService gaussianEliminationService) {
         this.gaussianEliminationService = gaussianEliminationService;
     }
 
-    @GetMapping("/gaussian-elimination")
-    public String showGaussianEliminationPage(Model model) {
-        GaussianEliminationResult result = new GaussianEliminationResult();
+        @GetMapping("/gaussian-elimination")
+        public String showGaussianEliminationPage(Model model) {
+                GaussianEliminationResult result = new GaussianEliminationResult();
 
-        result.setAugmentedMatrix(new double[2][3]);
-        result.setHasAugmentedMatrix(false);
-        result.setDisplayMode("decimal");
-        result.setCurrentGaussianSection(0);
+                result.setAugmentedMatrix(new double[2][3]);
+                result.setHasAugmentedMatrix(false);
+                result.setDisplayMode("decimal");
+                result.setCurrentGaussianSection(0);
 
-        model.addAttribute("result", result);
+                model.addAttribute("result", result);
 
-        return "gaussianEliminationMethod";
-    }
+                return "gaussianEliminationMethod";
+        }
 
-    @PostMapping("/gaussian-elimination")
-    public String createGaussianElimination(
+        @PostMapping("/gaussian-elimination")
+        public String createGaussianElimination(
+                @RequestParam(required = false) Double a_0_0,
+                @RequestParam(required = false) Double a_0_1,
+                @RequestParam(required = false) Double b_0,
 
-            @RequestParam(required = false) Double a_0_0,
-            @RequestParam(required = false) Double a_0_1,
-            @RequestParam(required = false) Double b_0,
+                @RequestParam(required = false) Double a_1_0,
+                @RequestParam(required = false) Double a_1_1,
+                @RequestParam(required = false) Double b_1,
+                @RequestParam(defaultValue = "0")  
+                int currentGaussianSectionTwoStep,    
+                @RequestParam(defaultValue = "0")
+                int currentGaussianSectionThreeStep, 
+                @RequestParam(defaultValue = "0")
+                int currentGaussianSectionFourStep,        
 
-            @RequestParam(required = false) Double a_1_0,
-            @RequestParam(required = false) Double a_1_1,
-            @RequestParam(required = false) Double b_1,
-            @RequestParam(defaultValue = "0")  
-            int currentGaussianSectionTwoStep,    
-            @RequestParam(defaultValue = "0")
-            int currentGaussianSectionThreeStep, 
-            @RequestParam(defaultValue = "0")
-            int currentGaussianSectionFourStep,        
-
-            @RequestParam(required = false) String action,
+                @RequestParam(required = false) String action,
 
         Model model) {
         GaussianEliminationResult result = new GaussianEliminationResult();
@@ -165,7 +163,7 @@ public class GaussianEliminationController {
         }
 
         result.setCurrentGaussianSectionTwoStep(Math.max(0, Math.min(result.getCurrentGaussianSectionTwoStep(), 8)));
-        result.setCurrentGaussianSectionThreeStep(Math.max(0, Math.min(result.getCurrentGaussianSectionThreeStep(), 1)));
+        result.setCurrentGaussianSectionThreeStep(Math.max(0, Math.min(result.getCurrentGaussianSectionThreeStep(), 3)));
         result.setCurrentGaussianSectionFourStep(Math.max(0, Math.min(result.getCurrentGaussianSectionFourStep(), 8)));
 
         if (result.getCurrentGaussianSectionTwoStep() >= 1) {
@@ -237,9 +235,14 @@ public class GaussianEliminationController {
 
                 result.setNewRowConstant(newRowConstant);
         }
+
+        if (result.getCurrentGaussianSectionThreeStep() >= 1) {       
+
+             
+        }
        
     
-    if (result.getCurrentGaussianSectionThreeStep() >= 1) {
+    if (result.getCurrentGaussianSectionThreeStep() >= 2) {
 
         double yAnswer =
                 gaussianEliminationService

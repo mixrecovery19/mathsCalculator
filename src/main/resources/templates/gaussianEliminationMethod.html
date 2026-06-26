@@ -15,6 +15,7 @@
     id="gaussianEliminationPage"
     class="app-layout"
     th:data-gaussian-elimination-section-two-step="${result.currentGaussianSectionTwoStep}"
+    th:data-gaussian-elimination-section-three-step="${result.currentGaussianSectionThreeStep}"
     th:classappend="${result.currentGaussianSection == 0} ? ' gaussian-section-0' : ''">
     <div th:replace="~{sidebar :: sidebar}"></div>
         <main class="matrix-page">
