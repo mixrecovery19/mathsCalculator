@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/stylesGaussianElimination.css">
     <script src="/js/overlayhelper.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="/js/linearSystems/gaussianEliminationStepsColours.js"></script>
+    <script src="/js/linearSystems/gaussianEliminationStepsColours.js?v=2"></script>
 </head>
 <body>
     <div
@@ -16,6 +16,8 @@
     class="app-layout"
     th:data-gaussian-elimination-section-two-step="${result.currentGaussianSectionTwoStep}"
     th:data-gaussian-elimination-section-three-step="${result.currentGaussianSectionThreeStep}"
+    th:data-gaussian-elimination-section-four-step="${result.currentGaussianSectionFourStep}"
+    th:data-current-gaussian-section="${result.currentGaussianSection}"
     th:classappend="${result.currentGaussianSection == 0} ? ' gaussian-section-0' : ''">
     <div th:replace="~{sidebar :: sidebar}"></div>
         <main class="matrix-page">
