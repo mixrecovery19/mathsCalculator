@@ -305,29 +305,29 @@
                 </div>
             </div>
         </div>
-        <div id="sectionFourControls" data-scroll-anchor>
-            <div class="button-group">
-                <button type="submit" name="action" value="previous-gaussian-section-four-system-step" class="btn-secondary">
-                    Previous Step
-                </button>
-                <button type="submit" name="action" value="next-gaussian-section-four-system-step" class="btn-primary">
-                    Next Step
-                </button>
-            </div>            
-            <div class="button-group">
-                <button type="submit" name="action" value="back-to-gaussian-section-three" class="btn-secondary dashboard-btn">
-                    Close Section 4
-                </button>
-                 <button type="submit" name="action" value="back-to-gaussian-start" class="btn-primary dashboard-btn">Restart Walkthrough</button>
-            </div>
-            <div class="button-group">
-                <button type="submit" name="action" value="display-decimal" class="btn-secondary" th:classappend="${result.displayMode == 'decimal'} ? ' active-display-mode' : ''">
-                    Decimal
-                </button>
-                <button type="submit" name="action" value="display-fraction" class="btn-secondary" th:classappend="${result.displayMode == 'fraction'} ? ' active-display-mode' : ''">
-                    Fraction
-                </button>
-            </div>
+            <div id="sectionFourControls" data-scroll-anchor>
+                <div class="button-group">
+                    <button type="submit" name="action" value="previous-gaussian-section-four-system-step" class="btn-secondary">
+                        Previous Step
+                    </button>
+                    <button type="submit" name="action" value="next-gaussian-section-four-system-step" class="btn-primary">
+                        Next Step
+                    </button>
+                </div>            
+                <div class="button-group">
+                    <button type="submit" name="action" value="back-to-gaussian-section-three" class="btn-secondary dashboard-btn">
+                        Close Section 4
+                    </button>
+                    <button type="submit" name="action" value="back-to-gaussian-start" class="btn-primary dashboard-btn">Restart Walkthrough</button>
+                </div>
+                <div class="button-group">
+                    <button type="submit" name="action" value="display-decimal" class="btn-secondary" th:classappend="${result.displayMode == 'decimal'} ? ' active-display-mode' : ''">
+                        Decimal
+                    </button>
+                    <button type="submit" name="action" value="display-fraction" class="btn-secondary" th:classappend="${result.displayMode == 'fraction'} ? ' active-display-mode' : ''">
+                        Fraction
+                    </button>
+                </div>
             </div>
         </div>  
     </section>

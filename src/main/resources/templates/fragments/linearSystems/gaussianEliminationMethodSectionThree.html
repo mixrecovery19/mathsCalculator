@@ -4,8 +4,7 @@
             th:if="${result.currentGaussianSection >= 3}"
             th:attr="data-active-section=${result.currentGaussianSection == 3 ? 'true' : null}">
         <div class="two-by-two-stage-three">
-            <h2>3. Now Find \(y\)</h2>
-            
+            <h2>3. Now Find \(y\)</h2>            
             <details class="math-details">
                 <summary>Why can we now solve for \(y\)?</summary>
                 <p class="math-description">
@@ -26,79 +25,81 @@
             <div class="walkthrough-step-header" font-weight="bold">
             Current Section Three Step: <span th:text="${result.currentGaussianSectionThreeStep}"></span> of 3
             </div>
-            <p class="math-introduction">
-                The first row operation has now transformed the augmented matrix into
-                row-echelon form. The second equation now contains only one unknown,
-                allowing us to solve directly for \(y\).
-            </p>
+                <p class="math-introduction">
+                    The first row operation has now transformed the augmented matrix into
+                    row-echelon form. The second equation now contains only one unknown,
+                    allowing us to solve directly for \(y\).
+                </p>
             <input type="hidden"
                 name="currentGaussianSectionThreeStep"
                 th:value="${result.currentGaussianSectionThreeStep}">
         <div class="result-card-container" th:if="${result.currentGaussianSectionThreeStep >= 0}">
             <h2>Augmented Matrix Worked Out in Step Two</h2>
                 <div class="linear-system-layout">
-                <table class="matrix-input-table matrix-cells-larger">
-                    <tr>
-                        <td>
-                            <input
-                                id="sectionThreeResultMatrix00"
-                                class="matrix-input matrix-cells-larger"
-                                title="Augmented matrix first row first value"
-                                placeholder="Augmented matrix first row first value"
-                                readonly
-                                th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}">
-                        </td>
-                        <td>
-                            <input
-                                id="sectionThreeResultMatrix01"
-                                class="matrix-input matrix-cells-larger"
-                                title="Augmented matrix first row second value"
-                                placeholder="Augmented matrix first row second value"
-                                readonly
-                                th:value="${@mathFormatterService.format(result.augmentedMatrix[0][1], result.displayMode)}">
-                        </td>
-                        <td class="matrix-divider">|</td>
-                        <td>
-                            <input
-                                id="sectionThreeResultMatrix02"
-                                class="matrix-input matrix-cells-larger"
-                                title="Augmented matrix first row constant"
-                                placeholder="Augmented matrix first row constant"
-                                readonly
-                                th:value="${@mathFormatterService.format(result.augmentedMatrix[0][2], result.displayMode)}">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input
-                                id="sectionThreeResultMatrix10"
-                                class="matrix-input matrix-cells-larger"
-                                title="Augmented matrix second row first value"
-                                placeholder="Augmented matrix second row first value"
-                                readonly
-                                th:value="${@mathFormatterService.format(result.newRowA,result.displayMode)}">
-                        </td>
-                        <td>
-                            <input
-                                id="sectionThreeResultMatrix11"
-                                class="matrix-input matrix-cells-larger"
-                                title="Augmented matrix second row second value"
-                                placeholder="Augmented matrix second row second value"
-                                readonly
-                                th:value="${@mathFormatterService.format(result.newRowB,result.displayMode)}">
-                        </td>
-                        <td class="matrix-divider">|</td>
-                        <td>
-                            <input
-                                id="sectionThreeResultMatrix12"
-                                class="matrix-input matrix-cells-larger"
-                                title="Augmented matrix second row constant"
-                                placeholder="Augmented matrix second row constant"
-                                readonly
-                                th:value="${@mathFormatterService.format(result.newRowConstant,result.displayMode)}">
-                        </td>
-                    </tr>
-                </table>
+                    <div class="calculation-card">
+                        <table class="matrix-input-table matrix-cells-larger">
+                        <tr>
+                            <td>
+                                <input
+                                    id="sectionThreeResultMatrix00"
+                                    class="matrix-input matrix-cells-larger"
+                                    title="Augmented matrix first row first value"
+                                    placeholder="Augmented matrix first row first value"
+                                    readonly
+                                    th:value="${@mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)}">
+                            </td>
+                            <td>
+                                <input
+                                    id="sectionThreeResultMatrix01"
+                                    class="matrix-input matrix-cells-larger"
+                                    title="Augmented matrix first row second value"
+                                    placeholder="Augmented matrix first row second value"
+                                    readonly
+                                    th:value="${@mathFormatterService.format(result.augmentedMatrix[0][1], result.displayMode)}">
+                            </td>
+                            <td class="matrix-divider">|</td>
+                            <td>
+                                <input
+                                    id="sectionThreeResultMatrix02"
+                                    class="matrix-input matrix-cells-larger"
+                                    title="Augmented matrix first row constant"
+                                    placeholder="Augmented matrix first row constant"
+                                    readonly
+                                    th:value="${@mathFormatterService.format(result.augmentedMatrix[0][2], result.displayMode)}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input
+                                    id="sectionThreeResultMatrix10"
+                                    class="matrix-input matrix-cells-larger"
+                                    title="Augmented matrix second row first value"
+                                    placeholder="Augmented matrix second row first value"
+                                    readonly
+                                    th:value="${@mathFormatterService.format(result.newRowA,result.displayMode)}">
+                            </td>
+                            <td>
+                                <input
+                                    id="sectionThreeResultMatrix11"
+                                    class="matrix-input matrix-cells-larger"
+                                    title="Augmented matrix second row second value"
+                                    placeholder="Augmented matrix second row second value"
+                                    readonly
+                                    th:value="${@mathFormatterService.format(result.newRowB,result.displayMode)}">
+                            </td>
+                            <td class="matrix-divider">|</td>
+                            <td>
+                                <input
+                                    id="sectionThreeResultMatrix12"
+                                    class="matrix-input matrix-cells-larger"
+                                    title="Augmented matrix second row constant"
+                                    placeholder="Augmented matrix second row constant"
+                                    readonly
+                                    th:value="${@mathFormatterService.format(result.newRowConstant,result.displayMode)}">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="linear-system-layout">
             <div class="coefficient-panel">

@@ -70,7 +70,9 @@
                                 class="matrix-input matrix-cells-larger"
                                 title="Elimination factor denominator"
                                 placeholder="Elimination factor denominator"
-                                th:value="${result.currentGaussianSectionTwoStep >= 1 ? result.augmentedMatrix[0][0] : ''}"
+                                th:value="${result.currentGaussianSectionTwoStep >= 1
+                                ? @mathFormatterService.format(result.augmentedMatrix[0][0], result.displayMode)
+                                : ''}"
                                 readonly>
                         </td>
                     </tr>
@@ -127,7 +129,7 @@
                                     aria-label="Original matrix coefficient"
                                     title="Original matrix coefficient"
                                     placeholder="Original matrix coefficient"
-                                    th:value="${result.augmentedMatrix[row][col]}"
+                                    th:value="${@mathFormatterService.format(result.augmentedMatrix[row][col], result.displayMode)}"
                                     readonly>
                             </td>
                             <td class="matrix-divider">|</td>
@@ -139,7 +141,7 @@
                                     aria-label="Original matrix constant"
                                     title="Original matrix constant"
                                     placeholder="Original matrix constant"
-                                    th:value="${result.augmentedMatrix[row][2]}"
+                                    th:value="${@mathFormatterService.format(result.augmentedMatrix[row][2], result.displayMode)}"
                                     readonly>
                             </td>
 

@@ -21,7 +21,7 @@ document.addEventListener(
 function twoByTwoStepColours(determinantStep) {
     console.log("determinantStep =", determinantStep);
     clearColours();  
-    if (determinantStep >= 2) {
+    if (determinantStep >= 1) {
         colourCells(
             [
                 "cell-0-0",
@@ -32,7 +32,7 @@ function twoByTwoStepColours(determinantStep) {
         );
     }
     // STEP 2
-    if (determinantStep >= 3) {
+    if (determinantStep >= 2) {
         colourCells(
             [
                 "cell-0-1",
@@ -43,7 +43,7 @@ function twoByTwoStepColours(determinantStep) {
         );
     }
     // STEP 3
-    if (determinantStep >= 4) {
+    if (determinantStep >= 3) {
         colourCells(
             [
                 "determinant",

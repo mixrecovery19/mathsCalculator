@@ -91,9 +91,9 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                     result.setInverseCurrentStep(inverseCurrentStep);
                     result.setSolveLinearStep(solveLinearStep);
 
-                    result.setHasInverseWalkthrough(determinantStep >= 4);
+                    result.setHasInverseWalkthrough(determinantStep >= 3);
                     result.setHasFinalLinearSystemWalkthrough(
-                        determinantStep >= 4 && inverseCurrentStep >= 4 && solveLinearStep >= 0
+                        determinantStep >= 3 && inverseCurrentStep >= 4 && solveLinearStep >= 0
                     );
                 }
                 else if ("create-linear-system".equals(action)) {
@@ -101,7 +101,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                     result.setCurrentSection(1);
                 }
                 else if ("proceed-to-step-two".equals(action)) {
-                    newDeterminantStep = 1;
+                    newDeterminantStep = 0;
                     result.setCurrentSection(2);
                 }
                 else if ("next-linear-system-step".equals(action)) {
@@ -114,28 +114,28 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                 }     
            
                 if ("start-inverse-walkthrough".equals(action)) {
-                    newDeterminantStep = 4;
+                    newDeterminantStep = 3;
                     inverseCurrentStep = 0;
                     result.setHasInverseWalkthrough(true);
                     result.setCurrentSection(3);
                 }
 
                 if ("next-linear-inverse-step".equals(action)) {
-                    newDeterminantStep = 4;
+                    newDeterminantStep = 3;
                     inverseCurrentStep++;
                     result.setHasInverseWalkthrough(true);
                     result.setCurrentSection(3);
                 }
 
                 if ("previous-linear-inverse-step".equals(action)) {
-                    newDeterminantStep = 4;
+                    newDeterminantStep = 3;
                     inverseCurrentStep--;
                     result.setHasInverseWalkthrough(true);
                     result.setCurrentSection(3);
                 }           
 
                 if ("start-final-linear-system-walkthrough".equals(action)) {
-                    newDeterminantStep = 4;
+                    newDeterminantStep = 3;
                     inverseCurrentStep = 4;
                     solveLinearStep = 0;
                     result.setHasInverseWalkthrough(true);
@@ -143,7 +143,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                     result.setCurrentSection(4);
                 }
                 if ("next-final-linear-system-step".equals(action)) {
-                    newDeterminantStep = 4;
+                    newDeterminantStep = 3;
                     inverseCurrentStep = 4;
                     solveLinearStep++;
                     result.setHasInverseWalkthrough(true);
@@ -151,7 +151,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                     result.setCurrentSection(4);
                 }
                 if ("previous-final-linear-system-step".equals(action)) {
-                    newDeterminantStep = 4;
+                    newDeterminantStep = 3;
                     inverseCurrentStep = 4;
                     solveLinearStep--;
                     result.setHasInverseWalkthrough(true);
@@ -182,7 +182,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                     result.setHasInitialValues(false);
                     result.setHasMatrixValues(true);
 
-                    newDeterminantStep = 4;
+                    newDeterminantStep = 3;
                     inverseCurrentStep = 0;
                     solveLinearStep = 0;
 
@@ -194,7 +194,7 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                     result.setHasInitialValues(false);
                     result.setHasMatrixValues(true);
 
-                    newDeterminantStep = 4;
+                    newDeterminantStep = 3;
                     inverseCurrentStep = 4;
                     solveLinearStep = 0;
                     result.setCurrentSection(3);
@@ -214,17 +214,17 @@ import com.totalbeginner.mathsCalculator.service.MathFormatterService;
                     result.setCurrentSection(0);
                 }                
                               
-            newDeterminantStep = Math.max(0, Math.min(newDeterminantStep, 4));            
+            newDeterminantStep = Math.max(0, Math.min(newDeterminantStep, 3));            
             inverseCurrentStep = Math.max(0, Math.min(inverseCurrentStep, 4));
-            solveLinearStep = Math.max(0, Math.min(solveLinearStep, 7));
+            solveLinearStep = Math.max(0, Math.min(solveLinearStep, 8));
 
             // Store the final values
             result.setDeterminantStep(newDeterminantStep);
             result.setInverseCurrentStep(inverseCurrentStep);
             result.setSolveLinearStep(solveLinearStep);
-            result.setHasInverseWalkthrough(newDeterminantStep >= 4);
+            result.setHasInverseWalkthrough(newDeterminantStep >= 3);
             result.setHasFinalLinearSystemWalkthrough(
-                    newDeterminantStep >= 4                    
+                    newDeterminantStep >= 3                    
                     && inverseCurrentStep >= 4
                     && solveLinearStep >= 0
             );

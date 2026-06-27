@@ -15,21 +15,55 @@
                 Your hard work is done, now simply multuply through the constants, then add to find the solution!
             </p>
         </details>
-            <div class="linear-system-layout">          
-               
+            <div class="walkthrough-step-header">Calculate The Final Steps:<span th:text="${result.solveLinearStep}"></span> of 8</div>
+                <input type="hidden" name="solveLinearStep" th:value="${result.solveLinearStep}">
+                    <div class="walkthrough-step-box">
+                        <div class="walkthrough-step-body">
+                            <div class="walkthrough-step-text" th:switch="${result.solveLinearStep}">
+                                <span th:case="0">
+                                    Press <strong>Next Step</strong> to begin multiplying the inverse matrix by the constants vector.
+                                </span>
+                                <span th:case="1">
+                                    Multiply the first value in the top row of \(A^{-1}\) by the first value in the constants vector.
+                                </span>
+                                <span th:case="2">
+                                    Multiply the second value in the top row of \(A^{-1}\) by the second value in the constants vector.
+                                </span>
+                                <span th:case="3">
+                                    Add the two top-row products together to calculate the value of \(x\).
+                                </span>
+                                <span th:case="4">
+                                    Multiply the first value in the bottom row of \(A^{-1}\) by the first value in the constants vector.
+                                </span>
+                                <span th:case="5">
+                                    Multiply the second value in the bottom row of \(A^{-1}\) by the second value in the constants vector.
+                                </span>
+                                <span th:case="6">
+                                    Add the two bottom-row products together to calculate the value of \(y\).
+                                </span>
+                                <span th:case="7">
+                                    The solution vector \(X\) is now complete, containing the calculated values of \(x\) and \(y\).
+                                </span>
+                                <span th:case="8">
+                                    You have successfully solved the linear system using the inverse matrix method.
+                                </span>
+                            </div>
+                        </div>
+                    </div>      
+            <div class="linear-system-layout">        
                 <div class="coefficient-panel">
                     <h3>Inverse Matrix \(A^{-1}\)</h3>
                     <table class="matrix-input-table matrix-cells-larger">
                         <tr th:each="row,rowStat : ${finalInverseMatrix}">
                             <td th:each="value,colStat : ${row}">
                                 <input
-                                        type="text"
-                                        class="matrix-input matrix-readonly matrix-cells-larger"                                    
-                                        th:id="'inverse-final-' + ${rowStat.index} + '-' + ${colStat.index}"
-                                        th:value="${@mathFormatterService.format(value, result.displayMode)}"
-                                        th:attr="title='Inverse matrix value', placeholder='Inverse matrix value'"
-                                        aria-label="Inverse matrix value"
-                                        readonly>
+                                    type="text"
+                                    class="matrix-input matrix-readonly matrix-cells-larger"                                    
+                                    th:id="'inverse-final-' + ${rowStat.index} + '-' + ${colStat.index}"
+                                    th:value="${@mathFormatterService.format(value, result.displayMode)}"
+                                    th:attr="title='Inverse matrix value', placeholder='Inverse matrix value'"
+                                    aria-label="Inverse matrix value"
+                                    readonly>
                             </td>
                         </tr>
                     </table>
@@ -157,27 +191,49 @@
                     </tr>
                 </table>
             </div>
-            <div class="button-group">
-                <button type="submit" name="action" value="previous-final-linear-system-step" class="btn-secondary">
-                    Previous Step
-                </button>
-                <button type="submit" name="action" value="next-final-linear-system-step" class="btn-primary">Next Step</button>
-            </div>
+            <div class="final-result-container" th:if="${result.solveLinearStep >= 8}">
+            <h2>5. Final Solution</h2>
+            <div class="final-result-box">
+                <label>Values of \(x\) and \(y\)</label>
+                        <div class="equation-row">
+                            <input
+                                class="final-section-output"
+                                th:value="'x = ' + ${@mathFormatterService.format(result.xAnswer, result.displayMode)}"
+                                aria-label="Final solution for x"
+                                title="Final solution for x"
+                                readonly>
+                            <input
+                                class="final-section-output"
+                                th:value="'y = ' + ${@mathFormatterService.format(result.yAnswer, result.displayMode)}"
+                                aria-label="Final solution for y"
+                                title="Final solution for y"
+                                readonly>
+                        </div>
+                    </div>
+                </div>
             <input type="hidden" name="currentSection" th:value="${result.currentSection}">
             <input type="hidden" name="determinantStep" th:value="${result.determinantStep}">
             <input type="hidden" name="inverseCurrentStep" th:value="${result.inverseCurrentStep}">
-            <input type="hidden" name="solveLinearStep" th:value="${result.solveLinearStep}">
-            <div class="button-group">
-                <button type="submit" name="displayMode" value="decimal" class="btn-secondary" th:classappend="${result.displayMode == 'decimal'} ? ' active-display-mode' : ''">
-                    Decimal
-                </button>
-                <button type="submit" name="displayMode" value="fraction" class="btn-secondary" th:classappend="${result.displayMode == 'fraction'} ? ' active-display-mode' : ''">
-                    Fraction
-                </button>
-            </div>
-            <div class="button-group continue-button-group">    
-                <button type="submit" name="action" value="back-to-section-three" class="btn-secondary dashboard-btn">Close Section 4</button>
-                <button type="submit" name="action" value="restart-linear-system-walkthrough" class="btn-primary dashboard-btn">Restart Walkthrough</button>
+            <input type="hidden" name="solveLinearStep" th:value="${result.solveLinearStep}"> 
+            <div id="sectionFourControls" data-scroll-anchor>
+                <div class="button-group">
+                    <button type="submit" name="action" value="previous-final-linear-system-step" class="btn-secondary">
+                        Previous Step
+                    </button>
+                    <button type="submit" name="action" value="next-final-linear-system-step" class="btn-primary">Next Step</button>
+                </div>                      
+                <div class="button-group continue-button-group">    
+                    <button type="submit" name="action" value="back-to-section-three" class="btn-secondary dashboard-btn">Close Section 4</button>
+                    <button type="submit" name="action" value="restart-linear-system-walkthrough" class="btn-primary dashboard-btn">Restart Walkthrough</button>
+                </div>
+                <div class="button-group">
+                    <button type="submit" name="displayMode" value="decimal" class="btn-secondary" th:classappend="${result.displayMode == 'decimal'} ? ' active-display-mode' : ''">
+                        Decimal
+                    </button>
+                    <button type="submit" name="displayMode" value="fraction" class="btn-secondary" th:classappend="${result.displayMode == 'fraction'} ? ' active-display-mode' : ''">
+                        Fraction
+                    </button>
+                </div>
             </div>
         </div>
     </section>

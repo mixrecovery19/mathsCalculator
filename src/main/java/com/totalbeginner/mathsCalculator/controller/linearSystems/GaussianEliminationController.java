@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GaussianEliminationController {
-    private final GaussianEliminationService gaussianEliminationService;
-    private final MathFormatterService mathFormatterService;
+    private final GaussianEliminationService gaussianEliminationService;    
 
     public GaussianEliminationController(GaussianEliminationService gaussianEliminationService, MathFormatterService mathFormatterService) {
-        this.gaussianEliminationService = gaussianEliminationService;
-        this.mathFormatterService = mathFormatterService;
+        this.gaussianEliminationService = gaussianEliminationService;       
     }
 
         @GetMapping("/gaussian-elimination")
