@@ -1,6 +1,8 @@
 package com.totalbeginner.mathsCalculator.controller;
 
+import com.totalbeginner.mathsCalculator.dto.MatrixInverse3x3Result;
 import com.totalbeginner.mathsCalculator.dto.MatrixSarrusResult;
+import com.totalbeginner.mathsCalculator.service.MatrixInverse3x3Service;
 import com.totalbeginner.mathsCalculator.service.MatrixSarrusService;
 
 import org.springframework.stereotype.Controller;
@@ -12,28 +14,29 @@ import java.util.Map;
         @Controller
         public class MatrixSarrusController {
         private final MatrixSarrusService matrixSarrusService;
-        private final MatrixInverse3x3Controller matrixInverse3x3Controller;
-        public MatrixSarrusController(MatrixSarrusService matrixSarrusService, MatrixInverse3x3Controller matrixInverse3x3Controller) {        
+        private final MatrixInverse3x3Service matrixInverse3x3Service;
+        public MatrixSarrusController(
+        MatrixSarrusService matrixSarrusService,
+        MatrixInverse3x3Service matrixInverse3x3Service) {
                 this.matrixSarrusService = matrixSarrusService;
-                this.matrixInverse3x3Controller = matrixInverse3x3Controller;
+                this.matrixInverse3x3Service = matrixInverse3x3Service;
         }
 
         @GetMapping("/matrix-sarrus")
-                public String matrixSarrusPage(Model model) {
+        public String matrixSarrusPage(Model model) {
+                MatrixSarrusResult result = new MatrixSarrusResult();
 
-                        MatrixSarrusResult result = new MatrixSarrusResult();
+                result.setCurrentSarrusSection(0);
+                result.setCurrentStepSarrusSectionTwo(0);
+                result.setDisplayMode("decimal");
 
-                        result.setCurrentSarrusSection(0);
-                        result.setCurrentStepSarrusSectionTwo(0);
-                        result.setDisplayMode("decimal");
+                model.addAttribute("size", 3);
+                model.addAttribute("matrixSarrus", new double[3][3]);
+                model.addAttribute("hasMatrixValues", false);
+                model.addAttribute("result", result);
 
-                        model.addAttribute("size", 3);
-                        model.addAttribute("matrixSarrus", new double[3][3]);
-                        model.addAttribute("hasMatrixValues", false);
-                        model.addAttribute("result", result);
-
-                        return "matrixSarrus";
-                }
+                return "matrixSarrus";
+        }
 
         @PostMapping("/matrices-sarrus")
         public String handleSarrusAction(
@@ -123,7 +126,11 @@ import java.util.Map;
         result = matrixSarrusService.buildSarrusResult(matrix, newStep);       
         }
         if (newSarrusSection >= 3) {
-        matrixInverse3x3Controller.loadInverseSection(model, matrix, currentStepSarrusSectionThree);        
+
+        MatrixInverse3x3Result inverseResult =
+                matrixInverse3x3Service.buildInverseResult(matrix, currentStepSarrusSectionThree);            
+
+                model.addAttribute("inverseResult", inverseResult);
         }
         boolean hasMatrixValues = matrixSarrusService.hasMatrixValues(matrix);
                 

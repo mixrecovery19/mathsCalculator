@@ -1,3 +1,6 @@
+/*As I am learning, A Bachelor of I.T. Student, which is how this project developed, to "sink in" some of the math and programming concepts 
+I learned in the first semester I decided to leave some of the code as examples. They may help you too.*/
+
 /* this is a login controller, spring boot uses controllers to handle https requests and map the urls
  */
 package com.totalbeginner.mathsCalculator.controller;

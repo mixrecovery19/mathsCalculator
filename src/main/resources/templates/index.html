@@ -8,60 +8,57 @@
     <link rel="stylesheet" href="/css/stylesIndex.css">          
 </head>
 <body>
-<div class="app-layout">
-    <!-- 🔹 Reusable Sidebar -->
-    <div th:replace="~{sidebar :: sidebar}"></div>
- <!-- 🔹 Main Content -->
-<main class="main-content">
-    <div class="home-container">      
-        <section class="hero-section">
-            <div class="image-carousel-container">
-                <img id="carouselImage" class="carousel-image" alt="Homepage image">              
-            </div>
-            <h1>Learning App</h1>
-            <p class="tagline">By: Mixrecovery19</p>            
-        </section>
+<div class="app-layout">    
+    <div th:replace="~{sidebar :: sidebar}"></div> 
+    <main class="main-content">
+        <div class="home-container">      
+            <section class="hero-section">
+                <div class="image-carousel-container">
+                    <img id="carouselImage" class="carousel-image" alt="Homepage image">              
+                </div>
+                <h1>Learning App</h1>
+                <p class="tagline">By: Mixrecovery19</p>            
+            </section>
+            <!-- Login Status -->
+            <section class="status-card">
+                <div th:if="${user == null}" class="logged-out">
+                    <strong>Guest Access</strong>
+                    <p>You are currently browsing in read-only mode because I have not applied a login flow intentionally.<br>
+                    I intentionally left it as a placeholder for future development.</p>               
+                </div>
+                <div th:if="${user != null}" class="logged-in">
+                    <strong>Logged In</strong>
+                    <p>Welcome back,<span th:text="${user.username}"></span></p>               
+                </div>
+            </section>
 
-        <!-- Login Status -->
-        <section class="status-card">
-            <div th:if="${user == null}" class="logged-out">
-                <strong>Guest Access</strong>
-                <p>You are currently browsing in read-only mode because I have not applied a login flow intentionally.<br>
-                I intentionally leftit as a placeholder for future development.</p>               
-            </div>
-            <div th:if="${user != null}" class="logged-in">
-                <strong>Logged In</strong>
-                <p>Welcome back,<span th:text="${user.username}"></span></p>               
-            </div>
-        </section>
-
-        <!-- About -->
-        <section class="hero-card">
-            <h2>Open Source Math App</h2>
-            <p>Browse through our collection of interactive mathematical tools and resources.</p>       
-            <p>Go to @mixrecovery19 on GitHub if you want to contribute!</p>      
-        </section>
-
-        <!-- Future Feature Placeholder -->
-        <section class="preview-card">
-            <h3>Featured Math Tools By</h3>
-            <div th:if="${featuredArticle != null}">
-                <h4 th:text="${featuredArticle.title}"></h4>
-                <p th:text="${#strings.abbreviate(featuredArticle.content, 180)}"></p>                      
-            </div>             
-            <div th:if="${featuredArticle == null}">       
-                <p>No articles available.</p>
-            </div>
-        </section>
-    </div>
-</main>
+            <!-- About -->
+            <section class="hero-card">
+                <h2>Math App</h2>
+                <p>Browse through our collection of interactive mathematical tools and resources.</p>       
+                <p>Clone Repo https://github.com/mixrecovery19/mathsCalculator.git</p>      
+            </section>
+            <section class="preview-card">
+                <h3>Support the Project</h3>
+                    <p>
+                        If this project has helped you learn mathematics or Spring Boot,
+                        and you'd like to support future development, you can buy me a coffee.
+                    </p>
+                    <p>
+                        Every contribution helps fund new walkthroughs, additional mathematical
+                        topics, improvements, and future open-source releases.
+                    </p>
+                    <a href="https://buymeacoffee.com/cellfit" target="_blank" rel="noopener noreferrer" class="coffee-button">
+                        ☕ Buy Me a Coffee
+                    </a>
+            </section>
+    </main>
 </div>
 <script th:inline="javascript">
 //cleverly creates an empty array which it then populates from the model attribute.
 // even more cleverly, it looks as though the array is entirely empty and that we have commented out
 // the images variable however Thumeleadf will actually replace the empty array with real data at runtime.
-    const myImages =
-        /*[[${images}]]*/ [];
+    const myImages = /*[[${images}]]*/ [];
 </script>
 <script src="/js/homePageImageRotation.js"></script>
 </body>
