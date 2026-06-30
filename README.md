@@ -2,7 +2,7 @@
 
 Thank you for taking the time to check out my Maths Calculator.
 
-Website: [www.cellfit.com.au](https://www.cellfit.com.au)
+I am also the very proud creator of a fitness application CellFit, Website: [www.cellfit.com.au](https://www.cellfit.com.au)
 
 I am a Bachelor of Information Technology student, and after completing my first semester I wanted to reinforce the mathematics I learned in BIT112 – Mathematics for I.T. by combining it with the Object-Oriented Programming concepts I was learning in Java and Spring Boot.
 
@@ -19,6 +19,7 @@ Thank you for your support, and happy learning!
 — Michael Kalaf
 
 Some screenshots to give you an idea of some of what comes with this repo(which I hope to make my first, true, open source project in time)
+
 ## Screenshots
 
 ### Home
