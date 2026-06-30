@@ -1,0 +1,59 @@
+ <div th:fragment="matrixSarrusSectionOne"
+    th:if="${result.currentSarrusSection >= 1}">
+    <section class="hero-card"
+    th:attr="data-active-section=${result.currentSarrusSection == 1 ? 'true' : null}"> 
+        <div class="sarrus-stage-two">               
+            <h2>Generate Sarrus 5 x 3 Matrix from Your Initial 3 x 3 Matrix</h2>                      
+                <details class="math-details">
+                    <summary>Calculating the Determinant using the Sarrus Method</summary>
+                        <p class="math-description">
+                            When you click "Generate Sarrus 5 × 3 Matrix", your initial
+                            \(3 \times 3\) matrix is extended by repeating the first two
+                            columns on the right-hand side.<br><br>
+                            Given:\[A=\begin{bmatrix}a & b & c \\d & e & f \\g & h & i\end{bmatrix}\]
+                            the Sarrus method calculates:\[\det(A)=(aei+bfg+cdh) - (ceg+bdi+afh) \]
+                            The downward diagonals form the positive total, and the upward
+                            diagonals form the negative total.<br><br>
+                            Finally, the determinant is calculated by subtracting the negative
+                            total from the positive total.
+                        </p>
+                </details>                    
+                    <input type="hidden" name="size" th:value="${size}">
+                    <input type="hidden" name="currentStep" th:value="${result != null ? result.currentStepSarrusSectionTwo : 0}">
+                    <input type="hidden" name="positiveTotal" th:value="${result != null ? result.positiveTotal : ''}">
+                    <input type="hidden" name="negativeTotal" th:value="${result != null ? result.negativeTotal : ''}">
+                        <table class="matrix-table matrix-table-readonly matrix-larger-cells">
+                            <tr th:each="rowIndex : ${#numbers.sequence(0, size - 1)}">
+                                <td th:each="colIndex : ${#numbers.sequence(0, size - 1)}">
+                                    <input type="text" class="matrix-input matrix-readonly matrix-cells-larger"
+                                        title="Initial matrix value"
+                                        aria-label="Initial matrix value"
+                                        readonly
+                                        th:value="
+                                        ${matrixSarrus != null
+                                        && matrixSarrus[rowIndex][colIndex] != 0
+                                        ? @mathFormatterService.format(matrixSarrus[rowIndex][colIndex], result.displayMode)
+                                        : ''}">
+                                </td>
+                            </tr>
+                        </table>
+                    <div id="sectionTwoControls" class="button-group" data-scroll-anchor>
+                        <button type="submit" name="action" value="generate-sarrus" class="btn-primary">
+                                Generate Sarrus 5 × 3 Matrix
+                        </button>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" name="action" value="display-decimal"
+                                class="btn-secondary"
+                                th:classappend="${result.displayMode == 'decimal'} ? 'active-display-mode' : ''">
+                            Decimal
+                        </button>
+                        <button type="submit" name="action" value="display-fraction"
+                                class="btn-secondary"
+                                th:classappend="${result.displayMode == 'fraction'} ? 'active-display-mode' : ''">
+                            Fraction
+                        </button>
+                    </div>
+                </div>                 
+            </section>
+        </div>   

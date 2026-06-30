@@ -1,11 +1,9 @@
-<script src="/js/overlayhelper.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <div th:fragment="matrixSarrusHeader" class="matrix-inputs-dashboard">
     <div class="matrix-controls matrix-fragment-card">
         <div class="matrix-control-row">
             <h1>3 × 3 Determinant Calculator (Sarrus Method)</h1>                            
         </div>
-         <h2>1. Enter Values To Form Your 3 x 3 Matrix</h2>
+         <h2>Enter Values To Form Your 3 x 3 Matrix To Start</h2>
             <details class="math-details">
                 <summary>Calculating the Determinant of a 3 × 3 Matrix using the Sarrus Method</summary>
                     <p class="math-description">
@@ -24,7 +22,20 @@
                         of a \(3 \times 3\) matrix to be calculated manually
                         in an efficient and visual way.
                     </p>
-            </details>                             
+            </details>  
+            <div class="walkthrough-step-box">
+                <div class="walkthrough-step-body">
+                    <div class="walkthrough-step-text">
+                        <p>
+                            Enter the values of your \(3 \times 3\) matrix as <strong>decimal values</strong>
+                            (for example, <strong>0.5</strong> instead of <strong>1/2</strong>). Once your
+                            matrix has been created, you can switch between
+                            <strong>Decimal</strong> and <strong>Fraction</strong> display modes at any time
+                            to view the walkthrough and results in your preferred format.
+                        </p>
+                    </div>
+                </div>
+            </div>                           
         <input type="hidden" name="size" th:value="${size ?: 3}">
             <table class="matrix-input-table">
                 <tr th:each="row : ${#numbers.sequence(0, (size ?: 2) - 1)}">
@@ -36,13 +47,14 @@
                             th:id="'cell_' + ${row} + '_' + ${col}"
                             th:name="'cell_' + ${row} + '_' + ${col}"
                             th:value="${matrixSarrus != null && matrixSarrus[row][col] != 0 ? matrixSarrus[row][col] : ''}"
-                            class="matrix-input">
+                            class="matrix-input matrix-cells-larger">
                     </td>
                 </tr>
             </table>
         <button title="Update Matrix" type="submit" name="action" value="update-matrix-sarrus" class="btn-primary dashboard-btn">
             <span th:text="${hasMatrixValues} ? 'Update Matrix' : 'Create Matrix'"></span>
         </button>
+        
     </div>
 </div> 
         

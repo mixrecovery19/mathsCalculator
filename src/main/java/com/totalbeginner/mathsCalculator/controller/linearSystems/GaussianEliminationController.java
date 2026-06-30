@@ -89,12 +89,12 @@ public class GaussianEliminationController {
                 result.setCurrentGaussianSection(currentGaussianSection);
         }
         if ("display-decimal".equals(action)) {
-    result.setDisplayMode("decimal");
-}
+                result.setDisplayMode("decimal");
+        }
 
-if ("display-fraction".equals(action)) {
-    result.setDisplayMode("fraction");
-}
+        if ("display-fraction".equals(action)) {
+                result.setDisplayMode("fraction");
+        }
 
         if ("create-augmented-matrix".equals(action)) {
                 result.setHasAugmentedMatrix(true);
@@ -106,7 +106,6 @@ if ("display-fraction".equals(action)) {
                 result.setCurrentGaussianSection(2);
                 result.setCurrentGaussianSectionTwoStep(0);
         }
-
         if ("next-gaussian-section-two-system-step".equals(action)) {
                 result.setHasAugmentedMatrix(true);
                 result.setCurrentGaussianSection(2);
@@ -114,22 +113,19 @@ if ("display-fraction".equals(action)) {
                         result.getCurrentGaussianSectionTwoStep() + 1
                 );
         }
-
         if ("previous-gaussian-section-two-system-step".equals(action)) {
                 result.setHasAugmentedMatrix(true);
                 result.setCurrentGaussianSection(2);
                 result.setCurrentGaussianSectionTwoStep(
                         result.getCurrentGaussianSectionTwoStep() - 1
                 );
-        }      
-    
+        }  
         if ("next-gaussian-section-three-system-step".equals(action)) {
                 result.setHasAugmentedMatrix(true);
                 result.setCurrentGaussianSection(3);
                 result.setCurrentGaussianSectionThreeStep(
                         result.getCurrentGaussianSectionThreeStep() + 1);
         }
-
         if ("previous-gaussian-section-three-system-step".equals(action)) {
                 result.setHasAugmentedMatrix(true);
                 result.setCurrentGaussianSection(3);
@@ -178,7 +174,6 @@ if ("display-fraction".equals(action)) {
                 result.setCurrentGaussianSection(4);
                 result.setCurrentGaussianSectionFourStep(0);
         }
-
         result.setCurrentGaussianSectionTwoStep(Math.max(0, Math.min(result.getCurrentGaussianSectionTwoStep(), 8)));
         result.setCurrentGaussianSectionThreeStep(Math.max(0, Math.min(result.getCurrentGaussianSectionThreeStep(), 3)));
         result.setCurrentGaussianSectionFourStep(Math.max(0, Math.min(result.getCurrentGaussianSectionFourStep(), 8)));

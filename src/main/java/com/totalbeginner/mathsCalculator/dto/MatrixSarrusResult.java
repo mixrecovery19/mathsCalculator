@@ -2,27 +2,31 @@ package com.totalbeginner.mathsCalculator.dto;
 
 public class MatrixSarrusResult {
 
-    private double[][] sarrusMatrix;
-    private Double determinant;
+    private double[][] sarrusMatrix;    
 
-    private Double positiveStep1;
-    private Double positiveStep2;
-    private Double positiveStep3;
-    private Double positiveTotal;
+    private int currentSarrusSection;
+    private int currentStepSarrusSectionTwo;
+    private int currentStepSarrusSectionThree;
 
-    private Double negativeStep1;
-    private Double negativeStep2;
-    private Double negativeStep3;
-    private Double negativeTotal;
+    private double determinant;
+    private double positiveStep1;
+    private double positiveStep2;
+    private double positiveStep3;
+    private double positiveTotal;
+
+    private double negativeStep1;
+    private double negativeStep2;
+    private double negativeStep3;
+    private double negativeTotal;
     
-    private int currentStep;
+    
 
     private double[][] originalMatrix;
     private boolean hasMatrixValues;
     private boolean sarrusGenerated;
     private boolean showInverseSection;
-
-    // Getters and Setters
+    private String displayMode;
+    
     public double[][] getSarrusMatrix() { return sarrusMatrix; }
     public void setSarrusMatrix(double[][] sarrusMatrix) { this.sarrusMatrix = sarrusMatrix; }
 
@@ -53,8 +57,11 @@ public class MatrixSarrusResult {
     public Double getNegativeTotal() { return negativeTotal; }
     public void setNegativeTotal(Double negativeTotal) { this.negativeTotal = negativeTotal; }    
 
-    public int getCurrentStep() { return currentStep; }
-    public void setCurrentStep(int currentStep) { this.currentStep = currentStep; }
+    public int getCurrentStepSarrusSectionTwo() { return currentStepSarrusSectionTwo; }
+    public void setCurrentStepSarrusSectionTwo(int currentStepSarrusSectionTwo) { this.currentStepSarrusSectionTwo = currentStepSarrusSectionTwo; }
+
+    public int getCurrentStepSarrusSectionThree() { return currentStepSarrusSectionThree; }
+    public void setCurrentStepSarrusSectionThree(int currentStepSarrusSectionThree) { this.currentStepSarrusSectionThree = currentStepSarrusSectionThree; }
 
     public double[][] getOriginalMatrix() { return originalMatrix; }
     public void setOriginalMatrix(double[][] originalMatrix) { this.originalMatrix = originalMatrix; }
@@ -67,4 +74,9 @@ public class MatrixSarrusResult {
 
     public boolean isShowInverseSection() { return showInverseSection; }
     public void setShowInverseSection(boolean showInverseSection) { this.showInverseSection = showInverseSection; }
+
+    public int getCurrentSarrusSection() { return currentSarrusSection; }
+    public void setCurrentSarrusSection(int currentSarrusSection) { this.currentSarrusSection = currentSarrusSection; } 
+    public String getDisplayMode() { return displayMode; }
+    public void setDisplayMode(String displayMode) { this.displayMode = displayMode; }
 }

@@ -543,6 +543,67 @@ input[type="number"] {
     width: 360px;
     flex-shrink: 0;
 }
+.walkthrough-step-box {
+    width: 100%;
+    height: 110px;                   
+    padding: 16px 20px;
+    margin: 20px 0;
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+    background: #f8f9fa;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto 2rem auto;
+    padding: 1rem 1.5rem;
+
+    background: #f8fafc;
+    border-left: 5px solid #5dade2;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 90px;         
+}
+
+
+.walkthrough-step-header {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #2c3e50;
+    text-align: center;
+    margin: 1rem 0 0.5rem;
+}
+
+
+
+.walkthrough-step-body {
+    width: 100%;
+}
+
+.walkthrough-step-text {
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #455a64;
+    font-weight: 500;
+}
+.active-display-mode {
+    background: #ffff99;
+    border: 2px solid #d4b106;
+    font-weight: 700;
+    color: black;
+}
+
+.active-display-mode:hover {
+    background: #ffe97a;
+}
+
 @keyframes determinantPop {
     0% {
         transform: scale(0.85);

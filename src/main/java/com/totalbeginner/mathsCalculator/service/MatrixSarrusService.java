@@ -6,35 +6,35 @@ import java.util.Map;
 
         @Service
         public class MatrixSarrusService {
-        public MatrixSarrusResult buildSarrusResult(double[][] matrix, int currentStep) {
+        public MatrixSarrusResult buildSarrusResult(double[][] matrix, int currentStepSarrusSectionTwo) {
 
                 MatrixSarrusResult result = new MatrixSarrusResult();
                 double[][] sarrusMatrix = buildSarrusMatrix(matrix);
 
                 result.setOriginalMatrix(matrix);
                 result.setSarrusMatrix(sarrusMatrix);
-                result.setCurrentStep(currentStep);    
+                result.setCurrentStepSarrusSectionTwo(currentStepSarrusSectionTwo);    
                 result.setHasMatrixValues(hasMatrixValues(matrix));
 
-        if (currentStep >= 1) {
+        if (currentStepSarrusSectionTwo >= 1) {
                 result.setPositiveStep1(calculatePositiveStep1(sarrusMatrix));
         }
-        if (currentStep >= 2) {
+        if (currentStepSarrusSectionTwo >= 2) {
                 result.setPositiveStep2(calculatePositiveStep2(sarrusMatrix));
         }
-        if (currentStep >= 3) {
+        if (currentStepSarrusSectionTwo >= 3) {
                 result.setPositiveStep3(calculatePositiveStep3(sarrusMatrix));
         }
-        if (currentStep >= 4) {
+        if (currentStepSarrusSectionTwo >= 4) {
                 result.setNegativeStep1(calculateNegativeStep1(sarrusMatrix));
         }
-        if (currentStep >= 5) {
+        if (currentStepSarrusSectionTwo >= 5) {
                 result.setNegativeStep2(calculateNegativeStep2(sarrusMatrix));
         }
-        if (currentStep >= 6) {
+        if (currentStepSarrusSectionTwo >= 6) {
                 result.setNegativeStep3(calculateNegativeStep3(sarrusMatrix));
         }
-        if (currentStep >= 7) {
+        if (currentStepSarrusSectionTwo >= 7) {
                 result.setPositiveTotal(
                         calculatePositiveTotal(
                                 result.getPositiveStep1(),
@@ -43,7 +43,7 @@ import java.util.Map;
                         )
                 );
         }
-        if (currentStep >= 8) {
+        if (currentStepSarrusSectionTwo >= 8) {
                 result.setNegativeTotal(
                         calculateNegativeTotal(
                                 result.getNegativeStep1(),
@@ -53,7 +53,7 @@ import java.util.Map;
                 );
         }
 
-        if (currentStep >= 9) {
+        if (currentStepSarrusSectionTwo >= 9) {
                 result.setDeterminant(
                         calculateDeterminant(
                                 result.getPositiveTotal(),
