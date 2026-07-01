@@ -1,0 +1,14 @@
+<div th:fragment="primeButtons">
+    <div class="prime-button-grid">
+        <button
+            th:each="prime : ${primeButtons}"
+            type="submit"
+            name="attemptedPrime"
+            th:value="${prime}"
+            th:attr="aria-label=${'Prime ' + prime}"
+            title="Prime"
+            class="btn-secondary prime-number-button"
+            th:text="${prime}">
+        </button>
+    </div>
+</div>

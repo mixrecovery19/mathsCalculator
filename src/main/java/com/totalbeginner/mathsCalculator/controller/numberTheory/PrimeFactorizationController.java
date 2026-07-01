@@ -14,7 +14,9 @@ public class PrimeFactorizationController {
 
     private final PrimeFactorizationService primeFactorizationService;
 
-    public PrimeFactorizationController(PrimeFactorizationService primeFactorizationService) {
+    public PrimeFactorizationController(
+            PrimeFactorizationService primeFactorizationService) {
+
         this.primeFactorizationService = primeFactorizationService;
     }
 
@@ -22,38 +24,48 @@ public class PrimeFactorizationController {
     public String showPrimeFactorizationPage(Model model) {
 
         model.addAttribute("number", 0);
+        model.addAttribute("primeButtons",
+                primeFactorizationService.buildPrimeButtons());
 
         return "numberTheory/primeFactorization";
     }
 
     @PostMapping("/prime-factorization")
     public String handlePrimeFactorization(
+
             @RequestParam(defaultValue = "0") int number,
             @RequestParam(required = false) String action,
-            Model model) {
+            @RequestParam(defaultValue = "0") int currentNumber,
+            @RequestParam(defaultValue = "0") int attemptedPrime,
+            @RequestParam(required = false) String factors,
 
-        PrimeFactorizationResult result = primeFactorizationService.buildPrimeFactorizationResult(number);
-
+            Model model) {  
+        PrimeFactorizationResult result =
+                primeFactorizationService.buildPrimeFactorizationResult(number);
+        /*
+         * Restore the current value only if the walkthrough
+         * is not already complete.
+         */
+        if (!result.isCompleted()) {
+            result.setCurrentNumber(
+                    currentNumber == 0 ? number : currentNumber);
+        }
         switch (action == null ? "" : action) {
 
-            case "update-number":
-                break;
-
             case "generate-factorization":
-                // TODO: Call PrimeFactorizationService
-                break;
+                result = primeFactorizationService.buildPrimeFactorizationResult(number);
+                result.setCurrentNumber(number);
+            break;
 
-            case "next-step":
-                // TODO
-                break;
-
-            case "previous-step":
-                // TODO
+            case "check-prime-factor":
+                result = primeFactorizationService.checkPrimeFactor(
+                        result,
+                        attemptedPrime,
+                        factors);
                 break;
 
             case "reset":
-                number = 0;
-                break;
+                return "redirect:/prime-factorization";
 
             default:
                 break;
@@ -61,7 +73,17 @@ public class PrimeFactorizationController {
 
         model.addAttribute("number", number);
         model.addAttribute("result", result);
-       
+        model.addAttribute("primeButtons",
+                primeFactorizationService.buildPrimeButtons());
+
+        if (result != null) {
+            model.addAttribute("factorsDisplay",
+                    result.getFactorsDisplay());
+
+            model.addAttribute("finalFactorizationDisplay",
+                    result.getFinalFactorizationDisplay());
+        }
+
         return "numberTheory/primeFactorization";
     }
 }

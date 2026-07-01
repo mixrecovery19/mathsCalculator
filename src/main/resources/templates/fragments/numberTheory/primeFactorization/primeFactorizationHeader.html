@@ -41,8 +41,8 @@
                     th:value="${number != 0 ? number : ''}"
                     placeholder="2-10000">
             </div>
-        <button type="submit" name="action" value="generate-factorization" class="btn-primary dashboard-btn">
-            Generate Prime Factorization
-        </button>
+                <button type="submit" name="action" value="generate-factorization" class="btn-primary dashboard-btn"
+                    th:text="${result == null ? 'Start Prime Factorization Practice' : 'Practice Another Number'}"
+                    th:attr="aria-label=${result == null ? 'Start Prime Factorization Practice' : 'Practice Another Number'}">Start Prime Factorization Practice</button>
     </div>
 </div>

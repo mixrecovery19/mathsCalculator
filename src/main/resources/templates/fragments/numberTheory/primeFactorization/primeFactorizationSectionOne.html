@@ -1,17 +1,13 @@
-<div th:fragment="primeFactorizationSectionOne"
-     th:if="${result != null}"
-     class="matrix-inputs-dashboard">
+<div th:fragment="primeFactorizationSectionOne" th:if="${result != null}" class="matrix-inputs-dashboard">
     <section class="matrix-controls matrix-fragment-card">
         <div class="matrix-control-row">
             <h2>1. Begin the Prime Factorization</h2>
         </div>
-        <p class="math-description">
-            You have chosen the integer:
-        </p>
+        <p class="math-description">You have chosen the integer:</p>
         <div class="determinant-result-box">
             <span th:text="${result.originalNumber}"></span>
         </div>
-        <details class="math-details" open>
+        <details class="math-details" closed>
             <summary>How We Begin</summary>
                 <p class="math-description">
                     We begin by testing the smallest prime number:
@@ -32,14 +28,46 @@
             <div class="walkthrough-step-title">
                 Current Number
             </div>
-            <div class="walkthrough-step-text">
-    Current Number =
-    <strong th:text="${result.currentNumber}"></strong>
-</div>
+            <div class="walkthrough-step-text">Current Number =
+            <strong th:text="${result.currentNumber}"></strong>
         </div>
-        <p class="math-description">
-            Next, you will try prime numbers and check whether they divide evenly
-            into your current number.
-        </p>
+    </div>
+        <div class="prime-choice-box" th:if="${!result.completed}">
+            <div class="prime-choice-title">Try Your Prime Divisor</div>
+            <div class="prime-choice-body">
+                <p class="math-description">
+                    Click one of the prime numbers below to test whether it divides
+                    evenly into the current number.
+                </p>
+                <div th:replace="~{fragments/numberTheory/primeFactorization/primeButtons :: primeButtons}"></div>
+            </div>
+        </div>
+                <input type="hidden" name="action" value="check-prime-factor">
+                <input type="hidden" name="number" th:value="${result.originalNumber}">
+                <input type="hidden" name="currentNumber" th:value="${result.currentNumber}">                
+                <input type="hidden" name="factors" th:value="${result.factorsDisplay != null ? #strings.replace(result.factorsDisplay, ' × ', ',') : ''}">
+                <div class="walkthrough-step-box" th:if="${result.feedbackMessage != null}">
+                <div class="walkthrough-step-title">Result</div>
+                <div class="walkthrough-step-text" th:text="${result.feedbackMessage}"></div>
+            </div>
+                <div class="walkthrough-step-box" th:if="${result.factorsDisplay != null && !#strings.isEmpty(result.factorsDisplay)}">
+                <div class="walkthrough-step-title">Factors Found</div>
+                <div class="walkthrough-step-text">
+                    <strong th:text="${result.factorsDisplay}"></strong>
+                </div>
+            </div>
+                <div class="final-result-container" th:if="${result.completed}">
+                <h2>Final Prime Factorization</h2>
+                <div class="final-result-box">
+                    <label>Prime Factorization</label>
+                    <div class="solution-value" th:text="${result.finalFactorizationDisplay}">
+                </div>
+            </div>
+            <div class="button-group" th:if="${result.completed}">
+                <a th:href="@{/prime-factorization}" class="btn-primary dashboard-btn">
+    Restart Walkthrough
+</a>
+            </div>
+        </div>
     </section>
 </div>
