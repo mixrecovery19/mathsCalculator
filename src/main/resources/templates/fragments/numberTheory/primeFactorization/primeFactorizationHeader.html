@@ -1,0 +1,48 @@
+<div th:fragment="primeFactorizationHeader" class="matrix-inputs-dashboard">
+    <div class="matrix-controls matrix-fragment-card">
+        <div class="matrix-control-row">
+            <h1>Prime Factorization Walkthrough</h1>
+        </div>
+            <h2>Enter a Positive Integer Between 2 & 10,000 to Begin</h2>
+            <details class="math-details">
+                <summary>Finding Prime Factors Using Repeated Division</summary>
+                    <p class="math-description">
+                        Prime factorization expresses a positive integer as a product of
+                        prime numbers.<br>
+                        Rather than guessing the factors, we repeatedly divide by the
+                        <strong>smallest prime number</strong> that divides evenly into the
+                        current value.
+                        <br>
+                        For example,
+                        \[84 = 2 \times 2 \times 3 \times 7\]
+                        or
+                        \[84 = 2^{2}\times3\times7\]
+                        Throughout this walkthrough you will:
+                        <br>
+                        • Enter any positive integer between 2 and 10,000.<br>
+                        • Test successive prime numbers for divisibility.<br>
+                        • Divide whenever the number divides evenly.<br>
+                        • Repeat the process until the remaining value is itself prime.<br>
+                        • Display the complete prime factorization in standard form.
+                    </p>
+            </details>
+            <div class="matrix-control-row">
+                <label for="number">
+                    <strong>Positive Integer</strong>
+                </label>
+                <input
+                    type="number"
+                    id="number"
+                    name="number"
+                    min="2"
+                    max="10000"
+                    step="1"
+                    class="matrix-input matrix-cells-larger"
+                    th:value="${number != 0 ? number : ''}"
+                    placeholder="2-10000">
+            </div>
+        <button type="submit" name="action" value="generate-factorization" class="btn-primary dashboard-btn">
+            Generate Prime Factorization
+        </button>
+    </div>
+</div>

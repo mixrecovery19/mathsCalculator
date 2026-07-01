@@ -1,0 +1,45 @@
+<div th:fragment="primeFactorizationSectionOne"
+     th:if="${result != null}"
+     class="matrix-inputs-dashboard">
+    <section class="matrix-controls matrix-fragment-card">
+        <div class="matrix-control-row">
+            <h2>1. Begin the Prime Factorization</h2>
+        </div>
+        <p class="math-description">
+            You have chosen the integer:
+        </p>
+        <div class="determinant-result-box">
+            <span th:text="${result.originalNumber}"></span>
+        </div>
+        <details class="math-details" open>
+            <summary>How We Begin</summary>
+                <p class="math-description">
+                    We begin by testing the smallest prime number:
+                    \[2\]
+                    If the number divides evenly by \(2\), then \(2\) is one of its
+                    prime factors.
+                    <br>
+                    In general, we are looking for prime numbers that divide the
+                    current value with no remainder:
+                    \[\text{Current Number} \div \text{Prime Factor}
+                        = \text{Whole Number}\]
+                    If there is a remainder, we move to the next prime number:
+                    \[2,\ 3,\ 5,\ 7,\ 11,\ 13,\ 17,\ldots
+                    \]
+                </p>
+        </details>
+        <div class="walkthrough-step-box">
+            <div class="walkthrough-step-title">
+                Current Number
+            </div>
+            <div class="walkthrough-step-text">
+    Current Number =
+    <strong th:text="${result.currentNumber}"></strong>
+</div>
+        </div>
+        <p class="math-description">
+            Next, you will try prime numbers and check whether they divide evenly
+            into your current number.
+        </p>
+    </section>
+</div>
