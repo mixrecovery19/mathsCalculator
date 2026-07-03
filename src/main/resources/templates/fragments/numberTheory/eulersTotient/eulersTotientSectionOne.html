@@ -1,0 +1,75 @@
+<div th:fragment="eulersTotientSectionOne"
+     th:if="${result != null && result.hasResult}">
+    <section class="hero-card">
+        <div class="totient-fragment-card">
+            <h2>Step 1 – Identify the Distinct Prime Factors</h2>
+            <div class="math-introduction">
+
+                Euler's Totient Formula only requires the
+                <strong>distinct prime factors</strong> of the number.
+                Although a prime factor may appear multiple times in the
+                prime factorisation, it is only used once in the formula.
+
+            </div>
+
+            <details class="math-details">
+
+                <summary>Why only the distinct prime factors?</summary>
+
+                <div class="details-content">
+                    <p>                        Suppose the prime factorisation of
+                        <strong th:text="${result.number}">315</strong>
+                        is:
+                    </p>
+                    <p style="text-align:center;">
+                        \(315 = 3^2 \times 5 \times 7\)
+                    </p>
+                    <p>
+                        Even though 3 appears twice, Euler's Totient Formula
+                        only uses each unique prime once:
+                    </p>
+                    <p style="text-align:center;">
+                        \(3,\;5,\;7\)
+                    </p>
+                    <p>
+                        Your application has already identified the distinct
+                        prime factors shown below.
+                    </p>
+                </div>
+            </details>
+            <div class="walkthrough-display">
+                <div class="factorisation-title">
+                    Distinct Prime Factors
+                </div>
+                <div class="prime-pill-row">
+                    <div class="prime-pill-row">
+
+    <span class="prime-pill"
+          th:each="factor : ${result.factors}"
+          th:text="${factor.prime}">
+        2
+    </span>
+
+</div>
+                </div>
+            </div>
+            <div class="walkthrough-step-box">
+                <div class="walkthrough-step-text">
+                    Great! We now have every distinct prime factor required
+                    to substitute into Euler's Totient Formula.
+                    The next step is to build the product
+                    \(n(1-\frac1p)\) using these prime values.
+
+                </div>
+            </div>
+            <div class="button-group continue-button-group">                             
+                        <button type="submit" name="action" value="back-to-section-two" class="btn-secondary dashboard-btn">
+                                Close Section 1
+                        </button>     
+                        <button type="submit" name="action" value="proceed-to-eulers-totient-section-two" class="btn-primary">
+                                Proceed To Next Step
+                        </button>                                          
+                    </div>
+        </div>
+    </section>
+</div>

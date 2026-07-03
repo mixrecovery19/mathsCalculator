@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Euler's Totient Function</title>
+
+    <link rel="stylesheet" href="/css/stylesSideBar.css">
+    <link rel="stylesheet" href="/css/numberTheory/stylesEulersTotient.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="/js/overlayhelper.js"></script>
+</head>
+    <body>
+        <div class="app-layout">
+            <div th:replace="~{sidebar :: sidebar}"></div>
+            <main class="matrix-page">
+                <form th:action="@{/eulers-totient}" method="post">
+                    <div th:replace="~{fragments/numberTheory/eulersTotient/eulersTotientHeader :: eulersTotientHeader}"></div>
+                    <div th:replace="~{fragments/numberTheory/eulersTotient/eulersTotientSectionOne :: eulersTotientSectionOne}"></div>
+                    <div th:replace="~{fragments/numberTheory/eulersTotient/eulersTotientSectionTwo :: eulersTotientSectionTwo}"></div>
+                </form>
+            </main>
+        </div>
+    </body>
+</html>

@@ -4,21 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Prime Factorization</title>
-
     <link rel="stylesheet" href="/css/stylesSideBar.css">
     <link rel="stylesheet" href="/css/numberTheory/stylesPrimeFactorization.css">
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="/js/overlayhelper.js"></script>
 </head>
-<body>
-<div class="app-layout">
-    <div th:replace="~{sidebar :: sidebar}"></div>
-        <main class="matrix-page">       
-            <form th:action="@{/prime-factorization}" method="post">
-                <div th:replace="~{fragments/numberTheory/primeFactorization/primeFactorizationHeader :: primeFactorizationHeader}"></div>
-                <div th:if="${result != null}" th:replace="~{fragments/numberTheory/primeFactorization/primeFactorizationSectionOne :: primeFactorizationSectionOne}"></div>
-            </form>
-        </main>
-    </div>
-</body>
+    <body>
+        <div class="app-layout">
+            <div th:replace="~{sidebar :: sidebar}"></div>
+                <main class="matrix-page">       
+                    <form th:action="@{/prime-factorization}" method="post">
+                        <th:block th:if="${result == null}">
+                            <div th:replace="~{fragments/numberTheory/primeFactorization/primeFactorizationHeader :: primeFactorizationHeader}"></div>
+                        </th:block>
+                            <div th:replace="~{fragments/numberTheory/primeFactorization/primeFactorizationSectionOne :: primeFactorizationSectionOne}"></div>
+                    </form>
+                </main>
+            </div>
+    </body>
 </html>

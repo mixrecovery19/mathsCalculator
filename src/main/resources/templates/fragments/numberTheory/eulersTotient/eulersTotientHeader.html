@@ -1,0 +1,60 @@
+<div th:fragment="eulersTotientHeader">
+    <section class="hero-card">
+        <h1>Euler's Totient Function φ(n)</h1>
+        <p class="math-description">
+            Euler's Totient Function, written as \( \phi(n) \), counts how many
+            positive integers less than or equal to <strong>n</strong> are
+            relatively prime (coprime) to <strong>n</strong>.
+        </p>
+        <details class="math-details">
+            <summary>What is Euler's Totient Function?</summary>
+            <div class="details-content">
+                <p>
+                    Two numbers are <strong>coprime</strong> if their greatest
+                    common divisor (GCD) is 1.
+                </p>
+
+                <p>
+                    For large values of <strong>n</strong>, Euler's Totient can
+                    be calculated efficiently using the distinct prime factors
+                    of the number.
+                </p>
+                <p>
+                    The formula is:
+                </p>
+                <p>
+                    \[
+                    \phi(n)=
+                    n
+                    \left(1-\frac{1}{p_1}\right)
+                    \left(1-\frac{1}{p_2}\right)
+                    \cdots
+                    \left(1-\frac{1}{p_k}\right)
+                    \]
+                </p>
+                <p>
+                    where \(p_1,p_2,\ldots,p_k\) are the distinct prime factors
+                    of \(n\).
+                </p>
+            </div>
+        </details>
+        <div class="totient-input-group">
+            <label for="number">
+                Enter a Positive Integer
+            </label>
+            <input
+                    id="number"
+                    class="totient-input"
+                    type="number"
+                    name="number"
+                    min="1"
+                    th:value="${number}"
+                    required>
+            <button
+                    type="submit"
+                    class="primary-button">
+                Calculate Euler's Totient
+            </button>
+        </div>
+    </section>
+</div>
