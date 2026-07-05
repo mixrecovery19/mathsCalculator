@@ -6,14 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
         ? activeSection.querySelector("[data-scroll-anchor]")
         : null;
 
-    if (scrollAnchor) {
-        scrollAnchor.scrollIntoView({
-            behavior: "instant",
-            block: "center"
-        });
+        if (scrollAnchor) {
+            scrollAnchor.scrollIntoView({
+                behavior: "instant",
+                block: "center"
+            });
 
-    } else {
-        const activeSection = document.querySelector("[data-active-section='true']");
+        } else {
+    const activeSection = document.querySelector("[data-active-section='true']");
         if (activeSection) {
             activeSection.scrollIntoView({
                 behavior: "instant",

@@ -90,4 +90,13 @@ public class EulersTotientResult {
     public void setPreviousValue(int previousValue) {
         this.previousValue = previousValue;
     }
+    public int getMaximumSectionTwoStep() {
+        if (factors == null) {
+            return 0;
+        }
+        return factors.size() + 2;
+    }
+    public boolean isFinalStep() {
+        return factors != null && eulersSectionTwoCurrentStep == factors.size() + 1;
+    }
 }

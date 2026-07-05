@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.totalbeginner.mathsCalculator.dto.numberTheory.EulersTotientResult;
-import com.totalbeginner.mathsCalculator.dto.numberTheory.EulerTotientFactor;
 import com.totalbeginner.mathsCalculator.service.numberTheory.EulersTotientService;
 
 @Controller
@@ -22,14 +21,14 @@ public class EulersTotientController {
     @GetMapping("/eulers-totient")
     public String showEulersTotientPage(Model model) {
 
-        model.addAttribute("number", 0);
+        model.addAttribute("number", null);
         model.addAttribute("result", new EulersTotientResult());
 
         return "numberTheory/eulersTotient";
     }
 
-  @PostMapping("/eulers-totient")
-public String calculateTotient(
+    @PostMapping("/eulers-totient")
+    public String calculateTotient(
         @RequestParam(required = false) String action,
         @RequestParam int number,
         @RequestParam(defaultValue = "0") int eulersSectionTwoCurrentStep,
@@ -39,46 +38,49 @@ public String calculateTotient(
 
     EulersTotientResult result = new EulersTotientResult();
 
-   result.setNumber(number);
-result.setHasResult(true);
-result.setEulersSection(eulersSection);
-result.setEulersSectionTwoCurrentStep(eulersSectionTwoCurrentStep);
+    result.setNumber(number);
+    result.setHasResult(true);
+    result.setEulersSection(eulersSection);
+    result.setEulersSectionTwoCurrentStep(eulersSectionTwoCurrentStep);
 
-handleSectionTwoActions(action, result);
-
-result.setFactors(
+    result.setFactors(
         eulersTotientService.buildEulerFactors(number));
 
-if (result.getEulersSectionTwoCurrentStep() >= 1) {
-    eulersTotientService.simplifyEulerFactors(result.getFactors());
-}
+    String redirect = handleSectionTwoActions(action, result);
+    if (redirect != null) {
+        return redirect;
+    }
 
-if (result.getEulersSectionTwoCurrentStep() >= 2) {
-    eulersTotientService.buildSectionTwoWalkthroughState(result);
-}
-
-model.addAttribute("number", number);
-model.addAttribute("result", result);
+    if (result.getEulersSectionTwoCurrentStep() >= 1) {
+        eulersTotientService.simplifyEulerFactors(result.getFactors());
+    }
+    if (result.getEulersSectionTwoCurrentStep() >= 2) {
+        eulersTotientService.buildSectionTwoWalkthroughState(result);
+    }
+    
+    model.addAttribute("number", number);
+    model.addAttribute("result", result);
 
     return "numberTheory/eulersTotient";
-}
-    private void handleSectionTwoActions(
+    }
+    private String handleSectionTwoActions(
         String action,
         EulersTotientResult result) {
 
-            if (action == null) {
-                return;
-            }
+    if (action == null) {
+        return null;
+    }
+
+    int maximumStep = result.getFactors().size() + 1;
 
     switch (action) {
-
         case "proceed-to-eulers-totient-section-two":
             result.setEulersSection(2);
             result.setEulersSectionTwoCurrentStep(0);
             break;
 
         case "next-section-two-step":
-            if (result.getEulersSectionTwoCurrentStep() < 6) {
+            if (result.getEulersSectionTwoCurrentStep() < maximumStep) {
                 result.setEulersSectionTwoCurrentStep(
                         result.getEulersSectionTwoCurrentStep() + 1);
             }
@@ -89,7 +91,11 @@ model.addAttribute("result", result);
                 result.setEulersSectionTwoCurrentStep(
                         result.getEulersSectionTwoCurrentStep() - 1);
             }
-            break;
+                break;
+        case "restart-eulers-totient":
+            return "redirect:/eulers-totient";
+           
+        }
+        return null;
     }
-}
 }

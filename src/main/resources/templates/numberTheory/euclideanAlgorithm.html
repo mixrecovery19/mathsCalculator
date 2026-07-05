@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Euclidean Algorithm</title>
+
+    <link rel="stylesheet" href="/css/stylesSideBar.css">
+    <link rel="stylesheet" href="/css/numberTheory/stylesEuclideanAlgorithm.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="/js/overlayhelper.js"></script>
+</head>
+
+<body>
+
+<div class="app-layout">
+    <div th:replace="~{sidebar :: sidebar}"></div>
+    <main class="matrix-page">
+        <form th:action="@{/euclidean-algorithm}" method="post">
+            <div th:replace="~{fragments/numberTheory/euclideanAlgorithm/euclideanAlgorithmHeader :: euclideanAlgorithmHeader}"></div>
+            <div th:replace="~{fragments/numberTheory/euclideanAlgorithm/euclideanAlgorithmSectionOne :: euclideanAlgorithmSectionOne}"></div>
+        </form>
+    </main>
+</div>
+</body>
+</html>

@@ -71,9 +71,19 @@ public class EulersTotientService {
     int activeFactorIndex =
             result.getEulersSectionTwoCurrentStep() - 2;
 
-    if (activeFactorIndex < 0 || activeFactorIndex >= factors.size()) {
-        return;
+    if (activeFactorIndex >= factors.size()) {
+
+    int finalValue = result.getNumber();
+
+    for (EulerTotientFactor factor : factors) {
+        finalValue = multiplyByFactor(finalValue, factor);
     }
+
+    result.setCurrentValue(finalValue);
+    result.setTotient(finalValue);
+
+    return;
+}
 
     result.setActiveFactorIndex(activeFactorIndex);
 

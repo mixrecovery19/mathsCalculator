@@ -1,6 +1,8 @@
 <div th:fragment="eulersTotientSectionTwo"
      th:if="${result.eulersSection >= 2}">
-    <section class="hero-card">
+    <section class="hero-card"
+             th:attr="data-active-section=${result.eulersSection == 2 ? 'true' : null}"            
+             data-scroll-anchor>
         <div class="totient-fragment-card">
             <h2>Step-by-Step Euler's Totient Walkthrough</h2>
             <details class="math-details">
@@ -20,189 +22,132 @@
             </details>
             <div class="walkthrough-step-header">
                 Current Section Two Step:
-                <span th:text="${result.eulersSectionTwoCurrentStep}"></span>
-                of 6
+                <span th:text="${result.eulersSectionTwoCurrentStep}"></span>               
             </div>
             <div class="walkthrough-step-box">
                 <div class="walkthrough-step-text">
                     <span th:if="${result.eulersSectionTwoCurrentStep == 0}">
-                        Press <strong>Next Step</strong> to substitute the
-                        distinct prime factors into Euler's Totient Formula.
+                        Press <strong>Next Step</strong> to substitute the distinct prime factors into Euler's Totient Formula.
                     </span>
                     <span th:if="${result.eulersSectionTwoCurrentStep == 1}">
-                        We can now substitute each distinct prime factor found in Section One
-                        directly into Euler's Totient Formula.
-                        This gives us the complete formula before any simplification begins.
+                        Substitute the distinct prime factors into Euler's Totient Formula and rewrite each bracket as a simplified fraction.
                     </span>
-
-                    <span th:if="${result.eulersSectionTwoCurrentStep == 2}">
-                        Step 2 placeholder.
+                    <span th:if="${result.eulersSectionTwoCurrentStep >= 2 && !result.finalStep}">
+                        Multiply the current value by the next Euler factor.
+                        This reduces the running product one factor at a time.
                     </span>
-
-                    <span th:if="${result.eulersSectionTwoCurrentStep == 3}">
-                        Step 3 placeholder.
+                    <span th:if="${result.finalStep}">
+                        All Euler factors have now been applied.
+                        The final value is Euler's Totient for your number.
                     </span>
-
-                    <span th:if="${result.eulersSectionTwoCurrentStep == 4}">
-                        Step 4 placeholder.
-                    </span>
-
-                    <span th:if="${result.eulersSectionTwoCurrentStep == 5}">
-                        Step 5 placeholder.
-                    </span>
-
                 </div>
-
             </div>
 
-            <div class="walkthrough-display">
-
-                <div class="walkthrough-display-title">
-                    Euler's Totient Formula
-                </div>
-
+            <div class="walkthrough-display">                
                 <div class="euler-formula">
-
                     <span class="formula-phi">
                         φ(<span th:text="${result.number}"></span>)
                     </span>
-
                     <span class="formula-equals">=</span>
-
                     <span class="formula-number"
                         th:text="${result.number}">
                     </span>
-
                     <span th:each="factor : ${result.factors}"
                         class="formula-factor"
                         th:classappend="${factor.highlighted} ? ' active-display-mode'">
-
+                        <span th:text="${factor.displayValue}"></span>
+                    </span>
+                </div>
+            </div>           
+                 <input type="hidden" name="eulersSection" th:value="${result.eulersSection}" title="eulersSection">
+                 <input type="hidden"
+                     name="eulersSectionTwoCurrentStep"
+                     th:value="${result.eulersSectionTwoCurrentStep}"
+                     title="eulersSectionTwoCurrentStep">
+                 <input type="hidden"
+                     name="number"
+                     th:value="${result.number}"
+                     title="number">          
+        </div>
+            <div class="coefficient-panel" th:if="${result.eulersSectionTwoCurrentStep >= 1}">
+            <div class="calculation-card">                
+                <div class="euler-formula">
+                    <span class="formula-phi">
+                        φ(<span th:text="${result.number}"></span>)
+                    </span>
+                    <span class="formula-equals">=</span>
+                    <span class="formula-number"
+                        th:text="${result.number}">
+                    </span>
+                    <span th:each="factor : ${result.factors}"
+                        class="formula-factor">
                         <span th:text="${factor.displayValue}"></span>
                     </span>
                 </div>
             </div>
-
-            <!-- Navigation -->
-
-            <input type="hidden"
-                   name="eulersSection"
-                   th:value="${result.eulersSection}">
-
-            <input type="hidden"
-                   name="eulersSectionTwoCurrentStep"
-                   th:value="${result.eulersSectionTwoCurrentStep}">
-
-            <input type="hidden"
-                   name="number"
-                   th:value="${result.number}">
-
-            <div class="button-group continue-button-group">
-
-                <button type="submit"
-                        name="action"
-                        value="previous-section-two-step"
-                        class="btn-secondary">
-
-                    Previous Step
-
-                </button>
-
-                <button type="submit"
-                        name="action"
-                        value="next-section-two-step"
-                        class="btn-primary">
-
-                    Next Step
-                </button>
-            </div>
-        </div>
-        <div class="coefficient-panel"
-     th:if="${result.eulersSectionTwoCurrentStep >= 1}">
-
-    <!-- STEP 1 -->
-
-    <div class="calculation-card">
-
-        <div class="calculation-title">
-            Step 1 – Substitute the Distinct Prime Factors into Euler's Formula
-        </div>
-
-        <div class="euler-formula">
-
-            <span class="formula-phi">
-                φ(<span th:text="${result.number}"></span>)
-            </span>
-
-            <span class="formula-equals">=</span>
-
-            <span class="formula-number"
-                  th:text="${result.number}">
-            </span>
-
-            <span th:each="factor : ${result.factors}"
-                  class="formula-factor">
-
-                <span th:text="${factor.displayValue}"></span>
-
-            </span>
-
-        </div>
-
-    </div>
-
-    <!-- DYNAMIC MULTIPLICATION STEP -->
-
     <div class="calculation-card"
-         th:if="${result.eulersSectionTwoCurrentStep >= 2}">
-
-        <div class="calculation-title">
-
-            Step
-            <span th:text="${result.eulersSectionTwoCurrentStep}"></span>
-
-            – Multiply the next factor
-
-        </div>
-
+         th:if="${result.eulersSectionTwoCurrentStep >= 2}">       
         <div class="euler-formula">
-
             <span th:text="${result.previousValue}"></span>
-
             <span> × </span>
-
-            <span
-                th:text="${result.factors[result.activeFactorIndex].displayValue}">
+            <span th:text="${result.factors[result.activeFactorIndex].displayValue}">
             </span>
-
             <span> = </span>
-
             <strong th:text="${result.currentValue}"></strong>
-
         </div>
-
         <br>
-
         <div class="euler-formula">
-
             <span class="formula-number"
                   th:text="${result.currentValue}">
             </span>
-
-            <span
-                th:each="factor,stat : ${result.factors}"
-                th:if="${stat.index > result.activeFactorIndex}"
-                class="formula-factor">
-
-                <span th:text="${factor.displayValue}">
-                </span>
-
+            <span th:each="factor,stat : ${result.factors}"
+                  th:if="${stat.index > result.activeFactorIndex}"
+                  class="formula-factor">
+                <span th:text="${factor.displayValue}"></span>
             </span>
-
-        </div>
-
+        </div>        
     </div>
-
 </div>
+    <div class="final-result-container" th:if="${result.finalStep}">
+        <h2>Final Answer</h2>
+        <div class="final-result-box">
+            <label>Final Value of Euler's Totient Function</label>
+            <input
+                class="final-section-output"
+                th:value="'φ(' + ${result.number} + ') = ' + ${result.currentValue}"
+                readonly
+                title="Final value of Euler's Totient Function"
+                placeholder="φ(n) = ...">
+            <p class="math-description">
+                There are
+                <strong th:text="${result.currentValue}"></strong>
+                positive integers less than
+                <strong th:text="${result.number}"></strong>
+                that are relatively prime to
+                <strong th:text="${result.number}"></strong>.
+            </p>
+        </div>
+    </div>
+<div id="eulersSectionTwoControls" data-scroll-anchor>
+    <div class="button-group">
+        <button type="submit" name="action" value="previous-section-two-step" class="btn-secondary">
+            Previous Step
+        </button>
+        <button type="submit"
+                name="action"
+                value="next-section-two-step"
+                class="btn-primary">
+            Next Step
+        </button>
+    </div>
+            <div class="button-group">                
+                <button type="submit"
+                        name="action"
+                        value="restart-eulers-totient"
+                        class="btn-primary">
+                    Restart Walkthrough
+                </button>
+            </div>            
         </div>
     </section>
 </div>

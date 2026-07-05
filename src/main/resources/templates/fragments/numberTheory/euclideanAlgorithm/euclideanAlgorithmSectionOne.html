@@ -1,0 +1,133 @@
+<div th:fragment="euclideanAlgorithmSectionOne" th:if="${result.euclideanSection >= 1}">
+    <section class="hero-card"
+             th:attr="data-active-section=${result.euclideanSection == 1 ? 'true' : null}"
+             data-scroll-anchor>
+        <div class="euclidian-fragment-card">
+            <h2>Step-by-Step Euclidean Algorithm Walkthrough</h2>
+                <details class="math-details">
+                    <summary>About this walkthrough</summary>
+                        <div class="details-content">
+                            <p>
+                                The Euclidean Algorithm repeatedly divides the larger
+                                number by the smaller number.
+                            </p>
+                            <p>
+                                After each division, the remainder becomes the new
+                                divisor and the process repeats.
+                            </p>
+                            <p>
+                                Once the remainder becomes zero, the last non-zero
+                                remainder is the Greatest Common Divisor (GCD).
+                            </p>                    
+                        </div>
+                </details>
+            <div class="walkthrough-step-header">
+                Current Step:
+                <span th:text="${result.currentEuclideanStep}"></span>
+            </div>
+            <div class="walkthrough-step-box">
+                <div class="walkthrough-step-text">
+                    <span th:if="${result.currentEuclideanStep == 0}">
+                        Press <strong>Next Step</strong> to begin the
+                        Euclidean Algorithm.
+                    </span>
+
+                    <span th:if="${result.currentEuclideanStep == 1}">
+                        Always divide the <strong>larger number</strong> by the
+                        <strong>smaller number</strong>.
+                        Record both the quotient and the remainder.
+                    </span>
+
+                    <span th:if="${result.currentEuclideanStep == 2}">
+                        If the remainder is not zero, replace the original
+                        dividend with the previous divisor, and replace the
+                        divisor with the remainder.
+                    </span>
+
+                    <span th:if="${result.currentEuclideanStep >= 3
+                            and result.currentEuclideanStep < result.maximumEuclideanStep}">
+                    Continue repeating this process until the remainder
+                    becomes zero. The last non-zero remainder is the
+                    Greatest Common Divisor.
+                </span>
+                <span th:if="${result.currentEuclideanStep == result.maximumEuclideanStep}">
+                    The remainder is now zero. The last non-zero remainder is the
+                    Greatest Common Divisor.
+                </span>
+                </div>
+
+            </div>
+
+           <div class="result-card-container">
+            <div class="calculation-card"
+                th:each="step, stat : ${result.steps}"
+                th:if="${stat.index < result.currentEuclideanStep}">
+                <div class="calculation-title">
+                    Step <span th:text="${stat.index + 1}"></span>
+                </div>
+                <div class="euclidian-formula">
+                    <span th:text="${step.dividend}"></span>
+                    <span>=</span>
+                    <span th:text="${step.quotient}"></span>
+                    <span>×</span>
+                    <span th:text="${step.divisor}"></span>
+                    <span>+</span>
+                    <span class="highlighted-cell"
+                        th:text="${step.remainder}">
+                    </span>
+                </div>
+            </div>
+        </div>
+<div class="final-result-container"
+     th:if="${result.currentEuclideanStep == result.maximumEuclideanStep}">
+
+    <h2>Final Answer</h2>
+    <div class="final-result-box">
+        <label>Greatest Common Divisor</label>
+        <input
+            class="final-section-output"
+            th:value="'gcd(' + ${result.firstNumber} + ', ' + ${result.secondNumber} + ') = ' + ${result.greatestCommonDivisor}"
+            title="Greatest Common Divisor result"
+            readonly>
+            <p class="math-description"
+                th:if="${result.greatestCommonDivisor == 1}">
+                Since the Greatest Common Divisor is
+                <strong>1</strong>, these numbers are
+                <strong>coprime (relatively prime)</strong>.
+                This means they share no common factors other than 1.
+                In RSA encryption, the Euclidean Algorithm is commonly used to verify
+                that the chosen public exponent <strong>e</strong> and
+                <strong>φ(n)</strong> are coprime before continuing with key generation.
+            </p>
+            <p class="math-description" th:if="${result.greatestCommonDivisor != 1}">
+                Since the Greatest Common Divisor is
+                <strong th:text="${result.greatestCommonDivisor}"></strong>,
+                these numbers are <strong>not coprime</strong>.
+                Because they share a common factor greater than 1, this pair would not
+                satisfy the coprime requirement needed when selecting the RSA public
+                exponent <strong>e</strong>.
+            </p>
+        </div>
+    </div>
+            <input type="hidden" name="euclideanSection" th:value="${result.euclideanSection}">
+            <input type="hidden" name="currentEuclideanStep" th:value="${result.currentEuclideanStep}">
+            <input type="hidden" name="firstNumber" th:value="${result.firstNumber}">
+            <input type="hidden" name="secondNumber" th:value="${result.secondNumber}">
+        </div>
+        <div id="euclideanSectionOneControls" data-scroll-anchor>
+            <div class="button-group">
+                <button type="submit" name="action" value="previous-euclidean-step" class="btn-secondary">
+                    Previous Step
+                </button>
+                <button type="submit" name="action" value="next-euclidean-step" class="btn-primary">
+                    Next Step
+                </button>
+            </div>
+            <div class="button-group">
+                <button type="submit" name="action" value="restart-euclidean-algorithm" class="btn-primary">
+                    Restart Walkthrough
+                </button>
+            </div>
+        </div>
+    </section>
+</div>

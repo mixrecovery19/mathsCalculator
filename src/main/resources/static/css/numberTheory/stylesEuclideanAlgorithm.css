@@ -41,7 +41,7 @@ body {
 }
 
 .hero-card,
-.totient-card {
+.euclidian-card {
     background: white;
     border-radius: 20px;
     padding: 2rem;
@@ -50,14 +50,14 @@ body {
     box-shadow: 0 6px 20px rgba(0,0,0,.08);
 }
 
-.totient-fragment-card {
+.euclidian-fragment-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.25rem;
 }
 
-.totient-title-row {
+.euclidian-title-row {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,7 +65,7 @@ body {
     flex-wrap: wrap;
 }
 
-.totient-title-row h1 {
+.euclidian-title-row h1 {
     font-size: 2rem;
     color: #2c3e50;
 }
@@ -102,7 +102,7 @@ body {
     line-height: 1.7;
 }
 
-.totient-control-row {
+.euclidian-control-row {
     display: flex;
     justify-content: center;
     align-items: end;
@@ -111,19 +111,19 @@ body {
     margin-top: 1rem;
 }
 
-.totient-input-group {
+.euclidian-input-group {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: .5rem;
 }
 
-.totient-input-group label {
+.euclidian-input-group label {
     font-weight: 800;
     color: #2c3e50;
 }
 
-.totient-input {
+.euclidian-input {
     width: var(--totient-input-width);
     height: var(--totient-input-height);
     border-radius: 14px;
@@ -135,7 +135,7 @@ body {
     transition: .2s;
 }
 
-.totient-input:focus {
+.euclidian-input:focus {
     outline: none;
     border-color: #05e16c;
     box-shadow: 0 0 0 3px rgba(5,225,108,.18);
@@ -331,7 +331,7 @@ input[type=number] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
-.euler-formula {
+.euclidian-formula {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -382,7 +382,6 @@ input[type=number] {
     flex-direction: column;
     align-items: center;
     gap: 0.8rem;
-
     background: linear-gradient(
         135deg,
         #fff9c4,
@@ -391,9 +390,7 @@ input[type=number] {
 
     border: 3px solid #f1c40f;
     border-radius: 20px;
-
     padding: 1.5rem 2rem;
-
     box-shadow: 0 8px 24px rgba(0,0,0,.12);
 
     animation: determinantPop 0.45s ease;
@@ -406,20 +403,15 @@ input[type=number] {
 }
 
 .final-section-output {
-
     min-width: 280px;
     width: auto;
     height: 90px;
     padding: 0 24px;
     border: 3px solid #f1c40f;
     border-radius: 18px;
-
     background: white;
-
     font-size: 2rem;
     font-weight: 800;
-
     text-align: center;
-
     box-sizing: border-box;
 }

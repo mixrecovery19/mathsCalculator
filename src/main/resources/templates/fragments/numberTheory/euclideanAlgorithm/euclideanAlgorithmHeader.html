@@ -1,0 +1,63 @@
+<div th:fragment="euclideanAlgorithmHeader">
+    <section class="hero-card">
+        <div class="euclidian-fragment-card">
+        <h1>Euclidean Algorithm Walkthrough</h1>
+        <p class="math-description">
+            The Euclidean Algorithm is an efficient method for finding the
+            <strong>Greatest Common Divisor (GCD)</strong> of two positive
+            integers.
+        </p>
+        <details class="math-details">
+            <summary>What is the Euclidean Algorithm?</summary>
+            <div class="details-content">
+                <p>
+                    The Euclidean Algorithm repeatedly divides one number by
+                    another and replaces the pair of numbers with the divisor
+                    and the remainder.
+                </p>
+                <p>
+                    When the remainder becomes zero, the last non-zero
+                    remainder is the Greatest Common Divisor (GCD).
+                </p>
+                <p>
+                    This algorithm is fundamental to number theory and is
+                    widely used in cryptography, including RSA encryption.
+                </p>
+            </div>
+        </details>
+        <div class="euclidian-control-row">
+            <div class="euclidian-input-group">
+                <label for="firstNumber">First Positive Integer</label>
+                <input
+                    id="firstNumber"
+                    class="euclidian-input"
+                    name="firstNumber"
+                    type="number"
+                    min="2"
+                    th:value="${firstNumber != null ? firstNumber : ''}"
+                    placeholder="2-10000"
+                    required>
+            </div>
+            <div class="euclidian-input-group">
+                <label for="secondNumber">Second Positive Integer</label>
+                <input
+                    id="secondNumber"
+                    class="euclidian-input"
+                    name="secondNumber"
+                    type="number"
+                    min="2"
+                    th:value="${secondNumber != null ? secondNumber : ''}"
+                    placeholder="2-10000"
+                    required>
+            </div>
+            <button
+                type="submit"
+                name="action"
+                value="start-euclidean"
+                class="primary-button">
+                Start Euclidean Algorithm
+            </button>
+        </div>
+    </div>
+    </section>
+</div>
