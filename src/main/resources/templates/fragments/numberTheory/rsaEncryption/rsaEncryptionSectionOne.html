@@ -1,0 +1,77 @@
+<div th:fragment="rsaEncryptionSectionOne">
+    <section class="hero-card">
+        <h2>1. Enter Prime Values</h2>
+        <p class="math-introduction">
+            Enter two prime numbers. These values are used to calculate
+            \[
+            N = p_1 \times p_2
+            \]
+        </p>
+
+        <div class="rsa-input-layout">
+
+            <div class="rsa-input-card">
+                <label for="p1">Prime Number p₁</label>
+                <input
+                    id="p1"
+                    name="p1"
+                    type="number"
+                    class="matrix-input"
+                    th:value="${result.p1 != 0 ? result.p1 : ''}"
+                    placeholder="p₁">
+            </div>
+            <div class="rsa-input-card">
+                <label for="p2">Prime Number p₂</label>
+                <input
+                    id="p2"
+                    name="p2"
+                    type="number"
+                    class="matrix-input"
+                    th:value="${result.p2 != 0 ? result.p2 : ''}"
+                    placeholder="p₂">
+            </div>
+        </div>
+        <div class="button-group">
+            <button
+                type="submit"
+                name="action"
+                value="calculate-n"
+                class="btn-primary">
+                Calculate N
+            </button>
+        </div>
+        <div class="result-card-container" th:if="${result.hasValues && result.validPrimes}">
+            <div class="result-card">
+                <label>
+                    \[
+                    N = p_1 \times p_2
+                    \]
+                </label>
+                <div class="calculation-title">
+                    <span th:text="${result.p1}"></span>
+                    ×
+                    <span th:text="${result.p2}"></span>
+                    =
+                    <span th:text="${result.n}"></span>
+                </div>
+                <input
+                    class="result-card-large-input"
+                    type="text"
+                    th:value="${result.n}"
+                    title="N calculation result"
+                    readonly>
+            </div>
+        </div>
+        <div
+            class="step-panel" th:if="${result.hasValues && !result.validPrimes}">
+            <h3>Check Your Prime Numbers</h3>
+            <p th:text="${result.errorMessage}"></p>
+        </div>
+        <div class="button-group" th:if="${result.hasValues && result.validPrimes}">
+            <button type="submit" name="action" value="proceed-section-2" class="btn-primary">
+                Proceed to Section 2
+            </button>
+        </div>
+    </section>
+
+</div>

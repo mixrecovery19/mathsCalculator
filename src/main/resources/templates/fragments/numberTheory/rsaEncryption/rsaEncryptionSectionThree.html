@@ -1,0 +1,74 @@
+<div th:fragment="rsaEncryptionSectionThree"
+     th:if="${result.currentRsaSection >= 3}">
+    <section class="hero-card">
+        <h2>3. Select the Public Exponent (e)</h2>
+        <p class="math-introduction">
+            The public exponent, \(e\), forms part of your RSA public key.
+            For RSA to work correctly, the value of \(e\) must be coprime
+            with \(\phi(N)\). In other words:
+            \[
+            \gcd(e,\phi(N))=1
+            \]
+
+            This walkthrough will verify that the value you enter satisfies
+            this requirement. If you would like to see how two numbers are
+            tested for coprimality, refer to the Euclidean Algorithm
+            walkthrough in the Number Theory section.
+        </p>
+        <div class="rsa-section-layout">
+            <div class="calculation-card">
+                <div class="calculation-title">
+                    Your Current RSA Values
+                </div>
+                <p class="walkthrough-step-text">
+                    \(N=\)
+                    <strong th:text="${result.n}"></strong>
+                </p>
+                <p class="walkthrough-step-text">
+                    \(\phi(N)=\)
+                    <strong th:text="${result.phi}"></strong>
+                </p>
+            </div>
+            <div class="calculation-card">
+                <div class="calculation-title">
+                    Enter Your Public Exponent
+                </div>
+                <p class="walkthrough-step-text">
+                    Enter a value for \(e\).
+                </p>
+                <input
+                    class="matrix-input matrix-cells-larger"
+                    type="number"
+                    name="e"
+                    min="2"
+                    placeholder="Enter a value for e"
+                    th:value="${result.e}">
+                <p class="walkthrough-step-text">
+                    Your value must satisfy:
+                    \[\gcd(e,\phi(N))=1\]
+                </p>
+            </div>
+        </div>
+        <div class="button-group">
+            <button type="submit" name="action" value="validate-e" class="btn-primary">
+                Validate e
+            </button>
+        </div>
+        <div class="final-result-container" th:if="${result.validE}">
+            <div class="final-result-box">
+                <label>Public Key</label>
+                <div class="final-section-output">
+                    Pu(
+                    <span th:text="${result.e}"></span>,
+                    <span th:text="${result.n}"></span>
+                    )
+                </div>
+            </div>
+        </div>
+        <div class="button-group" th:if="${result.hasValues && result.validPrimes}">
+            <button type="submit" name="action" value="proceed-section-4" class="btn-primary">
+                Proceed to Section 4
+            </button>
+        </div>
+    </section>
+</div>

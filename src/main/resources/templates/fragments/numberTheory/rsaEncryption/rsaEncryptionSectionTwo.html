@@ -1,0 +1,71 @@
+<div th:fragment="rsaEncryptionSectionTwo" th:if="${result.currentRsaSection >= 2}">
+    <section class="hero-card">
+        <h2>2. Calculate Euler's Totient φ(N)</h2>
+            <p class="math-introduction">
+                Now that you have created
+                \(N\), we calculate Euler's Totient using your prime values. Seeing as this is elementary, basic demonstration
+                we have simply applied the calcuation of φ(N) to the values you have provided.<br>
+                Remember, this is a demonstration, the true value of RSA encryption comes in the much larger P1 & P2 values.<br>
+                Real RSA encryption relies on prime numbers hundreds, even thousands of bits long which would take away from being able to manually calculate for educational purposes.
+            </p>
+        <div class="rsa-section-layout">
+        <div class="calculation-card">
+            <div class="calculation-title">
+                Your values:
+            </div>
+            <p class="walkthrough-step-text">
+                \(p_1 =\)
+                <strong th:text="${result.p1}"></strong>,
+                \(p_2 =\)
+                <strong th:text="${result.p2}"></strong>,
+                and
+                \(N =\)
+                <strong th:text="${result.n}"></strong>
+            </p>
+        </div>  
+        <div class="calculation-card">
+            <div class="calculation-title">
+                Calculate φ(N)
+            </div>
+            <p class="walkthrough-step-text">
+                \[\phi(N) = (p_1 - 1)(p_2 - 1)\]
+            </p>
+            <p class="walkthrough-step-text" th:inline="text">
+                \[
+                \phi([[${result.n}]]) =
+                ([[${result.p1}]] - 1)
+                ([[${result.p2}]] - 1)
+                \]
+            </p>
+            <p class="walkthrough-step-text" th:inline="text">
+                \[
+                \phi([[${result.n}]]) =
+                ([[${result.p1 - 1}]])
+                ([[${result.p2 - 1}]])
+                \]
+            </p>
+            <p class="walkthrough-step-text" th:inline="text">
+                \[
+                \phi([[${result.n}]]) =
+                [[${result.phi}]]
+                \]
+            </p>
+        </div>
+        </div>
+        <div class="final-result-container">
+            <div class="final-result-box">
+                <label>Euler's Totient</label>
+                <div class="final-section-output">
+                    φ(<span th:text="${result.n}"></span>)
+                    =
+                    <span th:text="${result.phi}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="button-group" th:if="${result.hasValues && result.validPrimes}">
+            <button type="submit" name="action" value="proceed-section-3" class="btn-primary">
+                Proceed to Section 3
+            </button>
+        </div>
+    </section>
+</div>

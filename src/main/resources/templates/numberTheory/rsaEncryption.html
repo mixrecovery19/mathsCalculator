@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RSA Encryption Walkthrough</title>
+    <link rel="stylesheet" href="/css/stylesSideBar.css">
+    <link rel="stylesheet" href="/css/numberTheory/stylesRsaEncryption.css">
+    <link rel="stylesheet" href="/css/numberTheory/stylesNumberTheoryShared.css">
+    <script src="/js/overlayhelper.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="app-layout">
+    <div th:replace="~{sidebar :: sidebar}"></div>
+    <main class="matrix-page">
+        <form th:action="@{/rsa-encryption}" method="post">
+            <input type="hidden" name="currentRsaSection" th:value="${result.currentRsaSection}" />
+            <div th:replace="~{fragments/numberTheory/rsaEncryption/rsaEncryptionHeader :: rsaEncryptionHeader}"></div>          
+            <div th:replace="~{fragments/numberTheory/rsaEncryption/rsaEncryptionSectionOne :: rsaEncryptionSectionOne}"></div>
+            <div th:replace="~{fragments/numberTheory/rsaEncryption/rsaEncryptionSectionTwo :: rsaEncryptionSectionTwo}"></div>
+            <div th:replace="~{fragments/numberTheory/rsaEncryption/rsaEncryptionSectionThree :: rsaEncryptionSectionThree}"></div>
+            <div th:replace="~{fragments/numberTheory/rsaEncryption/rsaEncryptionSectionFour :: rsaEncryptionSectionFour}"></div>
+        </form>
+    </main>
+</div>
+</body>
+</html>

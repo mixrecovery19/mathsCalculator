@@ -1,0 +1,65 @@
+<div th:fragment="rsaEncryptionHeader">
+    <section class="hero-card">
+        <h1>RSA Encryption Walkthrough</h1>
+        <p class="math-introduction">
+            RSA is one of the world's most widely used public-key cryptographic systems.
+            Rather than simply calculating the answer, this walkthrough demonstrates each
+            stage used to generate the public and private keys before showing how a message
+            can be encrypted and decrypted using small numbers suitable for learning.
+        </p>
+        <details class="math-details">
+            <summary>About this Walkthrough</summary>
+            <div class="math-description">
+                <p>
+                    During this walkthrough you will:
+                </p>
+                <ul>
+                    <li>
+                        Select two prime numbers (<strong>p₁</strong> and <strong>p₂</strong>).
+                    </li>
+                    <li>
+                        Calculate
+                        \[N = p_1 \times p_2\]
+                    </li>
+                    <li>
+                        Calculate Euler's Totient
+                        \[\phi(N) = (p_1 - 1)(p_2 - 1)\]
+                    </li>
+                    <li>
+                        Select a suitable public exponent
+                        \[e\]
+                        where
+                        \[\gcd(e,\phi(N)) = 1\]
+                    </li>
+                    <li>
+                        Calculate the private exponent
+                        \[d\]
+                    </li>
+                    <li>
+                        Create the public key
+                        \[Pu(e,N)\]
+                    </li>
+                    <li>
+                        Create the private key
+                        \[Pr(d,N)\]
+                    </li>
+                    <li>
+                        Encrypt a message
+                        \[C = M^e \pmod N\]
+                    </li>
+                    <li>
+                        Decrypt the ciphertext
+                        \[M = C^d \pmod N\]
+                    </li>
+                </ul>
+                <p>
+                    This walkthrough is designed for educational purposes and intentionally
+                    uses small prime numbers so that each stage of the RSA algorithm can be
+                    performed manually. Real RSA systems use extremely large prime numbers,
+                    but the smaller values used here allow each calculation to be followed
+                    step by step.
+                </p>
+            </div>
+        </details>
+    </section>
+</div>

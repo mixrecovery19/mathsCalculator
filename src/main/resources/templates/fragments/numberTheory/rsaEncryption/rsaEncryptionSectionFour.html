@@ -1,0 +1,76 @@
+<div th:fragment="rsaEncryptionSectionFour"
+     th:if="${result.currentRsaSection >= 4}">
+    <section class="hero-card">
+        <h2>4. Calculate the Private Exponent (d)</h2>
+        <details class="math-details">
+            <summary>How we calculate the private exponent, the \(d\) value</summary>
+        <p class="math-description">
+            The private exponent, \(d\), is the second part of the RSA key pair.
+            It is chosen so that:
+            \[
+            ed \equiv 1 \pmod{\phi(N)}
+            \]
+            For educational examples using small numbers, one convenient way to
+            calculate \(d\) is by repeatedly testing the expression:
+            \[
+            d=\frac{\phi(N)x+1}{e}
+            \]
+            Begin by letting \(x=1\). Multiply \(\phi(N)\) by \(1\), add \(1\),
+            then divide the result by your chosen value of \(e\). If the answer is
+            not a whole number, increase \(x\) to \(2\) and repeat the calculation.
+            Continue increasing \(x\) by \(1\) until the result produces a whole
+            number. That whole number is your value of \(d\).
+            <br>
+            This simple trial-and-error approach is ideal for the small numbers used
+            in educational demonstrations. Real RSA implementations use much more
+            efficient algorithms to calculate \(d\) when working with very large
+            prime numbers.
+        </p>
+        </details>
+        <div class="rsa-section-layout">
+            <div class="calculation-card">
+                <div class="calculation-title">
+                    Your Values
+                </div>
+                <p class="walkthrough-step-text">
+                    \(e=\)
+                    <strong th:text="${result.e}"></strong>
+                </p>
+                <p class="walkthrough-step-text">
+                    \(\phi(N)=\)
+                    <strong th:text="${result.phi}"></strong>
+                </p>
+            </div>
+            <div class="calculation-card">
+                <div class="calculation-title">
+                    Formula
+                </div>
+                <p class="walkthrough-step-text">
+                    \[
+                    d=\frac{\phi(N)x+1}{e}
+                    \]
+                </p>
+                <p class="walkthrough-step-text" th:inline="text">
+                    \[d=\frac{([[${result.phi}]])x+1}{([[${result.e}]])}\]
+                </p>                    
+            </div>
+        </div>
+
+        <div class="final-result-container">
+            <div class="final-result-box">
+                <label>Private Key</label>
+                <div class="final-section-output">
+                    Pr(
+                    <span th:text="${result.d}"></span>,
+                    <span th:text="${result.n}"></span>
+                    )
+                </div>
+            </div>
+        </div>
+        <div class="button-group">
+            <button type="submit" name="action" value="proceed-section-5" class="btn-primary">
+                Proceed to Section 5
+            </button>
+        </div>
+    </section>
+</div>

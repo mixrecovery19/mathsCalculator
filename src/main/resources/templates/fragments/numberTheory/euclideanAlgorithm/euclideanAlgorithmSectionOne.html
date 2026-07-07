@@ -55,60 +55,51 @@
                     Greatest Common Divisor.
                 </span>
                 </div>
-
             </div>
 
-           <div class="result-card-container">
-            <div class="calculation-card"
-                th:each="step, stat : ${result.steps}"
-                th:if="${stat.index < result.currentEuclideanStep}">
-                <div class="calculation-title">
-                    Step <span th:text="${stat.index + 1}"></span>
-                </div>
-                <div class="euclidian-formula">
-                    <span th:text="${step.dividend}"></span>
-                    <span>=</span>
-                    <span th:text="${step.quotient}"></span>
-                    <span>×</span>
-                    <span th:text="${step.divisor}"></span>
-                    <span>+</span>
-                    <span class="highlighted-cell"
-                        th:text="${step.remainder}">
-                    </span>
-                </div>
+           <div class="calculation-card" th:each="step, stat : ${result.steps}" th:if="${stat.index < result.currentEuclideanStep}">  
+            <div class="euclidian-formula">
+                <span th:text="${step.dividend}"></span>
+                <span>=</span>
+                <span th:text="${step.quotient}"></span>
+                <span>×</span>
+                <span th:text="${step.divisor}"></span>
+                <span>+</span>
+                <span class="highlighted-cell"
+                    th:text="${step.remainder}">
+                </span>
             </div>
         </div>
-<div class="final-result-container"
-     th:if="${result.currentEuclideanStep == result.maximumEuclideanStep}">
-
-    <h2>Final Answer</h2>
-    <div class="final-result-box">
-        <label>Greatest Common Divisor</label>
-        <input
-            class="final-section-output"
-            th:value="'gcd(' + ${result.firstNumber} + ', ' + ${result.secondNumber} + ') = ' + ${result.greatestCommonDivisor}"
-            title="Greatest Common Divisor result"
-            readonly>
-            <p class="math-description"
-                th:if="${result.greatestCommonDivisor == 1}">
-                Since the Greatest Common Divisor is
-                <strong>1</strong>, these numbers are
-                <strong>coprime (relatively prime)</strong>.
-                This means they share no common factors other than 1.
-                In RSA encryption, the Euclidean Algorithm is commonly used to verify
-                that the chosen public exponent <strong>e</strong> and
-                <strong>φ(n)</strong> are coprime before continuing with key generation.
-            </p>
-            <p class="math-description" th:if="${result.greatestCommonDivisor != 1}">
-                Since the Greatest Common Divisor is
-                <strong th:text="${result.greatestCommonDivisor}"></strong>,
-                these numbers are <strong>not coprime</strong>.
-                Because they share a common factor greater than 1, this pair would not
-                satisfy the coprime requirement needed when selecting the RSA public
-                exponent <strong>e</strong>.
-            </p>
-        </div>
-    </div>
+        <div class="final-result-container"
+            th:if="${result.currentEuclideanStep == result.maximumEuclideanStep}">
+            <h2>Final Answer</h2>
+                <div class="final-result-box">
+                    <label>Greatest Common Divisor</label>
+                    <input
+                        class="final-section-output"
+                        th:value="'gcd(' + ${result.firstNumber} + ', ' + ${result.secondNumber} + ') = ' + ${result.greatestCommonDivisor}"
+                        title="Greatest Common Divisor result"
+                        readonly>
+                        <p class="math-description"
+                            th:if="${result.greatestCommonDivisor == 1}">
+                            Since the Greatest Common Divisor is
+                            <strong>1</strong>, these numbers are
+                            <strong>coprime (relatively prime)</strong>.
+                            This means they share no common factors other than 1.
+                            In RSA encryption, the Euclidean Algorithm is commonly used to verify
+                            that the chosen public exponent <strong>e</strong> and
+                            <strong>φ(n)</strong> are coprime before continuing with key generation.
+                        </p>
+                        <p class="math-description" th:if="${result.greatestCommonDivisor != 1}">
+                            Since the Greatest Common Divisor is
+                            <strong th:text="${result.greatestCommonDivisor}"></strong>,
+                            these numbers are <strong>not coprime</strong>.
+                            Because they share a common factor greater than 1, this pair would not
+                            satisfy the coprime requirement needed when selecting the RSA public
+                            exponent <strong>e</strong>.
+                        </p>
+                    </div>
+                </div>
             <input type="hidden" name="euclideanSection" th:value="${result.euclideanSection}">
             <input type="hidden" name="currentEuclideanStep" th:value="${result.currentEuclideanStep}">
             <input type="hidden" name="firstNumber" th:value="${result.firstNumber}">

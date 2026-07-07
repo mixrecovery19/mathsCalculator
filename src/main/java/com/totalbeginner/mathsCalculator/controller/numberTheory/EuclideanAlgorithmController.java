@@ -41,28 +41,28 @@ public class EuclideanAlgorithmController {
 
   EuclideanAlgorithmResult result = new EuclideanAlgorithmResult();
 
-result.setFirstNumber(firstNumber);
-result.setSecondNumber(secondNumber);
+    result.setFirstNumber(firstNumber);
+    result.setSecondNumber(secondNumber);
 
-result.setEuclideanSection(euclideanSection);
-result.setCurrentEuclideanStep(currentEuclideanStep);
+    result.setEuclideanSection(euclideanSection);
+    result.setCurrentEuclideanStep(currentEuclideanStep);
 
-// Restart first
-if ("restart-euclidean-algorithm".equals(action)) {
-    return "redirect:/euclidean-algorithm";
-}
+    // Restart first
+    if ("restart-euclidean-algorithm".equals(action)) {
+        return "redirect:/euclidean-algorithm";
+    }
 
-// Build all calculations
-euclideanAlgorithmService.buildEuclideanWalkthrough(result);
+    // Build all calculations
+    euclideanAlgorithmService.buildEuclideanWalkthrough(result);
 
-// Handle next/previous/etc.
-handleEuclideanActions(action, result);
+    // Handle next/previous/etc.
+    handleEuclideanActions(action, result);
 
-model.addAttribute("firstNumber", firstNumber);
-model.addAttribute("secondNumber", secondNumber);
-model.addAttribute("result", result);
+    model.addAttribute("firstNumber", firstNumber);
+    model.addAttribute("secondNumber", secondNumber);
+    model.addAttribute("result", result);
 
-return "numberTheory/euclideanAlgorithm";
+    return "numberTheory/euclideanAlgorithm";
         }
 
     private String handleEuclideanActions(String action, EuclideanAlgorithmResult result) {
